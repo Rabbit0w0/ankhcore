@@ -1,0 +1,723 @@
+Initialized native services in: /Users/inkerbot/.gradle/native
+Initialized jansi services in: /Users/inkerbot/.gradle/native
+Found daemon DaemonInfo{pid=939, address=[c67b706e-4ec7-4ccf-bf8d-e60354fa538d port:49375, addresses:[/127.0.0.1]], state=Idle, lastBusy=1678978643729, context=DefaultDaemonContext[uid=2820bdba-d24f-4819-97cf-d47c569b60b9,javaHome=/Users/inkerbot/Library/Java/JavaVirtualMachines/azul-11.0.13/Contents/Home,daemonRegistryDir=/Users/inkerbot/.gradle/daemon,pid=939,idleTimeout=10800000,priority=NORMAL,daemonOpts=-XX:MaxMetaspaceSize=256m,-XX:+HeapDumpOnOutOfMemoryError,--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.base/java.lang=ALL-UNNAMED,--add-opens,java.base/java.lang.invoke=ALL-UNNAMED,--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,--add-opens,java.base/java.nio.charset=ALL-UNNAMED,--add-opens,java.base/java.net=ALL-UNNAMED,--add-opens,java.base/java.util.concurrent.atomic=ALL-UNNAMED,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=US,-Duser.language=en,-Duser.variant]} however its context does not match the desired criteria.
+Java home is different.
+Wanted: DefaultDaemonContext[uid=null,javaHome=/Users/inkerbot/Library/Java/JavaVirtualMachines/temurin-17.0.3/Contents/Home,daemonRegistryDir=/Users/inkerbot/.gradle/daemon,pid=9595,idleTimeout=null,priority=NORMAL,daemonOpts=--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.base/java.lang=ALL-UNNAMED,--add-opens,java.base/java.lang.invoke=ALL-UNNAMED,--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,--add-opens,java.base/java.nio.charset=ALL-UNNAMED,--add-opens,java.base/java.net=ALL-UNNAMED,--add-opens,java.base/java.util.concurrent.atomic=ALL-UNNAMED,-XX:MaxMetaspaceSize=256m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=US,-Duser.language=en,-Duser.variant]
+Actual: DefaultDaemonContext[uid=2820bdba-d24f-4819-97cf-d47c569b60b9,javaHome=/Users/inkerbot/Library/Java/JavaVirtualMachines/azul-11.0.13/Contents/Home,daemonRegistryDir=/Users/inkerbot/.gradle/daemon,pid=939,idleTimeout=10800000,priority=NORMAL,daemonOpts=-XX:MaxMetaspaceSize=256m,-XX:+HeapDumpOnOutOfMemoryError,--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.base/java.lang=ALL-UNNAMED,--add-opens,java.base/java.lang.invoke=ALL-UNNAMED,--add-opens,java.base/java.util=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,--add-opens,java.prefs/java.util.prefs=ALL-UNNAMED,--add-opens,java.base/java.nio.charset=ALL-UNNAMED,--add-opens,java.base/java.net=ALL-UNNAMED,--add-opens,java.base/java.util.concurrent.atomic=ALL-UNNAMED,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=US,-Duser.language=en,-Duser.variant]
+
+  Looking for a different daemon...
+The client will now receive all logging from the daemon (pid: 9549). The daemon log file: /Users/inkerbot/.gradle/daemon/7.4.2/daemon-9549.out.log
+Starting 3rd build in daemon [uptime: 49.081 secs, performance: 100%, non-heap usage: 26% of 256 MiB]
+Using 8 worker leases.
+Now considering [/Users/inkerbot/IdeaProjects/AnkhCore] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Settings evaluated using settings file '/Users/inkerbot/IdeaProjects/AnkhCore/settings.gradle.kts'.
+Projects loaded. Root project using build file '/Users/inkerbot/IdeaProjects/AnkhCore/build.gradle.kts'.
+Included projects: [root project 'ankh-core', project ':api', project ':gradle-plugin', project ':libs', project ':loader', project ':test-plugin', project ':libs:shadow-nbtapi', project ':libs:shadow-paper-lib', project ':libs:shadow-spring-boot-loader', project ':loader:logger', project ':loader:plugin']
+
+> Configure project :
+Evaluating root project 'ankh-core' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/build.gradle.kts'.
+Using Kotlin Gradle Plugin gradle71 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+Caching disabled for Kotlin DSL accessors for root project 'ankh-core' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for root project 'ankh-core' as it is up-to-date.
+
+> Configure project :api
+Evaluating project ':api' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/api/build.gradle.kts'.
+Caching disabled for Kotlin DSL accessors for project ':api' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for project ':api' as it is up-to-date.
+
+> Configure project :gradle-plugin
+Evaluating project ':gradle-plugin' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/gradle-plugin/build.gradle.kts'.
+
+> Configure project :libs
+Evaluating project ':libs' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/libs/build.gradle'.
+
+> Configure project :loader
+Evaluating project ':loader' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/loader/build.gradle.kts'.
+Caching disabled for Kotlin DSL accessors for project ':loader' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for project ':loader' as it is up-to-date.
+
+> Configure project :test-plugin
+Evaluating project ':test-plugin' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/test-plugin/build.gradle.kts'.
+Using Kotlin Gradle Plugin gradle71 variant
+kotlin scripting plugin: created the scripting discovery configuration: kotlinScriptDef
+kotlin scripting plugin: created the scripting discovery configuration: testKotlinScriptDef
+Caching disabled for Kotlin DSL accessors for project ':test-plugin' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for project ':test-plugin' as it is up-to-date.
+
+> Configure project :libs:shadow-nbtapi
+Evaluating project ':libs:shadow-nbtapi' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/libs/shadow-nbtapi/build.gradle.kts'.
+Caching disabled for Kotlin DSL accessors for project ':libs:shadow-nbtapi' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for project ':libs:shadow-nbtapi' as it is up-to-date.
+
+> Configure project :libs:shadow-paper-lib
+Evaluating project ':libs:shadow-paper-lib' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/libs/shadow-paper-lib/build.gradle.kts'.
+Caching disabled for Kotlin DSL accessors for project ':libs:shadow-paper-lib' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for project ':libs:shadow-paper-lib' as it is up-to-date.
+
+> Configure project :libs:shadow-spring-boot-loader
+Evaluating project ':libs:shadow-spring-boot-loader' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/libs/shadow-spring-boot-loader/build.gradle.kts'.
+Caching disabled for Kotlin DSL accessors for project ':libs:shadow-spring-boot-loader' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for project ':libs:shadow-spring-boot-loader' as it is up-to-date.
+
+> Configure project :loader:logger
+Evaluating project ':loader:logger' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/loader/logger/build.gradle.kts'.
+Caching disabled for Kotlin DSL accessors for project ':loader:logger' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for project ':loader:logger' as it is up-to-date.
+
+> Configure project :loader:plugin
+Evaluating project ':loader:plugin' using build file '/Users/inkerbot/IdeaProjects/AnkhCore/loader/plugin/build.gradle.kts'.
+Caching disabled for Kotlin DSL accessors for project ':loader:plugin' because:
+  Build cache is disabled
+Skipping Kotlin DSL accessors for project ':loader:plugin' as it is up-to-date.
+All projects evaluated.
+Selected primary task 'dependencies' from project :
+Tasks to be executed: [task ':dependencies']
+Tasks that were excluded: []
+:dependencies (Thread[Execution worker for ':',5,main]) started.
+
+> Task :dependencies
+Caching disabled for task ':dependencies' because:
+  Build cache is disabled
+Task ':dependencies' is not up-to-date because:
+  Task state is not tracked.
+
+------------------------------------------------------------
+Root project 'ankh-core'
+------------------------------------------------------------
+
+annotationProcessor - Annotation processors and their dependencies for source set 'main'.
+No dependencies
+
+api - API dependencies for compilation 'main' (target  (jvm)). (n)
++--- project api (n)
++--- org.jetbrains.kotlin:kotlin-stdlib (n)
++--- org.jetbrains.kotlin:kotlin-reflect (n)
++--- com.google.inject:guice:5.1.0 (n)
++--- bot.inker.acj:runtime:1.3 (n)
++--- bot.inker.aig:all:1.1-SNAPSHOT (n)
++--- org.ow2.asm:asm:9.4 (n)
++--- org.ow2.asm:asm-tree:9.4 (n)
++--- org.hibernate.orm:hibernate-core:6.1.7.Final (n)
++--- org.hibernate.orm:hibernate-hikaricp:6.1.7.Final (n)
++--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final (n)
++--- org.beanshell:bsh:3.0.0-SNAPSHOT (n)
++--- org.apache.groovy:groovy:4.0.9 (n)
++--- project shadow-paper-lib (n)
++--- project shadow-nbtapi (n)
++--- io.github.baked-libs:dough-api:1.2.0 (n)
+\--- org.slf4j:slf4j-api:2.0.6 (n)
+
+apiDependenciesMetadata
++--- project :api
+|    \--- javax.inject:javax.inject:1
++--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+|    \--- org.jetbrains:annotations:13.0
++--- org.jetbrains.kotlin:kotlin-reflect:1.8.10
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
++--- com.google.inject:guice:5.1.0
+|    +--- javax.inject:javax.inject:1
+|    +--- aopalliance:aopalliance:1.0
+|    \--- com.google.guava:guava:30.1-jre
+|         +--- com.google.guava:failureaccess:1.0.1
+|         +--- com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+|         +--- com.google.code.findbugs:jsr305:3.0.2
+|         +--- org.checkerframework:checker-qual:3.5.0
+|         +--- com.google.errorprone:error_prone_annotations:2.3.4
+|         \--- com.google.j2objc:j2objc-annotations:1.3
++--- bot.inker.acj:runtime:1.3
++--- bot.inker.aig:all:1.1-SNAPSHOT
++--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm-tree:9.4
+|    \--- org.ow2.asm:asm:9.4
++--- org.hibernate.orm:hibernate-core:6.1.7.Final
+|    +--- jakarta.persistence:jakarta.persistence-api:3.0.0
+|    \--- jakarta.transaction:jakarta.transaction-api:2.0.0
++--- org.hibernate.orm:hibernate-hikaricp:6.1.7.Final
++--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
++--- org.beanshell:bsh:3.0.0-SNAPSHOT
++--- org.apache.groovy:groovy:4.0.9
+|    \--- org.apache.groovy:groovy-bom:4.0.9
+|         \--- org.apache.groovy:groovy:4.0.9 (c)
++--- project :libs:shadow-paper-lib
++--- project :libs:shadow-nbtapi
++--- io.github.baked-libs:dough-api:1.2.0
+\--- org.slf4j:slf4j-api:2.0.6
+
+apiElements - API elements for main. (n)
+No dependencies
+
+apiElements-published (n)
+No dependencies
+
+archives - Configuration for archive artifacts. (n)
+No dependencies
+
+compileClasspath - Compile classpath for compilation 'main' (target  (jvm)).
++--- project :api
+|    \--- javax.inject:javax.inject:1
++--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+|    \--- org.jetbrains:annotations:13.0 -> 20.1.0
++--- org.jetbrains.kotlin:kotlin-reflect:1.8.10
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
++--- com.google.inject:guice:5.1.0
+|    +--- javax.inject:javax.inject:1
+|    +--- aopalliance:aopalliance:1.0
+|    \--- com.google.guava:guava:30.1-jre
+|         +--- com.google.guava:failureaccess:1.0.1
+|         +--- com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+|         +--- com.google.code.findbugs:jsr305:3.0.2
+|         +--- org.checkerframework:checker-qual:3.5.0 -> 3.11.0
+|         +--- com.google.errorprone:error_prone_annotations:2.3.4
+|         \--- com.google.j2objc:j2objc-annotations:1.3
++--- bot.inker.acj:runtime:1.3
++--- bot.inker.aig:all:1.1-SNAPSHOT
++--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm-tree:9.4
+|    \--- org.ow2.asm:asm:9.4
++--- org.hibernate.orm:hibernate-core:6.1.7.Final
+|    +--- jakarta.persistence:jakarta.persistence-api:3.0.0
+|    \--- jakarta.transaction:jakarta.transaction-api:2.0.0
++--- org.hibernate.orm:hibernate-hikaricp:6.1.7.Final
++--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
++--- org.beanshell:bsh:3.0.0-SNAPSHOT
++--- org.apache.groovy:groovy:4.0.9
+|    \--- org.apache.groovy:groovy-bom:4.0.9
+|         \--- org.apache.groovy:groovy:4.0.9 (c)
++--- project :libs:shadow-paper-lib
++--- project :libs:shadow-nbtapi
++--- io.github.baked-libs:dough-api:1.2.0
++--- org.slf4j:slf4j-api:2.0.6
++--- project :loader
+|    +--- project :api (*)
+|    \--- project :libs:shadow-spring-boot-loader
++--- project :libs:shadow-spring-boot-loader
++--- com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT
+|    +--- net.kyori:adventure-api:4.7.0
+|    |    +--- net.kyori:adventure-bom:4.7.0
+|    |    |    +--- net.kyori:adventure-api:4.7.0 (c)
+|    |    |    +--- net.kyori:adventure-key:4.7.0 (c)
+|    |    |    +--- net.kyori:adventure-text-serializer-gson:4.7.0 (c)
+|    |    |    +--- net.kyori:adventure-text-serializer-legacy:4.7.0 (c)
+|    |    |    \--- net.kyori:adventure-text-serializer-plain:4.7.0 (c)
+|    |    +--- net.kyori:adventure-key:4.7.0
+|    |    |    +--- net.kyori:adventure-bom:4.7.0 (*)
+|    |    |    +--- net.kyori:examination-api:1.1.0
+|    |    |    |    \--- org.checkerframework:checker-qual:3.10.0 -> 3.11.0
+|    |    |    +--- net.kyori:examination-string:1.1.0
+|    |    |    |    \--- net.kyori:examination-api:1.1.0 (*)
+|    |    |    +--- org.checkerframework:checker-qual:3.11.0
+|    |    |    \--- org.jetbrains:annotations:20.1.0
+|    |    +--- net.kyori:examination-api:1.1.0 (*)
+|    |    +--- net.kyori:examination-string:1.1.0 (*)
+|    |    +--- org.checkerframework:checker-qual:3.11.0
+|    |    \--- org.jetbrains:annotations:20.1.0
+|    +--- net.kyori:adventure-text-serializer-gson:4.7.0
+|    |    +--- net.kyori:adventure-bom:4.7.0 (*)
+|    |    +--- net.kyori:adventure-api:4.7.0 (*)
+|    |    \--- com.google.code.gson:gson:2.8.0
+|    +--- net.kyori:adventure-text-serializer-legacy:4.7.0
+|    |    +--- net.kyori:adventure-bom:4.7.0 (*)
+|    |    \--- net.kyori:adventure-api:4.7.0 (*)
+|    +--- net.kyori:adventure-text-serializer-plain:4.7.0
+|    |    +--- net.kyori:adventure-bom:4.7.0 (*)
+|    |    \--- net.kyori:adventure-api:4.7.0 (*)
+|    +--- commons-lang:commons-lang:2.6
+|    +--- com.google.code.findbugs:jsr305:1.3.9 -> 3.0.2
+|    +--- com.googlecode.json-simple:json-simple:1.1.1
+|    |    \--- junit:junit:4.10
+|    |         \--- org.hamcrest:hamcrest-core:1.1
+|    +--- com.google.guava:guava:21.0 -> 30.1-jre (*)
+|    +--- com.google.code.gson:gson:2.8.0
+|    +--- net.md-5:bungeecord-chat:1.16-R0.4
+|    |    +--- com.google.code.gson:gson:2.8.0
+|    |    \--- com.google.guava:guava:21.0 -> 30.1-jre (*)
+|    +--- org.yaml:snakeyaml:1.27
+|    +--- org.slf4j:slf4j-api:1.7.25 -> 2.0.6
+|    +--- org.ow2.asm:asm:9.0 -> 9.4
+|    \--- org.ow2.asm:asm-commons:9.0
+|         +--- org.ow2.asm:asm:9.0 -> 9.4
+|         +--- org.ow2.asm:asm-tree:9.0 -> 9.4 (*)
+|         \--- org.ow2.asm:asm-analysis:9.0
+|              \--- org.ow2.asm:asm-tree:9.0 -> 9.4 (*)
++--- me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0
+\--- org.apache.logging.log4j:log4j-to-slf4j:2.20.0
+     +--- org.apache.logging.log4j:log4j-api:2.20.0
+     \--- org.slf4j:slf4j-api:1.7.36 -> 2.0.6
+
+compileOnly - Compile only dependencies for compilation 'main' (target  (jvm)). (n)
++--- project loader (n)
++--- project shadow-spring-boot-loader (n)
++--- com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT (n)
+\--- me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0 (n)
+
+compileOnlyApi - Compile only API dependencies for source set 'main'. (n)
+No dependencies
+
+compileOnlyDependenciesMetadata
++--- project :loader
+|    +--- project :api
+|    |    \--- javax.inject:javax.inject:1
+|    \--- project :libs:shadow-spring-boot-loader
++--- project :libs:shadow-spring-boot-loader
++--- com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT
+|    +--- net.kyori:adventure-api:4.7.0
+|    |    +--- net.kyori:adventure-bom:4.7.0
+|    |    |    +--- net.kyori:adventure-api:4.7.0 (c)
+|    |    |    +--- net.kyori:adventure-key:4.7.0 (c)
+|    |    |    +--- net.kyori:adventure-text-serializer-gson:4.7.0 (c)
+|    |    |    +--- net.kyori:adventure-text-serializer-legacy:4.7.0 (c)
+|    |    |    \--- net.kyori:adventure-text-serializer-plain:4.7.0 (c)
+|    |    +--- net.kyori:adventure-key:4.7.0
+|    |    |    +--- net.kyori:adventure-bom:4.7.0 (*)
+|    |    |    +--- net.kyori:examination-api:1.1.0
+|    |    |    |    \--- org.checkerframework:checker-qual:3.10.0 -> 3.11.0
+|    |    |    +--- net.kyori:examination-string:1.1.0
+|    |    |    |    \--- net.kyori:examination-api:1.1.0 (*)
+|    |    |    +--- org.checkerframework:checker-qual:3.11.0
+|    |    |    \--- org.jetbrains:annotations:20.1.0
+|    |    +--- net.kyori:examination-api:1.1.0 (*)
+|    |    +--- net.kyori:examination-string:1.1.0 (*)
+|    |    +--- org.checkerframework:checker-qual:3.11.0
+|    |    \--- org.jetbrains:annotations:20.1.0
+|    +--- net.kyori:adventure-text-serializer-gson:4.7.0
+|    |    +--- net.kyori:adventure-bom:4.7.0 (*)
+|    |    +--- net.kyori:adventure-api:4.7.0 (*)
+|    |    \--- com.google.code.gson:gson:2.8.0
+|    +--- net.kyori:adventure-text-serializer-legacy:4.7.0
+|    |    +--- net.kyori:adventure-bom:4.7.0 (*)
+|    |    \--- net.kyori:adventure-api:4.7.0 (*)
+|    +--- net.kyori:adventure-text-serializer-plain:4.7.0
+|    |    +--- net.kyori:adventure-bom:4.7.0 (*)
+|    |    \--- net.kyori:adventure-api:4.7.0 (*)
+|    +--- commons-lang:commons-lang:2.6
+|    +--- com.google.code.findbugs:jsr305:1.3.9
+|    +--- com.googlecode.json-simple:json-simple:1.1.1
+|    |    \--- junit:junit:4.10
+|    |         \--- org.hamcrest:hamcrest-core:1.1
+|    +--- com.google.guava:guava:21.0
+|    +--- com.google.code.gson:gson:2.8.0
+|    +--- net.md-5:bungeecord-chat:1.16-R0.4
+|    |    +--- com.google.code.gson:gson:2.8.0
+|    |    \--- com.google.guava:guava:21.0
+|    +--- org.yaml:snakeyaml:1.27
+|    +--- org.slf4j:slf4j-api:1.7.25
+|    +--- org.ow2.asm:asm:9.0
+|    \--- org.ow2.asm:asm-commons:9.0
+|         +--- org.ow2.asm:asm:9.0
+|         +--- org.ow2.asm:asm-tree:9.0
+|         |    \--- org.ow2.asm:asm:9.0
+|         \--- org.ow2.asm:asm-analysis:9.0
+|              \--- org.ow2.asm:asm-tree:9.0 (*)
+\--- me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0
+
+default - Configuration for default artifacts. (n)
+No dependencies
+
+implementation - Implementation only dependencies for compilation 'main' (target  (jvm)). (n)
+\--- org.apache.logging.log4j:log4j-to-slf4j:2.20.0 (n)
+
+implementationDependenciesMetadata
++--- project :api
+|    \--- javax.inject:javax.inject:1
++--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+|    \--- org.jetbrains:annotations:13.0
++--- org.jetbrains.kotlin:kotlin-reflect:1.8.10
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
++--- com.google.inject:guice:5.1.0
+|    +--- javax.inject:javax.inject:1
+|    +--- aopalliance:aopalliance:1.0
+|    \--- com.google.guava:guava:30.1-jre
+|         +--- com.google.guava:failureaccess:1.0.1
+|         +--- com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+|         +--- com.google.code.findbugs:jsr305:3.0.2
+|         +--- org.checkerframework:checker-qual:3.5.0
+|         +--- com.google.errorprone:error_prone_annotations:2.3.4
+|         \--- com.google.j2objc:j2objc-annotations:1.3
++--- bot.inker.acj:runtime:1.3
++--- bot.inker.aig:all:1.1-SNAPSHOT
++--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm-tree:9.4
+|    \--- org.ow2.asm:asm:9.4
++--- org.hibernate.orm:hibernate-core:6.1.7.Final
+|    +--- jakarta.persistence:jakarta.persistence-api:3.0.0
+|    \--- jakarta.transaction:jakarta.transaction-api:2.0.0
++--- org.hibernate.orm:hibernate-hikaricp:6.1.7.Final
++--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
++--- org.beanshell:bsh:3.0.0-SNAPSHOT
++--- org.apache.groovy:groovy:4.0.9
+|    \--- org.apache.groovy:groovy-bom:4.0.9
+|         \--- org.apache.groovy:groovy:4.0.9 (c)
++--- project :libs:shadow-paper-lib
++--- project :libs:shadow-nbtapi
++--- io.github.baked-libs:dough-api:1.2.0
++--- org.slf4j:slf4j-api:2.0.6
+\--- org.apache.logging.log4j:log4j-to-slf4j:2.20.0
+     +--- org.apache.logging.log4j:log4j-api:2.20.0
+     \--- org.slf4j:slf4j-api:1.7.36 -> 2.0.6
+
+intransitiveDependenciesMetadata
+No dependencies
+
+kotlinCompilerClasspath
+\--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.10
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+     |    \--- org.jetbrains:annotations:13.0
+     +--- org.jetbrains.kotlin:kotlin-script-runtime:1.8.10
+     +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
+     +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.8.10
+     +--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+     \--- net.java.dev.jna:jna:5.6.0
+
+kotlinCompilerPluginClasspath
+No dependencies
+
+kotlinCompilerPluginClasspathMain - Kotlin compiler plugins for compilation 'main' (target  (jvm))
+\--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.8.10
+     +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.8.10
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.8.10
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+     |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+     |    |         \--- org.jetbrains:annotations:13.0
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.8.10
+     |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.8.10
+     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.8.10 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
+     \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
+
+kotlinCompilerPluginClasspathTest - Kotlin compiler plugins for compilation 'test' (target  (jvm))
+\--- org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.8.10
+     +--- org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable:1.8.10
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-common:1.8.10
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+     |    |         +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+     |    |         \--- org.jetbrains:annotations:13.0
+     |    +--- org.jetbrains.kotlin:kotlin-scripting-jvm:1.8.10
+     |    |    +--- org.jetbrains.kotlin:kotlin-script-runtime:1.8.10
+     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
+     |    |    \--- org.jetbrains.kotlin:kotlin-scripting-common:1.8.10 (*)
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
+     \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
+
+kotlinKlibCommonizerClasspath
+\--- org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.8.10
+     +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+     |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+     |    \--- org.jetbrains:annotations:13.0
+     \--- org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.10
+          +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
+          +--- org.jetbrains.kotlin:kotlin-script-runtime:1.8.10
+          +--- org.jetbrains.kotlin:kotlin-reflect:1.6.10
+          +--- org.jetbrains.kotlin:kotlin-daemon-embeddable:1.8.10
+          +--- org.jetbrains.intellij.deps:trove4j:1.0.20200330
+          \--- net.java.dev.jna:jna:5.6.0
+
+kotlinNativeCompilerPluginClasspath
+No dependencies
+
+kotlinScriptDef - Script filename extensions discovery classpath configuration
+No dependencies
+
+kotlinScriptDefExtensions
+No dependencies
+
+mainSourceElements - List of source directories contained in the Main SourceSet. (n)
+No dependencies
+
+runtimeClasspath - Runtime classpath of compilation 'main' (target  (jvm)).
++--- project :api
+|    \--- javax.inject:javax.inject:1
++--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+|    \--- org.jetbrains:annotations:13.0
++--- org.jetbrains.kotlin:kotlin-reflect:1.8.10
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
++--- com.google.inject:guice:5.1.0
+|    +--- javax.inject:javax.inject:1
+|    +--- aopalliance:aopalliance:1.0
+|    \--- com.google.guava:guava:30.1-jre
+|         +--- com.google.guava:failureaccess:1.0.1
+|         +--- com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+|         +--- com.google.code.findbugs:jsr305:3.0.2
+|         +--- org.checkerframework:checker-qual:3.5.0
+|         +--- com.google.errorprone:error_prone_annotations:2.3.4
+|         \--- com.google.j2objc:j2objc-annotations:1.3
++--- bot.inker.acj:runtime:1.3
++--- bot.inker.aig:all:1.1-SNAPSHOT
+|    \--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm-tree:9.4
+|    \--- org.ow2.asm:asm:9.4
++--- org.hibernate.orm:hibernate-core:6.1.7.Final
+|    +--- jakarta.persistence:jakarta.persistence-api:3.0.0
+|    +--- jakarta.transaction:jakarta.transaction-api:2.0.0
+|    +--- org.jboss.logging:jboss-logging:3.4.3.Final
+|    +--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
+|    +--- org.jboss:jandex:2.4.2.Final
+|    +--- com.fasterxml:classmate:1.5.1
+|    +--- net.bytebuddy:byte-buddy:1.12.18
+|    +--- jakarta.xml.bind:jakarta.xml.bind-api:3.0.1
+|    |    \--- com.sun.activation:jakarta.activation:2.0.1
+|    +--- org.glassfish.jaxb:jaxb-runtime:3.0.2
+|    |    +--- com.sun.activation:jakarta.activation:2.0.1
+|    |    \--- org.glassfish.jaxb:jaxb-core:3.0.2
+|    |         +--- jakarta.xml.bind:jakarta.xml.bind-api:3.0.1 (*)
+|    |         +--- com.sun.activation:jakarta.activation:2.0.1
+|    |         +--- org.glassfish.jaxb:txw2:3.0.2
+|    |         \--- com.sun.istack:istack-commons-runtime:4.0.1
+|    +--- jakarta.inject:jakarta.inject-api:2.0.0
+|    \--- org.antlr:antlr4-runtime:4.10.1
++--- org.hibernate.orm:hibernate-hikaricp:6.1.7.Final
+|    +--- org.jboss.logging:jboss-logging:3.4.3.Final
+|    +--- org.hibernate.orm:hibernate-core:6.1.7.Final (*)
+|    \--- com.zaxxer:HikariCP:3.2.0
+|         \--- org.slf4j:slf4j-api:1.7.25 -> 2.0.6
++--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
++--- org.beanshell:bsh:3.0.0-SNAPSHOT
++--- org.apache.groovy:groovy:4.0.9
+|    \--- org.apache.groovy:groovy-bom:4.0.9
+|         \--- org.apache.groovy:groovy:4.0.9 (c)
++--- project :libs:shadow-paper-lib
++--- project :libs:shadow-nbtapi
++--- io.github.baked-libs:dough-api:1.2.0
++--- org.slf4j:slf4j-api:2.0.6
++--- org.apache.logging.log4j:log4j-to-slf4j:2.20.0
+|    +--- org.apache.logging.log4j:log4j-api:2.20.0
+|    \--- org.slf4j:slf4j-api:1.7.36 -> 2.0.6
++--- com.h2database:h2:2.1.214
++--- org.mariadb.jdbc:mariadb-java-client:3.0.3
+\--- org.postgresql:postgresql:42.3.8
+     \--- org.checkerframework:checker-qual:3.5.0
+
+runtimeElements - Elements of runtime for main. (n)
+No dependencies
+
+runtimeElements-published (n)
+No dependencies
+
+runtimeOnly - Runtime only dependencies for compilation 'main' (target  (jvm)). (n)
++--- com.h2database:h2:2.1.214 (n)
++--- org.mariadb.jdbc:mariadb-java-client:3.0.3 (n)
+\--- org.postgresql:postgresql:42.3.8 (n)
+
+runtimeOnlyDependenciesMetadata
++--- com.h2database:h2:2.1.214
++--- org.mariadb.jdbc:mariadb-java-client:3.0.3
+\--- org.postgresql:postgresql:42.3.8
+
+sourceArtifacts (n)
+No dependencies
+
+testAnnotationProcessor - Annotation processors and their dependencies for source set 'test'.
+No dependencies
+
+testApi - API dependencies for compilation 'test' (target  (jvm)). (n)
+No dependencies
+
+testApiDependenciesMetadata
+No dependencies
+
+testCompileClasspath - Compile classpath for compilation 'test' (target  (jvm)).
++--- project :api
+|    \--- javax.inject:javax.inject:1
++--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+|    \--- org.jetbrains:annotations:13.0
++--- org.jetbrains.kotlin:kotlin-reflect:1.8.10
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
++--- com.google.inject:guice:5.1.0
+|    +--- javax.inject:javax.inject:1
+|    +--- aopalliance:aopalliance:1.0
+|    \--- com.google.guava:guava:30.1-jre
+|         +--- com.google.guava:failureaccess:1.0.1
+|         +--- com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+|         +--- com.google.code.findbugs:jsr305:3.0.2
+|         +--- org.checkerframework:checker-qual:3.5.0
+|         +--- com.google.errorprone:error_prone_annotations:2.3.4
+|         \--- com.google.j2objc:j2objc-annotations:1.3
++--- bot.inker.acj:runtime:1.3
++--- bot.inker.aig:all:1.1-SNAPSHOT
++--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm-tree:9.4
+|    \--- org.ow2.asm:asm:9.4
++--- org.hibernate.orm:hibernate-core:6.1.7.Final
+|    +--- jakarta.persistence:jakarta.persistence-api:3.0.0
+|    \--- jakarta.transaction:jakarta.transaction-api:2.0.0
++--- org.hibernate.orm:hibernate-hikaricp:6.1.7.Final
++--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
++--- org.beanshell:bsh:3.0.0-SNAPSHOT
++--- org.apache.groovy:groovy:4.0.9
+|    \--- org.apache.groovy:groovy-bom:4.0.9
+|         \--- org.apache.groovy:groovy:4.0.9 (c)
++--- project :libs:shadow-paper-lib
++--- project :libs:shadow-nbtapi
++--- io.github.baked-libs:dough-api:1.2.0
++--- org.slf4j:slf4j-api:2.0.6
+\--- org.apache.logging.log4j:log4j-to-slf4j:2.20.0
+     +--- org.apache.logging.log4j:log4j-api:2.20.0
+     \--- org.slf4j:slf4j-api:1.7.36 -> 2.0.6
+
+testCompileOnly - Compile only dependencies for compilation 'test' (target  (jvm)). (n)
+No dependencies
+
+testCompileOnlyDependenciesMetadata
+No dependencies
+
+testImplementation - Implementation only dependencies for compilation 'test' (target  (jvm)). (n)
+No dependencies
+
+testImplementationDependenciesMetadata
++--- project :api
+|    \--- javax.inject:javax.inject:1
++--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+|    \--- org.jetbrains:annotations:13.0
++--- org.jetbrains.kotlin:kotlin-reflect:1.8.10
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
++--- com.google.inject:guice:5.1.0
+|    +--- javax.inject:javax.inject:1
+|    +--- aopalliance:aopalliance:1.0
+|    \--- com.google.guava:guava:30.1-jre
+|         +--- com.google.guava:failureaccess:1.0.1
+|         +--- com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+|         +--- com.google.code.findbugs:jsr305:3.0.2
+|         +--- org.checkerframework:checker-qual:3.5.0
+|         +--- com.google.errorprone:error_prone_annotations:2.3.4
+|         \--- com.google.j2objc:j2objc-annotations:1.3
++--- bot.inker.acj:runtime:1.3
++--- bot.inker.aig:all:1.1-SNAPSHOT
++--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm-tree:9.4
+|    \--- org.ow2.asm:asm:9.4
++--- org.hibernate.orm:hibernate-core:6.1.7.Final
+|    +--- jakarta.persistence:jakarta.persistence-api:3.0.0
+|    \--- jakarta.transaction:jakarta.transaction-api:2.0.0
++--- org.hibernate.orm:hibernate-hikaricp:6.1.7.Final
++--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
++--- org.beanshell:bsh:3.0.0-SNAPSHOT
++--- org.apache.groovy:groovy:4.0.9
+|    \--- org.apache.groovy:groovy-bom:4.0.9
+|         \--- org.apache.groovy:groovy:4.0.9 (c)
++--- project :libs:shadow-paper-lib
++--- project :libs:shadow-nbtapi
++--- io.github.baked-libs:dough-api:1.2.0
++--- org.slf4j:slf4j-api:2.0.6
+\--- org.apache.logging.log4j:log4j-to-slf4j:2.20.0
+     +--- org.apache.logging.log4j:log4j-api:2.20.0
+     \--- org.slf4j:slf4j-api:1.7.36 -> 2.0.6
+
+testIntransitiveDependenciesMetadata
+No dependencies
+
+testKotlinScriptDef - Script filename extensions discovery classpath configuration
+No dependencies
+
+testKotlinScriptDefExtensions
+No dependencies
+
+testResultsElementsForTest - Directory containing binary results of running tests for the test Test Suite's test target. (n)
+No dependencies
+
+testRuntimeClasspath - Runtime classpath of compilation 'test' (target  (jvm)).
++--- project :api
+|    \--- javax.inject:javax.inject:1
++--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+|    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10
+|    \--- org.jetbrains:annotations:13.0
++--- org.jetbrains.kotlin:kotlin-reflect:1.8.10
+|    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 (*)
++--- com.google.inject:guice:5.1.0
+|    +--- javax.inject:javax.inject:1
+|    +--- aopalliance:aopalliance:1.0
+|    \--- com.google.guava:guava:30.1-jre
+|         +--- com.google.guava:failureaccess:1.0.1
+|         +--- com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava
+|         +--- com.google.code.findbugs:jsr305:3.0.2
+|         +--- org.checkerframework:checker-qual:3.5.0
+|         +--- com.google.errorprone:error_prone_annotations:2.3.4
+|         \--- com.google.j2objc:j2objc-annotations:1.3
++--- bot.inker.acj:runtime:1.3
++--- bot.inker.aig:all:1.1-SNAPSHOT
+|    \--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm:9.4
++--- org.ow2.asm:asm-tree:9.4
+|    \--- org.ow2.asm:asm:9.4
++--- org.hibernate.orm:hibernate-core:6.1.7.Final
+|    +--- jakarta.persistence:jakarta.persistence-api:3.0.0
+|    +--- jakarta.transaction:jakarta.transaction-api:2.0.0
+|    +--- org.jboss.logging:jboss-logging:3.4.3.Final
+|    +--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
+|    +--- org.jboss:jandex:2.4.2.Final
+|    +--- com.fasterxml:classmate:1.5.1
+|    +--- net.bytebuddy:byte-buddy:1.12.18
+|    +--- jakarta.xml.bind:jakarta.xml.bind-api:3.0.1
+|    |    \--- com.sun.activation:jakarta.activation:2.0.1
+|    +--- org.glassfish.jaxb:jaxb-runtime:3.0.2
+|    |    +--- com.sun.activation:jakarta.activation:2.0.1
+|    |    \--- org.glassfish.jaxb:jaxb-core:3.0.2
+|    |         +--- jakarta.xml.bind:jakarta.xml.bind-api:3.0.1 (*)
+|    |         +--- com.sun.activation:jakarta.activation:2.0.1
+|    |         +--- org.glassfish.jaxb:txw2:3.0.2
+|    |         \--- com.sun.istack:istack-commons-runtime:4.0.1
+|    +--- jakarta.inject:jakarta.inject-api:2.0.0
+|    \--- org.antlr:antlr4-runtime:4.10.1
++--- org.hibernate.orm:hibernate-hikaricp:6.1.7.Final
+|    +--- org.jboss.logging:jboss-logging:3.4.3.Final
+|    +--- org.hibernate.orm:hibernate-core:6.1.7.Final (*)
+|    \--- com.zaxxer:HikariCP:3.2.0
+|         \--- org.slf4j:slf4j-api:1.7.25 -> 2.0.6
++--- org.hibernate.common:hibernate-commons-annotations:6.0.6.Final
++--- org.beanshell:bsh:3.0.0-SNAPSHOT
++--- org.apache.groovy:groovy:4.0.9
+|    \--- org.apache.groovy:groovy-bom:4.0.9
+|         \--- org.apache.groovy:groovy:4.0.9 (c)
++--- project :libs:shadow-paper-lib
++--- project :libs:shadow-nbtapi
++--- io.github.baked-libs:dough-api:1.2.0
++--- org.slf4j:slf4j-api:2.0.6
++--- org.apache.logging.log4j:log4j-to-slf4j:2.20.0
+|    +--- org.apache.logging.log4j:log4j-api:2.20.0
+|    \--- org.slf4j:slf4j-api:1.7.36 -> 2.0.6
++--- com.h2database:h2:2.1.214
++--- org.mariadb.jdbc:mariadb-java-client:3.0.3
+\--- org.postgresql:postgresql:42.3.8
+     \--- org.checkerframework:checker-qual:3.5.0
+
+testRuntimeOnly - Runtime only dependencies for compilation 'test' (target  (jvm)). (n)
+No dependencies
+
+testRuntimeOnlyDependenciesMetadata
++--- com.h2database:h2:2.1.214
++--- org.mariadb.jdbc:mariadb-java-client:3.0.3
+\--- org.postgresql:postgresql:42.3.8
+
+(c) - dependency constraint
+(*) - dependencies omitted (listed previously)
+
+(n) - Not resolved (configuration is not meant to be resolved)
+
+A web-based, searchable dependency report is available by adding the --scan option.
+:dependencies (Thread[Execution worker for ':',5,main]) completed. Took 0.457 secs.
+producer locations for task group 0 (Thread[included builds,5,main]) started.
+producer locations for task group 0 (Thread[included builds,5,main]) completed. Took 0.0 secs.
+
+BUILD SUCCESSFUL in 1s
+1 actionable task: 1 executed
+Watched directory hierarchies: []

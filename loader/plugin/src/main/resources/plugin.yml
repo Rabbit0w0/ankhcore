@@ -1,0 +1,17 @@
+name: ankh-core
+version: 1.0-SNAPSHOT
+api-version: 1.16
+main: bot.inker.ankh.loader.AnkhCoreLoaderPlugin
+load: STARTUP
+authors:
+  - InkerBot
+softdepend: [ HolographicDisplays ]
+
+ankh-self-as-api: true
+ankh-classpath:
+  "kotlin.": SELF_ONLY
+  "org.apache.logging.": SELF_ONLY
+  "io.github.bakedlibs.": SELF_ONLY
+  "com.google.inject.": SELF_ONLY
+  "org.hibernate.": SELF_ONLY
+  "it.unimi.dsi.fastutil.": SELF_ONLY

@@ -2,6 +2,8 @@ package bot.inker.ankh.core
 
 import bot.inker.ankh.core.api.AnkhCoreLoader
 import bot.inker.ankh.core.api.block.BlockRegistry
+import bot.inker.ankh.core.api.entity.ChunkStorage
+import bot.inker.ankh.core.api.entity.LocationStorage
 import bot.inker.ankh.core.api.hologram.HologramService
 import bot.inker.ankh.core.api.ioc.AnkhIocKey
 import bot.inker.ankh.core.api.item.AnkhItemRegistry
@@ -10,6 +12,7 @@ import bot.inker.ankh.core.api.plugin.annotations.PluginModule
 import bot.inker.ankh.core.api.world.WorldService
 import bot.inker.ankh.core.block.BlockRegisterService
 import bot.inker.ankh.core.common.dsl.logger
+import bot.inker.ankh.core.common.entity.LocationEmbedded
 import bot.inker.ankh.core.hologram.HologramProvider
 import bot.inker.ankh.core.ioc.BridgerKey
 import bot.inker.ankh.core.item.ItemRegisterService
@@ -39,6 +42,9 @@ class AnkhCorePluginImpl : AbstractModule() {
 
     bind(StorageBackend::class.java).annotatedWith(Names.named("database")).to(DatabaseBackend::class.java)
     bind(StorageBackend::class.java).annotatedWith(Names.named("filesystem")).to(FilesystemBackend::class.java)
+
+    bind(LocationStorage.Factory::class.java).to(LocationEmbedded.Factory::class.java)
+    bind(ChunkStorage.Factory::class.java).to(ChunkStorage.Factory::class.java)
 
     bind(HologramService::class.java).toProvider(HologramProvider::class.java)
 

@@ -1,12 +1,13 @@
 package bot.inker.ankh.testplugin.block
 
 import bot.inker.ankh.core.api.block.AnkhBlock
+import bot.inker.ankh.core.api.block.AsyncTickableBlock
+import bot.inker.ankh.core.api.block.TickableBlock
+import bot.inker.ankh.core.api.entity.LocationStorage
 import bot.inker.ankh.core.api.hologram.HologramService
 import bot.inker.ankh.core.api.hologram.HologramTask
 import bot.inker.ankh.core.api.plugin.AnkhPluginContainer
 import bot.inker.ankh.core.api.plugin.annotations.AutoRegistered
-import bot.inker.ankh.core.block.AsyncTickableBlock
-import bot.inker.ankh.core.block.TickableBlock
 import bot.inker.ankh.core.common.entity.LocationEmbedded
 import bot.inker.ankh.core.common.dsl.key
 import bot.inker.ankh.core.common.dsl.logger
@@ -29,7 +30,7 @@ class TestBlock private constructor(
 
   override fun getKey() = factory.blockId
 
-  override fun runTick(location: LocationEmbedded) {
+  override fun runTick(location: LocationStorage) {
     val location = this.location ?: return
 
     nextMaterial.set(factory.materials[factory.random.nextInt(factory.materials.size)])
@@ -44,7 +45,7 @@ class TestBlock private constructor(
     }
   }
 
-  override fun runAsyncTick(location: LocationEmbedded) {
+  override fun runAsyncTick(location: LocationStorage) {
     // nextMaterial.set(materials[random.nextInt(materials.size)])
   }
 

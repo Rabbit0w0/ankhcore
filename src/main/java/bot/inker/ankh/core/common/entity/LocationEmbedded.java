@@ -1,38 +1,138 @@
 package bot.inker.ankh.core.common.entity;
 
+import bot.inker.ankh.core.api.entity.ChunkStorage;
+import bot.inker.ankh.core.api.entity.LocationStorage;
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Embeddable;
 import org.bukkit.Location;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
+import javax.inject.Singleton;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Embeddable
 @Access(AccessType.FIELD)
-public class LocationEmbedded implements Serializable {
+public final class LocationEmbedded implements LocationStorage, Serializable {
   @Nonnull
   private WorldChunkEmbedded chunk;
   private long position;
 
+  public @Nonnull UUID worldId(){
+    return chunk.worldId();
+  }
+
+  @NotNull
+  @Override
+  public LocationStorage worldId(@NotNull UUID worldId) {
+    return of(worldId, x(), y(), z());
+  }
+
   @Nonnull
-  public static LocationEmbedded of(WorldChunkEmbedded chunk, long position) {
+  @Override
+  public WorldChunkEmbedded chunk() {
+    return chunk;
+  }
+
+  public long position() {
+    return position;
+  }
+
+  @Override
+  public int x() {
+    return chunk.x() >> 4 | xFromPosition(position);
+  }
+
+  @Override
+  public @Nonnull LocationStorage x(int x) {
+    return of(worldId(), x, y(), z());
+  }
+
+  @Override
+  public int y() {
+    return yFromPosition(position);
+  }
+
+  @Override
+  public @Nonnull LocationStorage y(int y) {
+    return of(worldId(), x(), y, z());
+  }
+
+  @Override
+  public int z() {
+    return chunk.z() >> 4 | zFromPosition(position);
+  }
+
+  @Override
+  public @Nonnull LocationStorage z(int z) {
+    return of(worldId(), x(), y(), z);
+  }
+
+  @Override
+  public String toString() {
+    return "LocationStorage{" +
+      "world=" + chunk.worldId() +
+      ", x=" + x() +
+      ", y=" + y() +
+      ", z=" + z() +
+      '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if(o instanceof LocationStorage){
+      if(o instanceof LocationEmbedded){
+        LocationEmbedded that = (LocationEmbedded) o;
+        if(this.position != that.position) return false;
+        return this.chunk.equals(that.chunk);
+      }else{
+        LocationStorage that = (LocationStorage) o;
+        if(this.x() != that.x()) return false;
+        if(this.y() != that.y()) return false;
+        if(this.z() != that.z()) return false;
+        return this.chunk().equals(that.chunk());
+      }
+    }else{
+      return false;
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    int result = worldId().hashCode();
+    result = 31 * result + x();
+    result = 31 * result + y();
+    result = 31 * result + z();
+    return result;
+  }
+
+  @Nonnull
+  public static LocationEmbedded of(UUID worldId, int x, int y, int z) {
     LocationEmbedded locationEmbedded = new LocationEmbedded();
-    locationEmbedded.chunk = chunk;
-    locationEmbedded.position = position;
+    locationEmbedded.chunk = WorldChunkEmbedded.of(worldId, x >> 4, z >> 4);
+    locationEmbedded.position = positionFromLocation((short) (x & 0xf), y, (short) (z & 0xf));
     return locationEmbedded;
   }
 
   @Nonnull
   public static LocationEmbedded of(Location location) {
-    LocationEmbedded locationEmbedded = new LocationEmbedded();
-    WorldChunkEmbedded worldChunkEmbedded = WorldChunkEmbedded.of(location.getChunk());
-    locationEmbedded.chunk = worldChunkEmbedded;
-    short xOffset = (short) (location.getBlockX() - 16 * worldChunkEmbedded.x());
-    int y = location.getBlockY();
-    short zOffset = (short) (location.getBlockZ() - 16 * worldChunkEmbedded.z());
-    locationEmbedded.position = positionFromLocation(xOffset, y, zOffset);
-    return locationEmbedded;
+    return of(
+      location.getWorld().getUID(),
+      location.getBlockX(),
+      location.getBlockY(),
+      location.getBlockZ()
+    );
+  }
+
+  @Nonnull
+  public static LocationEmbedded of(LocationStorage location){
+    if(location instanceof LocationEmbedded){
+      return (LocationEmbedded) location;
+    }
+    return of(location.worldId(), location.x(), location.y(), location.z());
   }
 
   private static long positionFromLocation(short x, int y, short z) {
@@ -57,76 +157,16 @@ public class LocationEmbedded implements Serializable {
     return (short) position;
   }
 
-  @Nonnull
-  public WorldChunkEmbedded chunk() {
-    return chunk;
-  }
+  @Singleton
+  public static class Factory implements LocationStorage.Factory{
+    @Override
+    public @Nonnull LocationStorage of(@Nonnull UUID worldId, int x, int y, int z) {
+      return LocationEmbedded.of(worldId, x, y, z);
+    }
 
-  @Nonnull
-  public LocationEmbedded chunk(@Nonnull WorldChunkEmbedded chunk) {
-    return of(chunk, position);
-  }
-
-  public long position() {
-    return position;
-  }
-
-  public void position(long position) {
-    this.position = position;
-  }
-
-  public int x() {
-    return 16 * chunk.x() + xFromPosition(position);
-  }
-
-  @Nonnull
-  public LocationEmbedded x(int x) {
-    return of(chunk, positionFromLocation((short) (x - 16 * chunk.x()), y(), zFromPosition(position)));
-  }
-
-  public int y() {
-    return yFromPosition(position);
-  }
-
-  @Nonnull
-  public LocationEmbedded y(int y) {
-    return of(chunk, positionFromLocation(xFromPosition(position), y, zFromPosition(position)));
-  }
-
-  public int z() {
-    return 16 * chunk.z() + zFromPosition(position);
-  }
-
-  @Nonnull
-  public LocationEmbedded z(int z) {
-    return of(chunk, positionFromLocation(xFromPosition(position), y(), (short) (z - 16 * chunk.z())));
-  }
-
-  @Override
-  public String toString() {
-    return "LocationEmbedded{" +
-      "world=" + chunk.worldId() +
-      ", x=" + x() +
-      ", y=" + y() +
-      ", z=" + z() +
-      '}';
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    LocationEmbedded that = (LocationEmbedded) o;
-
-    if (position != that.position) return false;
-    return chunk.equals(that.chunk);
-  }
-
-  @Override
-  public int hashCode() {
-    int result = chunk.hashCode();
-    result = 31 * result + (int) (position ^ (position >>> 32));
-    return result;
+    @Override
+    public @Nonnull LocationStorage of(@Nonnull Location location) {
+      return LocationEmbedded.of(location);
+    }
   }
 }

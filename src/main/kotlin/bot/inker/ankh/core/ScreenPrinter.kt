@@ -23,7 +23,7 @@ object ScreenPrinter {
       logger.info("====================================================")
       logger.info(" AnkhCore works better if you use Paper as your server software.")
       logger.info(" AnkhCore may cause lag without Paper, will cause blocking-io in main-thread.")
-      logger.info(" If you config data-backends like database, lag will more serious.")
+      logger.info(" If you config data-backends likes database, lag will be more serious.")
       if (System.getProperty("paperlib.shown-benefits") == null) {
         System.setProperty("paperlib.shown-benefits", "1")
         logger.info("  ")

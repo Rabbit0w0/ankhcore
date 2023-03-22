@@ -1,6 +1,25 @@
-# AnkhCore Ankh系列核心插件
+# AnkhCore 开发文档
 
 在 Minecraft Bukkit 中实现 mod 的相关功能
+
+## 拓展加载系统
+
+创建插件实现类，并在 `plugin.yml` 中设置
+```java
+package bot.inker.ankh.testplugin;
+
+import bot.inker.ankh.core.api.plugin.AnkhBukkitPlugin;
+import bot.inker.ankh.core.api.plugin.AnkhPluginContainer;
+
+public class TestBukkitPluginLoader extends AnkhBukkitPlugin {
+  private static final AnkhPluginContainer container = AnkhBukkitPlugin.initial(TestBukkitPluginLoader.class);
+
+  @Override
+  protected AnkhPluginContainer getContainer() {
+    return container;
+  }
+}
+```
 
 ## 日志系统
 

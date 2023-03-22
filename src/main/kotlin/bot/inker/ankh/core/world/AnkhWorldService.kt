@@ -2,13 +2,13 @@ package bot.inker.ankh.core.world
 
 import bot.inker.ankh.core.api.AnkhCoreLoader
 import bot.inker.ankh.core.api.block.AnkhBlock
+import bot.inker.ankh.core.api.block.AsyncTickableBlock
+import bot.inker.ankh.core.api.block.TickableBlock
 import bot.inker.ankh.core.api.plugin.PluginLifeCycle
 import bot.inker.ankh.core.api.plugin.annotations.SubscriptEvent
 import bot.inker.ankh.core.api.plugin.annotations.SubscriptLifecycle
 import bot.inker.ankh.core.api.world.WorldService
-import bot.inker.ankh.core.block.AsyncTickableBlock
 import bot.inker.ankh.core.block.BlockRegisterService
-import bot.inker.ankh.core.block.TickableBlock
 import bot.inker.ankh.core.common.config.AnkhConfig
 import bot.inker.ankh.core.common.entity.LocationEmbedded
 import bot.inker.ankh.core.common.entity.WorldChunkEmbedded

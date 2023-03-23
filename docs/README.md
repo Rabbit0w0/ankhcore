@@ -5,6 +5,7 @@
 ## 拓展加载系统
 
 创建插件实现类，并在 `plugin.yml` 中设置
+
 ```java
 package bot.inker.ankh.testplugin;
 

@@ -7,7 +7,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface WorldService {
-  @Nullable AnkhBlock getBlock(@Nonnull Location location);
+  @Nullable
+  AnkhBlock getBlock(@Nonnull Location location);
+
   void setBlock(@Nonnull Location location, @Nonnull AnkhBlock ankhBlock);
+
   void removeBlock(@Nonnull Location location);
 }

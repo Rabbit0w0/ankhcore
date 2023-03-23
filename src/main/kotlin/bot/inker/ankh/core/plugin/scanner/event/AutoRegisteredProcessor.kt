@@ -2,9 +2,7 @@ package bot.inker.ankh.core.plugin.scanner.event
 
 import bot.inker.ankh.core.api.block.AnkhBlock
 import bot.inker.ankh.core.api.item.AnkhItem
-import bot.inker.ankh.core.api.plugin.annotations.AutoRegistered
 import bot.inker.ankh.core.block.BlockRegisterService
-import bot.inker.ankh.core.common.util.AnnotationUtil
 import bot.inker.ankh.core.item.ItemRegisterService
 import bot.inker.ankh.core.plugin.AnkhPluginContainerImpl
 import bot.inker.ankh.core.plugin.scanner.PluginClassScanner

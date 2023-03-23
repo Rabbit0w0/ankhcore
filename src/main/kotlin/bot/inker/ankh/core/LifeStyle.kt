@@ -11,12 +11,12 @@ class LifeStyle {
   private val logger by logger()
 
   @SubscriptLifecycle(PluginLifeCycle.ENABLE)
-  private fun onEnable(){
+  private fun onEnable() {
     //
   }
 
   @SubscriptLifecycle(PluginLifeCycle.DISABLE)
-  private fun onDisable(){
+  private fun onDisable() {
     if (!Bukkit.getServer().isStopping) {
       logger.error("====================================================")
       logger.error("AnkhCore is not designed to disable when server running, It's very dangerous")

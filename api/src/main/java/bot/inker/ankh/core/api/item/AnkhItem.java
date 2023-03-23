@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 public interface AnkhItem extends Keyed {
   void updateItem(ItemStack item);
+
   void onBlockPlace(BlockPlaceEvent event);
+
   void onUseItem(PlayerInteractEvent event);
 }

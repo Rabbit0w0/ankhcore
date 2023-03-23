@@ -1,4 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE")
+
 package bot.inker.ankh.core.common.dsl
 
 import org.bukkit.Bukkit

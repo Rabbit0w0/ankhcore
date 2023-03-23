@@ -8,7 +8,6 @@ import bot.inker.ankh.core.api.hologram.HologramService
 import bot.inker.ankh.core.api.hologram.HologramTask
 import bot.inker.ankh.core.api.plugin.AnkhPluginContainer
 import bot.inker.ankh.core.api.plugin.annotations.AutoRegistered
-import bot.inker.ankh.core.common.entity.LocationEmbedded
 import bot.inker.ankh.core.common.dsl.key
 import bot.inker.ankh.core.common.dsl.logger
 import bot.inker.ankh.testplugin.item.TestItem
@@ -87,7 +86,7 @@ class TestBlock private constructor(
       Material.DIAMOND_BLOCK
     )
     val blockId = pluginContainer.key("test-block")
-    override fun getKey():NamespacedKey = blockId
+    override fun getKey(): NamespacedKey = blockId
 
     override fun load(id: NamespacedKey, data: ByteArray): AnkhBlock {
       require(id == blockId)

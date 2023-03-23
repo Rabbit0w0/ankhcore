@@ -13,14 +13,14 @@ interface BlockStorageEntry {
       location: LocationEmbedded,
       blockId: NamespacedKey,
       content: ByteArray,
-    ):BlockStorageEntry = Default(location, blockId, content)
+    ): BlockStorageEntry = Default(location, blockId, content)
   }
 
   private class Default(
     private val location: LocationEmbedded,
     private val blockId: NamespacedKey,
-    private val content: ByteArray
-  ):BlockStorageEntry{
+    private val content: ByteArray,
+  ) : BlockStorageEntry {
     override fun location(): LocationEmbedded = location
 
     override fun blockId(): NamespacedKey = blockId

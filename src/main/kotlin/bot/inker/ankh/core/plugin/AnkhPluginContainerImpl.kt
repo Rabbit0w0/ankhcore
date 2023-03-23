@@ -146,10 +146,10 @@ class AnkhPluginContainerImpl(
     }
   }
 
-  private inline fun ensureSuccess(action:()->Unit){
-    try{
+  private inline fun ensureSuccess(action: () -> Unit) {
+    try {
       action()
-    }catch (e:Throwable){
+    } catch (e: Throwable) {
       Bukkit.getServer().shutdown()
       throw e
     }

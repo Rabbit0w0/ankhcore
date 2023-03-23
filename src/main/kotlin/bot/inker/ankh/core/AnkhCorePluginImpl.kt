@@ -13,7 +13,10 @@ import bot.inker.ankh.core.api.world.WorldService
 import bot.inker.ankh.core.block.BlockRegisterService
 import bot.inker.ankh.core.common.dsl.logger
 import bot.inker.ankh.core.common.entity.LocationEmbedded
+import bot.inker.ankh.core.common.entity.WorldChunkEmbedded
 import bot.inker.ankh.core.hologram.HologramProvider
+import bot.inker.ankh.core.hologram.hds.HdsHologramService
+import bot.inker.ankh.core.hologram.nop.NopHologramService
 import bot.inker.ankh.core.ioc.BridgerKey
 import bot.inker.ankh.core.item.ItemRegisterService
 import bot.inker.ankh.core.plugin.AnkhPluginContainerImpl
@@ -44,9 +47,12 @@ class AnkhCorePluginImpl : AbstractModule() {
     bind(StorageBackend::class.java).annotatedWith(Names.named("filesystem")).to(FilesystemBackend::class.java)
 
     bind(LocationStorage.Factory::class.java).to(LocationEmbedded.Factory::class.java)
-    bind(ChunkStorage.Factory::class.java).to(ChunkStorage.Factory::class.java)
+    bind(ChunkStorage.Factory::class.java).to(WorldChunkEmbedded.Factory::class.java)
 
     bind(HologramService::class.java).toProvider(HologramProvider::class.java)
+    bind(HologramService::class.java).annotatedWith(Names.named("holographic-displays"))
+      .to(HdsHologramService::class.java)
+    bind(HologramService::class.java).annotatedWith(Names.named("nop")).to(NopHologramService::class.java)
 
     bind(WorldService::class.java).to(AnkhWorldService::class.java)
 

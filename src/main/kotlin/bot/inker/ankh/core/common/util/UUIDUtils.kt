@@ -1,4 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE")
+
 package bot.inker.ankh.core.common.util
 
 import java.util.*
@@ -80,11 +81,13 @@ object UUIDUtils {
     return result
   }
 
+  @JvmStatic
   fun fromBytes(bytes: ByteArray): UUID {
     require(bytes.size == 16) { "Invalid length: " + bytes.size }
     return fromBytes0(bytes, 0)
   }
 
+  @JvmStatic
   fun fromBytes(bytes: ByteArray, start: Int): UUID {
     require(bytes.size - start >= 16) { "Invalid length: ${bytes.size - start}" }
     return fromBytes0(bytes, start)

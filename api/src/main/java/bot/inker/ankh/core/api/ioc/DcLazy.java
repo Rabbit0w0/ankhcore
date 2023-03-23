@@ -60,82 +60,82 @@ import java.util.function.Supplier;
  * (only an access to a <b>volatile</b> member field).
  * </p>
  *
- * @since 3.0
  * @param <T> the type of the object managed by this initializer class
+ * @since 3.0
  */
 public abstract class DcLazy<T> {
 
-    private static final Object NO_INIT = new Object();
+  private static final Object NO_INIT = new Object();
 
-    @SuppressWarnings("unchecked")
-    // Stores the managed object.
-    private volatile T object = (T) NO_INIT;
+  @SuppressWarnings("unchecked")
+  // Stores the managed object.
+  private volatile T object = (T) NO_INIT;
 
-    /**
-     * Returns the object wrapped by this instance. On first access the object
-     * is created. After that it is cached and can be accessed pretty fast.
-     *
-     * @return the object initialized by this {@link DcLazy}
-     */
-    public T get() {
-        // use a temporary variable to reduce the number of reads of the
-        // volatile field
-        T result = object;
+  public static <T> DcLazy<T> of(Supplier<T> supplier) {
+    return new DcLazy<T>() {
+      @Override
+      protected T initialize() throws Throwable {
+        return supplier.get();
+      }
+    };
+  }
 
+  public static <T> DcLazy<T> of(Callable<T> supplier) {
+    return new CallableInitializer<>(supplier);
+  }
+
+  /**
+   * Returns the object wrapped by this instance. On first access the object
+   * is created. After that it is cached and can be accessed pretty fast.
+   *
+   * @return the object initialized by this {@link DcLazy}
+   */
+  public T get() {
+    // use a temporary variable to reduce the number of reads of the
+    // volatile field
+    T result = object;
+
+    if (result == NO_INIT) {
+      synchronized (this) {
+        result = object;
         if (result == NO_INIT) {
-            synchronized (this) {
-                result = object;
-                if (result == NO_INIT) {
-                    object = result = callInitialize();
-                }
-            }
+          object = result = callInitialize();
         }
-
-        return result;
+      }
     }
 
-    private <E extends Throwable> T callInitialize() throws E{
-        try {
-            return initialize();
-        } catch (Throwable e) {
-            throw (E) e;
-        }
+    return result;
+  }
+
+  private <E extends Throwable> T callInitialize() throws E {
+    try {
+      return initialize();
+    } catch (Throwable e) {
+      throw (E) e;
+    }
+  }
+
+  /**
+   * Creates and initializes the object managed by this {@code
+   * LazyInitializer}. This method is called by {@link #get()} when the object
+   * is accessed for the first time. An implementation can focus on the
+   * creation of the object. No synchronization is needed, as this is already
+   * handled by {@code get()}.
+   *
+   * @return the managed data object
+   */
+  protected abstract T initialize() throws Throwable;
+
+  private static class CallableInitializer<T> extends DcLazy<T> {
+    private final Callable<T> supplier;
+
+    private CallableInitializer(Callable<T> supplier) {
+      this.supplier = supplier;
     }
 
-    /**
-     * Creates and initializes the object managed by this {@code
-     * LazyInitializer}. This method is called by {@link #get()} when the object
-     * is accessed for the first time. An implementation can focus on the
-     * creation of the object. No synchronization is needed, as this is already
-     * handled by {@code get()}.
-     *
-     * @return the managed data object
-     */
-    protected abstract T initialize() throws Throwable;
-
-    public static <T> DcLazy<T> of(Supplier<T> supplier){
-        return new DcLazy<T>() {
-            @Override
-            protected T initialize() throws Throwable {
-                return supplier.get();
-            }
-        };
+    @Override
+    protected T initialize() throws Throwable {
+      return supplier.call();
     }
-
-    public static <T> DcLazy<T> of(Callable<T> supplier){
-        return new CallableInitializer<>(supplier);
-    }
-
-    private static class CallableInitializer<T> extends DcLazy<T>{
-        private final Callable<T> supplier;
-
-        private CallableInitializer(Callable<T> supplier) {
-            this.supplier = supplier;
-        }
-
-        @Override
-        protected T initialize() throws Throwable {
-            return supplier.call();
-        }
-    }
+  }
 }

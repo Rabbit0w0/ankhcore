@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class ItemRegisterService @Inject private constructor(
 
-): AbstractRegistry<AnkhItem>(), AnkhItemRegistry {
+) : AbstractRegistry<AnkhItem>(), AnkhItemRegistry {
   private val logger by logger()
 
   @SubscriptEvent(priority = EventPriority.MONITOR)

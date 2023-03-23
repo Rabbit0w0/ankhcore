@@ -13,14 +13,24 @@ import javax.annotation.Nonnull;
 /**
  * AnkhBlock, which can contains data and storage in WorldService
  * AnkhBlock can be tickable, async-tickable
- *
+ * <p>
  * DON'T SAVE HARD REF TO BLOCK INSTANCE IN ANKH_BLOCK, IT WILL CAUSE MEMORY LEAK
  *
  * @see bot.inker.ankh.core.api.world.WorldService
  */
 public interface AnkhBlock extends Keyed {
   /**
+   * short link to factory, work as <code>AnkhCore.getInstance(Factory.class);</code>
+   *
+   * @return AnkhBlock.Factory
+   */
+  static @Nonnull Factory factory() {
+    return AnkhCore.getInstance(Factory.class);
+  }
+
+  /**
    * Called when block placed in location (or loaded in location by WorldService)
+   *
    * @param location the location the block in
    */
   void load(@Nonnull Location location);
@@ -44,7 +54,7 @@ public interface AnkhBlock extends Keyed {
    * @return bytes need storage
    * @see Factory#load(NamespacedKey, byte[])
    */
-  default byte[] save(){
+  default byte[] save() {
     return new byte[0];
   }
 
@@ -54,7 +64,7 @@ public interface AnkhBlock extends Keyed {
    * @param event the event
    * @see BlockBreakEvent
    */
-  default void onBlockBreak(@Nonnull BlockBreakEvent event){
+  default void onBlockBreak(@Nonnull BlockBreakEvent event) {
     //
   }
 
@@ -64,7 +74,7 @@ public interface AnkhBlock extends Keyed {
    * @param event the event
    * @see BlockRedstoneEvent
    */
-  default void onBlockRedstone(@Nonnull BlockRedstoneEvent event){
+  default void onBlockRedstone(@Nonnull BlockRedstoneEvent event) {
     //
   }
 
@@ -74,17 +84,8 @@ public interface AnkhBlock extends Keyed {
    * @param event the event
    * @see PlayerInteractEvent
    */
-  default void onPlayerInteract(@Nonnull PlayerInteractEvent event){
+  default void onPlayerInteract(@Nonnull PlayerInteractEvent event) {
     //
-  }
-
-  /**
-   * short link to factory, work as <code>AnkhCore.getInstance(Factory.class);</code>
-   *
-   * @return AnkhBlock.Factory
-   */
-  static @Nonnull Factory factory(){
-    return AnkhCore.getInstance(Factory.class);
   }
 
   /**
@@ -96,11 +97,12 @@ public interface AnkhBlock extends Keyed {
     /**
      * load AnkhBlock from data stored in <code>AnkhBlock.save()</code>
      *
-     * @param id the block id
+     * @param id   the block id
      * @param data the data stored before
      * @return the block instance
      * @see AnkhBlock#save()
      */
-    @Nonnull AnkhBlock load(@Nonnull NamespacedKey id, @Nonnull byte[] data);
+    @Nonnull
+    AnkhBlock load(@Nonnull NamespacedKey id, @Nonnull byte[] data);
   }
 }

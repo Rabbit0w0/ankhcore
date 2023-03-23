@@ -1,10 +1,10 @@
 database:
-  # database driver, available values: H2 MARIADB POSTGRESQL
-  driver: H2
+  # database driver, available values: 'H2' 'MARIADB' 'POSTGRESQL'
+  driver: 'H2'
   # jdbc url
-  # H2: jdbc:h2:./ankh-core
-  # MARIADB: jdbc:mariadb://localhost:3306/ankh-core
-  url: jdbc:h2:./ankh-core
+  # H2: 'jdbc:h2:./ankh-core'
+  # MARIADB: 'jdbc:mariadb://localhost:3306/ankh-core'
+  url: 'jdbc:h2:./ankh-core'
   # database username
   username: ''
   # database password
@@ -12,9 +12,16 @@ database:
 
 # config about world-storage, which stores ankh-block
 world-storage:
-  # available values: filesystem database
+  # available values: 'filesystem' 'database'
   # WIP: database backend is too slow, use it only necessary
-  backend: filesystem
+  backend: 'filesystem'
 
 # tick rate, run ankh-tick in x ticks
 tick-rate: 10
+
+# select service
+service:
+  # hologram service, empty to auto-detect
+  # 'holographic-displays': https://github.com/filoghost/HolographicDisplays
+  # 'nop': no operation
+  hologram: ''

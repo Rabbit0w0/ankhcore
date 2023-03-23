@@ -5,7 +5,7 @@ plugins {
 }
 
 allprojects {
-  if(project.buildscript.sourceFile?.exists() != true){
+  if (project.buildscript.sourceFile?.exists() != true) {
     project.tasks.forEach { it.enabled = false }
     return@allprojects
   }
@@ -13,9 +13,9 @@ allprojects {
   apply(plugin = "java-library")
   apply(plugin = "maven-publish")
 
-  if(rootProject == project){
+  if (rootProject == project) {
     group = "bot.inker.ankh"
-  }else{
+  } else {
     group = "bot.inker.ankh.core"
   }
   version = "1.0.2-SNAPSHOT"
@@ -37,11 +37,13 @@ allprojects {
 
   publishing {
     repositories {
-      maven(if(project.version.toString().endsWith("-SNAPSHOT")){
-        "https://repo.inker.bot/repository/maven-snapshots/"
-      }else{
-        "https://repo.inker.bot/repository/maven-releases/"
-      }){
+      maven(
+        if (project.version.toString().endsWith("-SNAPSHOT")) {
+          "https://repo.inker.bot/repository/maven-snapshots/"
+        } else {
+          "https://repo.inker.bot/repository/maven-releases/"
+        }
+      ) {
         credentials {
           username = System.getenv("NEXUS_USERNAME")
           password = System.getenv("NEXUS_PASSWORD")
@@ -60,7 +62,7 @@ allprojects {
           name.set("AnkhCore${project.name}")
           description.set("A bukkit plugin loader named AnkhCore")
           url.set("https://github.com/InkerBot/AnkhCore")
-          properties.set(mapOf( ))
+          properties.set(mapOf())
           licenses {
             license {
               name.set("MIT")

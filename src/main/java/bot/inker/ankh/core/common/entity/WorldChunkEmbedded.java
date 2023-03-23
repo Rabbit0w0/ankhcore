@@ -1,7 +1,6 @@
 package bot.inker.ankh.core.common.entity;
 
 import bot.inker.ankh.core.api.entity.ChunkStorage;
-import bot.inker.ankh.core.api.entity.LocationStorage;
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Embeddable;
@@ -19,6 +18,48 @@ public final class WorldChunkEmbedded implements ChunkStorage, Serializable {
   @Nonnull
   private UUID worldId;
   private long chunkId;
+
+  @Nonnull
+  public static WorldChunkEmbedded of(UUID worldId, int x, int z) {
+    return of(worldId, chunkKeyFromLocation(x, z));
+  }
+
+  @Nonnull
+  public static WorldChunkEmbedded of(@Nonnull Chunk chunk) {
+    return of(chunk.getWorld().getUID(), chunk.getX(), chunk.getZ());
+  }
+
+  @Nonnull
+  public static WorldChunkEmbedded of(UUID worldId, long chunkId) {
+    Objects.requireNonNull(worldId);
+    WorldChunkEmbedded worldChunkEmbedded = new WorldChunkEmbedded();
+    worldChunkEmbedded.worldId = worldId;
+    worldChunkEmbedded.chunkId = chunkId;
+    return worldChunkEmbedded;
+  }
+
+  @Nonnull
+  public static WorldChunkEmbedded warp(@Nonnull ChunkStorage chunk) {
+    if (chunk instanceof WorldChunkEmbedded) {
+      return (WorldChunkEmbedded) chunk;
+    }
+    return WorldChunkEmbedded.of(
+      chunk.worldId(),
+      chunkKeyFromLocation(chunk.x(), chunk.z())
+    );
+  }
+
+  private static long chunkKeyFromLocation(int x, int z) {
+    return (((long) x) << 32) | (z & 0xFFFFFFFFL);
+  }
+
+  private static int xFromChunkKey(long chunkKey) {
+    return (int) (chunkKey >> 32);
+  }
+
+  private static int zFromChunkKey(long chunkKey) {
+    return (int) chunkKey;
+  }
 
   @Nonnull
   @Override
@@ -75,18 +116,18 @@ public final class WorldChunkEmbedded implements ChunkStorage, Serializable {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if(o instanceof ChunkStorage){
-      if(o instanceof WorldChunkEmbedded){
+    if (o instanceof ChunkStorage) {
+      if (o instanceof WorldChunkEmbedded) {
         WorldChunkEmbedded that = (WorldChunkEmbedded) o;
-        if(this.chunkId != that.chunkId) return false;
+        if (this.chunkId != that.chunkId) return false;
         return this.worldId.equals(that.worldId);
-      }else{
+      } else {
         ChunkStorage that = (ChunkStorage) o;
-        if(this.x() != that.x()) return false;
-        if(this.z() != that.z()) return false;
+        if (this.x() != that.x()) return false;
+        if (this.z() != that.z()) return false;
         return this.worldId().equals(that.worldId());
       }
-    }else{
+    } else {
       return false;
     }
   }
@@ -97,48 +138,6 @@ public final class WorldChunkEmbedded implements ChunkStorage, Serializable {
     result = 31 * result + x();
     result = 31 * result + z();
     return result;
-  }
-
-  @Nonnull
-  public static WorldChunkEmbedded of(UUID worldId, int x, int z) {
-    return of(worldId, chunkKeyFromLocation(x, z));
-  }
-
-  @Nonnull
-  public static WorldChunkEmbedded of(@Nonnull Chunk chunk) {
-    return of(chunk.getWorld().getUID(), chunk.getX(), chunk.getZ());
-  }
-
-  @Nonnull
-  public static WorldChunkEmbedded of(UUID worldId, long chunkId) {
-    Objects.requireNonNull(worldId);
-    WorldChunkEmbedded worldChunkEmbedded = new WorldChunkEmbedded();
-    worldChunkEmbedded.worldId = worldId;
-    worldChunkEmbedded.chunkId = chunkId;
-    return worldChunkEmbedded;
-  }
-
-  @Nonnull
-  public static WorldChunkEmbedded warp(@Nonnull ChunkStorage chunk){
-    if(chunk instanceof WorldChunkEmbedded){
-      return (WorldChunkEmbedded) chunk;
-    }
-    return WorldChunkEmbedded.of(
-      chunk.worldId(),
-      chunkKeyFromLocation(chunk.x(), chunk.z())
-    );
-  }
-
-  private static long chunkKeyFromLocation(int x, int z) {
-    return (((long) x) << 32) | (z & 0xFFFFFFFFL);
-  }
-
-  private static int xFromChunkKey(long chunkKey) {
-    return (int) (chunkKey >> 32);
-  }
-
-  private static int zFromChunkKey(long chunkKey) {
-    return (int) chunkKey;
   }
 
   @Singleton

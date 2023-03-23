@@ -9,6 +9,6 @@ import javax.inject.Singleton
 @Singleton
 class BlockRegisterService @Inject private constructor(
 
-): AbstractRegistry<AnkhBlock.Factory>(), BlockRegistry {
+) : AbstractRegistry<AnkhBlock.Factory>(), BlockRegistry {
 
 }

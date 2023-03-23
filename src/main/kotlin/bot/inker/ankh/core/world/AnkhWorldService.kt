@@ -10,11 +10,11 @@ import bot.inker.ankh.core.api.plugin.annotations.SubscriptLifecycle
 import bot.inker.ankh.core.api.world.WorldService
 import bot.inker.ankh.core.block.BlockRegisterService
 import bot.inker.ankh.core.common.config.AnkhConfig
-import bot.inker.ankh.core.common.entity.LocationEmbedded
-import bot.inker.ankh.core.common.entity.WorldChunkEmbedded
 import bot.inker.ankh.core.common.dsl.getValue
 import bot.inker.ankh.core.common.dsl.logger
 import bot.inker.ankh.core.common.dsl.setValue
+import bot.inker.ankh.core.common.entity.LocationEmbedded
+import bot.inker.ankh.core.common.entity.WorldChunkEmbedded
 import bot.inker.ankh.core.database.DatabaseService
 import bot.inker.ankh.core.world.storage.BlockStorageEntry
 import bot.inker.ankh.core.world.storage.StorageBackend
@@ -46,7 +46,7 @@ class AnkhWorldService @Inject private constructor(
   private val ankhConfig: AnkhConfig,
   private val blockRegisterService: BlockRegisterService,
   private val databaseService: DatabaseService,
-):WorldService {
+) : WorldService {
   private val logger by logger()
   private val worldMap = MapMaker().makeMap<UUID, WorldStorage>()
   private val storageBackend = injector.getInstance(
@@ -84,7 +84,7 @@ class AnkhWorldService @Inject private constructor(
     handleBlockRemove(chunkStorage, locationEmbedded, ankhBlock)
   }
 
-  fun getBlockImpl(location: Location): Pair<Boolean,AnkhBlock?> {
+  fun getBlockImpl(location: Location): Pair<Boolean, AnkhBlock?> {
     val locationEmbedded = LocationEmbedded.of(location)
     val chunkStorage = getWorldStorage(locationEmbedded.chunk().worldId()).getChunkStorage(locationEmbedded.chunk())
     if (!chunkStorage.loaded || chunkStorage.loadFailure) {
@@ -93,13 +93,13 @@ class AnkhWorldService @Inject private constructor(
     return true to chunkStorage.blockMap[locationEmbedded]
   }
 
-  private fun loadChunk(world:World, worldChunk: WorldChunkEmbedded){
+  private fun loadChunk(world: World, worldChunk: WorldChunkEmbedded) {
     val worldStorage = getWorldStorage(worldChunk.worldId())
     val chunkStorage = worldStorage.chunks.computeIfAbsent(worldChunk, ::ChunkStorage)
 
     Bukkit.getScheduler().runTaskAsynchronously(loaderPlugin, Runnable {
       val asyncStartTime = System.nanoTime()
-      val syncActions = ArrayList<()->Unit>()
+      val syncActions = ArrayList<() -> Unit>()
       try {
         storageBackend.provide(worldChunk).forEach { storedBlock ->
           blockRegisterService.get(storedBlock.blockId())
@@ -124,14 +124,21 @@ class AnkhWorldService @Inject private constructor(
         val asyncPassTime = System.nanoTime() - asyncStartTime
         Bukkit.getScheduler().runTask(loaderPlugin, Runnable {
           val startTime = System.nanoTime()
-          syncActions.forEach{
+          syncActions.forEach {
             it()
           }
           chunkStorage.loaded = true
           val passTime = System.nanoTime() - startTime
-          logger.trace("load world:{} x:{} z:{} asyncTime:{} syncTime:{}", world.name, worldChunk.x(), worldChunk.z(), asyncPassTime, passTime)
+          logger.trace(
+            "load world:{} x:{} z:{} asyncTime:{} syncTime:{}",
+            world.name,
+            worldChunk.x(),
+            worldChunk.z(),
+            asyncPassTime,
+            passTime
+          )
         })
-      }catch (e:Exception){
+      } catch (e: Exception) {
         chunkStorage.loadFailure = true
         logger.warn("Failed to load chunk:{} x:{} z:{}", world.name, worldChunk.x(), worldChunk.z(), e)
       }
@@ -142,7 +149,7 @@ class AnkhWorldService @Inject private constructor(
   private fun saveChunk(worldChunk: WorldChunkEmbedded, unload: Boolean = false) {
     val worldStorage = getWorldStorage(worldChunk.worldId())
     worldStorage.chunks[worldChunk]?.let { chunkStorage ->
-      if(!chunkStorage.loaded || chunkStorage.loadFailure){
+      if (!chunkStorage.loaded || chunkStorage.loadFailure) {
         return
       }
       val startTime = System.nanoTime()
@@ -159,26 +166,39 @@ class AnkhWorldService @Inject private constructor(
         worldStorage.chunks.remove(worldChunk)
       }
       val passTime = System.nanoTime() - startTime
-      if(entries.isNotEmpty()) {
+      if (entries.isNotEmpty()) {
         val task = Runnable {
           val asyncStartTime = System.nanoTime()
           try {
             storageBackend.store(worldChunk, entries)
             chunkStorage.loaded = true
-          }catch (e:Exception){
+          } catch (e: Exception) {
             chunkStorage.loadFailure = true
             logger.warn("Failed to save chunk:{} x:{} z:{}", worldChunk.worldId(), worldChunk.x(), worldChunk.z(), e)
           }
           val asyncPassTime = System.nanoTime() - asyncStartTime
-          logger.trace("unload world:{} x:{} z:{} syncTime:{} asyncTime:{}", worldChunk.worldId(), worldChunk.x(), worldChunk.z(), passTime, asyncPassTime)
+          logger.trace(
+            "unload world:{} x:{} z:{} syncTime:{} asyncTime:{}",
+            worldChunk.worldId(),
+            worldChunk.x(),
+            worldChunk.z(),
+            passTime,
+            asyncPassTime
+          )
         }
         if (loaderPlugin.isEnabled) {
           Bukkit.getScheduler().runTaskAsynchronously(loaderPlugin, task)
-        }else{
+        } else {
           task.run()
         }
-      }else{
-        logger.trace("unload world:{} x:{} z:{} syncTime:{}", worldChunk.worldId(), worldChunk.x(), worldChunk.z(), passTime)
+      } else {
+        logger.trace(
+          "unload world:{} x:{} z:{} syncTime:{}",
+          worldChunk.worldId(),
+          worldChunk.x(),
+          worldChunk.z(),
+          passTime
+        )
       }
     }
   }
@@ -230,9 +250,9 @@ class AnkhWorldService @Inject private constructor(
   private fun runTick(location: LocationEmbedded, block: TickableBlock) {
     try {
       block.runTick(location)
-    }catch (e:InterruptedException){
+    } catch (e: InterruptedException) {
       throw e
-    }catch (e:Exception){
+    } catch (e: Exception) {
       logger.warn("Failed to run sync tick for block {}", location, e)
     }
   }
@@ -248,9 +268,9 @@ class AnkhWorldService @Inject private constructor(
   private fun runAsyncTick(location: LocationEmbedded, block: AsyncTickableBlock) {
     try {
       block.runAsyncTick(location)
-    }catch (e:InterruptedException){
+    } catch (e: InterruptedException) {
       throw e
-    }catch (e:Exception){
+    } catch (e: Exception) {
       logger.warn("Failed to run async tick for block {}", location, e)
     }
   }
@@ -261,9 +281,9 @@ class AnkhWorldService @Inject private constructor(
       override fun run() {
         try {
           worldMap.values.forEach(this@AnkhWorldService::runTick)
-        }catch (e:InterruptedException){
+        } catch (e: InterruptedException) {
           throw e
-        }catch (e:Exception){
+        } catch (e: Exception) {
           logger.warn("Failed to run sync tick", e)
         }
       }
@@ -273,9 +293,9 @@ class AnkhWorldService @Inject private constructor(
       override fun run() {
         try {
           worldMap.values.forEach(this@AnkhWorldService::runAsyncTick)
-        }catch (e:InterruptedException){
+        } catch (e: InterruptedException) {
           throw e
-        }catch (e:Exception){
+        } catch (e: Exception) {
           logger.warn("Failed to run async tick", e)
         }
       }
@@ -316,7 +336,7 @@ class AnkhWorldService @Inject private constructor(
     if (event.blocks.any {
         val blockStatus = getBlockImpl(it.location)
         !blockStatus.first || blockStatus.second != null
-    }) {
+      }) {
       event.isCancelled = true
     }
   }
@@ -326,7 +346,7 @@ class AnkhWorldService @Inject private constructor(
     if (event.blocks.any {
         val blockStatus = getBlockImpl(it.location)
         !blockStatus.first || blockStatus.second != null
-    }) {
+      }) {
       event.isCancelled = true
     }
   }
@@ -360,7 +380,7 @@ class AnkhWorldService @Inject private constructor(
     val blockStatus = getBlockImpl(event.block.location)
     if (!blockStatus.first) {
       event.isCancelled = true
-    }else if(blockStatus.second != null) {
+    } else if (blockStatus.second != null) {
       event.isDropItems = false
       event.expToDrop = 0
     }

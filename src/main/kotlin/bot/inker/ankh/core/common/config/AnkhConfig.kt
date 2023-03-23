@@ -19,6 +19,8 @@ class AnkhConfig @Inject private constructor(
 
   val worldStorage = WorldStorageBean(configuration.getConfigurationSection("world-storage")!!)
 
+  val service = ServiceBean(configuration.getConfigurationSection("service")!!)
+
   val tickRate = configuration.getInt("tick-rate")
 
   class DatabaseBean(configuration: ConfigurationSection) {
@@ -39,5 +41,9 @@ class AnkhConfig @Inject private constructor(
 
   class WorldStorageBean(configuration: ConfigurationSection) {
     val backend = configuration.getString("backend")!!
+  }
+
+  class ServiceBean(configuration: ConfigurationSection) {
+    val hologram = configuration.getString("hologram")
   }
 }

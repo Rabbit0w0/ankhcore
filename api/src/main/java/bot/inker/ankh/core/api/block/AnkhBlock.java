@@ -1,9 +1,9 @@
 package bot.inker.ankh.core.api.block;
 
 import bot.inker.ankh.core.api.AnkhCore;
-import org.bukkit.Keyed;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -52,7 +52,7 @@ public interface AnkhBlock extends Keyed {
    * Save block data, will store in WorldService, and will load in Factory.load
    *
    * @return bytes need storage
-   * @see Factory#load(NamespacedKey, byte[])
+   * @see Factory#load(Key, byte[])
    */
   default byte[] save() {
     return new byte[0];
@@ -103,6 +103,6 @@ public interface AnkhBlock extends Keyed {
      * @see AnkhBlock#save()
      */
     @Nonnull
-    AnkhBlock load(@Nonnull NamespacedKey id, @Nonnull byte[] data);
+    AnkhBlock load(@Nonnull Key id, @Nonnull byte[] data);
   }
 }

@@ -8,6 +8,8 @@ import bot.inker.ankh.core.api.plugin.PluginLifeCycle
 import bot.inker.ankh.core.api.plugin.annotations.SubscriptEvent
 import bot.inker.ankh.core.api.plugin.annotations.SubscriptLifecycle
 import bot.inker.ankh.core.api.world.WorldService
+import bot.inker.ankh.core.api.world.storage.BlockStorageEntry
+import bot.inker.ankh.core.api.world.storage.StorageBackend
 import bot.inker.ankh.core.block.BlockRegisterService
 import bot.inker.ankh.core.common.config.AnkhConfig
 import bot.inker.ankh.core.common.dsl.getValue
@@ -16,8 +18,6 @@ import bot.inker.ankh.core.common.dsl.setValue
 import bot.inker.ankh.core.common.entity.LocationEmbedded
 import bot.inker.ankh.core.common.entity.WorldChunkEmbedded
 import bot.inker.ankh.core.database.DatabaseService
-import bot.inker.ankh.core.world.storage.BlockStorageEntry
-import bot.inker.ankh.core.world.storage.StorageBackend
 import com.destroystokyo.paper.event.block.BlockDestroyEvent
 import com.google.common.collect.MapMaker
 import com.google.inject.Injector
@@ -108,7 +108,7 @@ class AnkhWorldService @Inject private constructor(
               syncActions.add {
                 handleBlockSet(
                   chunkStorage = chunkStorage,
-                  locationEmbedded = storedBlock.location(),
+                  locationEmbedded = LocationEmbedded.warp(storedBlock.location()),
                   location = Location(
                     world,
                     storedBlock.location().x().toDouble(),
@@ -155,9 +155,9 @@ class AnkhWorldService @Inject private constructor(
       val startTime = System.nanoTime()
       val entries = chunkStorage.blockMap
         .map { (location, block) ->
-          BlockStorageEntry(
+          BlockStorageEntry.of(
             location,
-            block.key,
+            block.key(),
             block.save()
           )
         }
@@ -287,7 +287,7 @@ class AnkhWorldService @Inject private constructor(
           logger.warn("Failed to run sync tick", e)
         }
       }
-    }.runTaskTimer(loaderPlugin, 100L, ankhConfig.tickRate.toLong())
+    }.runTaskTimer(loaderPlugin, 0, ankhConfig.tickRate.toLong())
 
     object : BukkitRunnable() {
       override fun run() {
@@ -299,7 +299,7 @@ class AnkhWorldService @Inject private constructor(
           logger.warn("Failed to run async tick", e)
         }
       }
-    }.runTaskTimerAsynchronously(loaderPlugin, 100L, ankhConfig.tickRate.toLong())
+    }.runTaskTimerAsynchronously(loaderPlugin, 0, ankhConfig.tickRate.toLong())
   }
 
   @SubscriptEvent

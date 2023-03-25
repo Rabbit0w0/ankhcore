@@ -1,14 +1,23 @@
 package bot.inker.ankh.core.api.item;
 
-import org.bukkit.Keyed;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public interface AnkhItem extends Keyed {
-  void updateItem(ItemStack item);
+  String ITEM_ID_TAG = "ankh-core:item-id";
 
-  void onBlockPlace(BlockPlaceEvent event);
+  default void updateItem(ItemStack item){
+    //
+  }
 
-  void onUseItem(PlayerInteractEvent event);
+  default void onBlockPlace(BlockPlaceEvent event){
+    //
+  }
+
+  default void onUseItem(PlayerInteractEvent event){
+    //
+  }
 }

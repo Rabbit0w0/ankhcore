@@ -32,8 +32,7 @@ object AsmEventExecutorFactory {
     val classNode = ClassNode()
     classNode.version = Opcodes.V1_8
     classNode.access = Opcodes.ACC_PUBLIC
-    classNode.name =
-      "bot/inker/ankh/core/\$generated\$/\$generated-dynamic-event-executor\$" + idAllocator.incrementAndGet()
+    classNode.name = Type.getInternalName(ownerClass) + "\$"+methodName+"\$" + idAllocator.incrementAndGet()
     classNode.superName = "java/lang/Object"
     classNode.interfaces = listOf("org/bukkit/plugin/EventExecutor")
     classNode.fields.add(
@@ -134,7 +133,7 @@ object AsmEventExecutorFactory {
     val classNode = ClassNode()
     classNode.version = Opcodes.V1_8
     classNode.access = Opcodes.ACC_PUBLIC
-    classNode.name = ownerInternalName + "\$ankh-event-executor-generated\$" + idAllocator.incrementAndGet()
+    classNode.name = ownerInternalName + "\$"+methodName+"\$" + idAllocator.incrementAndGet()
     classNode.superName = "java/lang/Object"
     classNode.interfaces = listOf("org/bukkit/plugin/EventExecutor")
     if (owner != null) {
@@ -197,9 +196,10 @@ object AsmEventExecutorFactory {
       null
     ).also(classNode.methods::add).instructions.let { insn ->
       if (owner != null) {
+        insn.add(VarInsnNode(Opcodes.ALOAD, 0))
         insn.add(
           FieldInsnNode(
-            Opcodes.GETSTATIC,
+            Opcodes.GETFIELD,
             classNode.name,
             "owner",
             ownerDescriptor

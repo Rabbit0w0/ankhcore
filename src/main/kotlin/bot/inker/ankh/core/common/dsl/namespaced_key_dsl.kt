@@ -1,14 +1,13 @@
 package bot.inker.ankh.core.common.dsl
 
 import bot.inker.ankh.core.api.plugin.AnkhPluginContainer
-import bot.inker.ankh.core.plugin.AnkhPluginContainerImpl
-import org.bukkit.NamespacedKey
+import net.kyori.adventure.key.Key
 import org.bukkit.plugin.Plugin
 
-fun Plugin.key(key: String): NamespacedKey {
-  return NamespacedKey(this, key)
+fun Plugin.key(key: String): Key {
+  return Key.key(this.name, key)
 }
 
-fun AnkhPluginContainer.key(key: String): NamespacedKey {
-  return NamespacedKey((this as AnkhPluginContainerImpl).pluginYml.name, key)
+fun AnkhPluginContainer.key(key: String): Key {
+  return Key.key(this.plugin().name, key)
 }

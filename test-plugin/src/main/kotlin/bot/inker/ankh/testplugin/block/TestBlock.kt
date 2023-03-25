@@ -3,7 +3,7 @@ package bot.inker.ankh.testplugin.block
 import bot.inker.ankh.core.api.block.AnkhBlock
 import bot.inker.ankh.core.api.block.AsyncTickableBlock
 import bot.inker.ankh.core.api.block.TickableBlock
-import bot.inker.ankh.core.api.entity.LocationStorage
+import bot.inker.ankh.core.api.storage.LocationStorage
 import bot.inker.ankh.core.api.hologram.HologramService
 import bot.inker.ankh.core.api.hologram.HologramTask
 import bot.inker.ankh.core.api.plugin.AnkhPluginContainer
@@ -12,9 +12,9 @@ import bot.inker.ankh.core.common.dsl.key
 import bot.inker.ankh.core.common.dsl.logger
 import bot.inker.ankh.testplugin.item.TestItem
 import com.google.inject.Injector
+import net.kyori.adventure.key.Key
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class TestBlock private constructor(
   private var hologram: HologramTask? = null
   private var nextMaterial = AtomicReference(Material.DIAMOND_BLOCK)
 
-  override fun getKey() = factory.blockId
+  override fun key(): Key = factory.blockId
 
   override fun runTick(location: LocationStorage) {
     val location = this.location ?: return
@@ -86,9 +86,10 @@ class TestBlock private constructor(
       Material.DIAMOND_BLOCK
     )
     val blockId = pluginContainer.key("test-block")
-    override fun getKey(): NamespacedKey = blockId
 
-    override fun load(id: NamespacedKey, data: ByteArray): AnkhBlock {
+    override fun key():Key = blockId
+
+    override fun load(id: Key, data: ByteArray): AnkhBlock {
       require(id == blockId)
       return TestBlock(this)
     }

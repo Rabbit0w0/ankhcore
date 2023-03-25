@@ -1,12 +1,15 @@
 package bot.inker.ankh.core.world.storage
 
 import bot.inker.ankh.core.api.AnkhCoreLoader
+import bot.inker.ankh.core.api.storage.ChunkStorage
+import bot.inker.ankh.core.api.world.storage.BlockStorageEntry
+import bot.inker.ankh.core.api.world.storage.StorageBackend
 import bot.inker.ankh.core.common.entity.LocationEmbedded
 import bot.inker.ankh.core.common.entity.WorldChunkEmbedded
 import bot.inker.ankh.core.common.util.HexUtil
-import bot.inker.ankh.core.common.util.UUIDUtils
+import bot.inker.ankh.core.common.util.UUIDUtil
 import com.google.common.primitives.Longs
-import org.bukkit.NamespacedKey
+import net.kyori.adventure.key.Key
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.nio.charset.StandardCharsets
@@ -24,11 +27,12 @@ class FilesystemBackend @Inject private constructor(
 
   private fun getChunkStoragePath(worldChunk: WorldChunkEmbedded): Path {
     val chunkIdHex = HexUtil.toHex(Longs.toByteArray(worldChunk.chunkId()))
-    return basePath.resolve(UUIDUtils.toPlainString(worldChunk.worldId()))
+    return basePath.resolve(UUIDUtil.toPlainString(worldChunk.worldId()))
       .resolve("$chunkIdHex.bin")
   }
 
-  override fun provide(worldChunk: WorldChunkEmbedded): Stream<BlockStorageEntry> {
+  override fun provide(chunkStorage: ChunkStorage): Stream<BlockStorageEntry> {
+    val worldChunk = WorldChunkEmbedded.warp(chunkStorage)
     val targetPath = getChunkStoragePath(worldChunk)
     if (!Files.exists(targetPath) || Files.isDirectory(targetPath)) {
       return Stream.empty()
@@ -37,7 +41,7 @@ class FilesystemBackend @Inject private constructor(
       val count = input.readInt()
       val result = ArrayList<BlockStorageEntry>(count)
       for (i in 0 until count) {
-        BlockStorageEntry(
+        BlockStorageEntry.of(
           LocationEmbedded.of(
             worldChunk,
             input.readLong()
@@ -45,7 +49,7 @@ class FilesystemBackend @Inject private constructor(
           ByteArray(input.readInt())
             .also(input::readFully)
             .toString(StandardCharsets.UTF_8)
-            .let(NamespacedKey::fromString)!!,
+            .let(Key::key),
           ByteArray(input.readInt()).also(input::readFully),
         ).let(result::add)
       }
@@ -53,7 +57,8 @@ class FilesystemBackend @Inject private constructor(
     }
   }
 
-  override fun store(worldChunk: WorldChunkEmbedded, entries: List<BlockStorageEntry>) {
+  override fun store(chunkStorage: ChunkStorage, entries: List<BlockStorageEntry>) {
+    val worldChunk = WorldChunkEmbedded.warp(chunkStorage)
     val targetPath = getChunkStoragePath(worldChunk)
 
     if (entries.isEmpty()) {
@@ -68,7 +73,8 @@ class FilesystemBackend @Inject private constructor(
     Files.newOutputStream(tempPath).let(::DataOutputStream).use { output ->
       output.writeInt(entries.size)
       entries.forEach { entry ->
-        output.writeLong(entry.location().position())
+        val location = LocationEmbedded.warp(entry.location())
+        output.writeLong(location.position())
         val blockIdBytes = entry.blockId().asString().toByteArray(StandardCharsets.UTF_8)
         output.writeInt(blockIdBytes.size)
         output.write(blockIdBytes)

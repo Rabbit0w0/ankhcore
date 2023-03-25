@@ -1,4 +1,4 @@
-package bot.inker.ankh.core.api.entity;
+package bot.inker.ankh.core.api.storage;
 
 import bot.inker.ankh.core.api.ioc.DcLazy;
 import bot.inker.ankh.core.api.ioc.IocLazy;

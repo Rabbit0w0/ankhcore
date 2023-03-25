@@ -1,12 +1,11 @@
 package bot.inker.ankh.core.common.entity;
 
-import bot.inker.ankh.core.api.entity.ChunkStorage;
-import bot.inker.ankh.core.api.entity.LocationStorage;
+import bot.inker.ankh.core.api.storage.ChunkStorage;
+import bot.inker.ankh.core.api.storage.LocationStorage;
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Embeddable;
 import org.bukkit.Location;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
@@ -43,7 +42,7 @@ public final class LocationEmbedded implements LocationStorage, Serializable {
     );
   }
 
-  public static @Nonnull LocationEmbedded of(LocationStorage location) {
+  public static @Nonnull LocationEmbedded warp(LocationStorage location) {
     if (location instanceof LocationEmbedded) {
       return (LocationEmbedded) location;
     }
@@ -76,9 +75,9 @@ public final class LocationEmbedded implements LocationStorage, Serializable {
     return chunk.worldId();
   }
 
-  @NotNull
+  @Nonnull
   @Override
-  public LocationStorage worldId(@NotNull UUID worldId) {
+  public LocationStorage worldId(@Nonnull UUID worldId) {
     return of(worldId, x(), y(), z());
   }
 

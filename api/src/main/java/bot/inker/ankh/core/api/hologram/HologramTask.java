@@ -4,28 +4,29 @@ import bot.inker.ankh.core.api.util.IBuilder;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
-public interface HologramTask {
-  static Builder builder() {
-    return HologramService.instance().builder();
-  }
+import javax.annotation.Nonnull;
 
-  void updateContent(HologramContent content);
+public interface HologramTask {
+
+  void updateContent(@Nonnull HologramContent content);
 
   void delete();
 
+  static @Nonnull Builder builder() {
+    return HologramService.instance().builder();
+  }
+
   interface Builder extends IBuilder<Builder, HologramTask> {
-    InnerContentBuilder content();
+    @Nonnull InnerContentBuilder content();
 
-    Builder content(HologramContent content);
+    @Nonnull Builder content(@Nonnull HologramContent content);
 
-    Builder location(Location location);
-
-    HologramTask build();
+    @Nonnull Builder location(@Nonnull Location location);
   }
 
   interface InnerContentBuilder extends IBuilder<InnerContentBuilder, Builder> {
-    InnerContentBuilder appendContent(String content);
+    @Nonnull InnerContentBuilder appendContent(@Nonnull String content);
 
-    InnerContentBuilder appendItem(ItemStack item);
+    @Nonnull InnerContentBuilder appendItem(@Nonnull ItemStack item);
   }
 }

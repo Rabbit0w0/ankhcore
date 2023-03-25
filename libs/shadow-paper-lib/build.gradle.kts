@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation("io.papermc:paperlib:1.0.7")
+  api("io.papermc:paperlib:1.0.7")
 }
 
 tasks.shadowJar {

@@ -7,6 +7,7 @@ import bot.inker.ankh.core.common.dsl.key
 import bot.inker.ankh.core.common.dsl.logger
 import bot.inker.ankh.core.item.AbstractAnkhItem
 import bot.inker.ankh.testplugin.block.TestBlock
+import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Material
@@ -24,15 +25,18 @@ class TestItem @Inject private constructor(
   private val testBlockFactory: TestBlock.Factory,
 ) : AbstractAnkhItem() {
   private val logger by logger()
-  override val itemId = pluginContainer.key("test-item")
-  override val material = Material.STONE
-  override val itemName = Component.text()
+
+  override fun key(): Key = pluginContainer.key("test-item")
+  override fun material(): Material = Material.STONE
+
+  override fun itemName(): Component = Component.text()
     .append(Component.text("测", NamedTextColor.BLUE))
     .append(Component.text("试", NamedTextColor.RED))
     .append(Component.text("物", NamedTextColor.GREEN))
     .append(Component.text("品", NamedTextColor.YELLOW))
     .build()
-  override val lores = listOf(
+
+  override fun lores(): List<Component> = listOf(
     Component.text()
       .append(Component.text("测试物品，点击放置 测试方块"))
       .build()

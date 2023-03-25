@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation("de.tr7zw:item-nbt-api:2.11.1")
+  api("de.tr7zw:item-nbt-api:2.11.1")
 }
 
 tasks.shadowJar {

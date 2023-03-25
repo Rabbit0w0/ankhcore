@@ -1,6 +1,6 @@
 package bot.inker.ankh.core.common.entity;
 
-import bot.inker.ankh.core.api.entity.ChunkStorage;
+import bot.inker.ankh.core.api.storage.ChunkStorage;
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Embeddable;

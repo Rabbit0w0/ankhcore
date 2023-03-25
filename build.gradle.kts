@@ -118,6 +118,7 @@ dependencies {
   api("bot.inker.aig:all:1.1-SNAPSHOT")
   api("org.ow2.asm:asm:9.4")
   api("org.ow2.asm:asm-tree:9.4")
+  api("it.unimi.dsi:fastutil:8.5.12")
 
   // database
   api("org.hibernate.orm:hibernate-core:6.1.7.Final")
@@ -143,10 +144,14 @@ dependencies {
 
   // For docs, use no-shadow version
   api("io.github.baked-libs:dough-api:1.2.0")
-  api("org.slf4j:slf4j-api:2.0.6")
+
+  // lombok
+  compileOnly("org.projectlombok:lombok:1.18.26")
+  annotationProcessor("org.projectlombok:lombok:1.18.26")
 
   // logger binding
   implementation("org.apache.logging.log4j:log4j-to-slf4j:2.20.0")
+  api("org.slf4j:slf4j-api:2.0.6")
 }
 
 tasks.compileKotlin {

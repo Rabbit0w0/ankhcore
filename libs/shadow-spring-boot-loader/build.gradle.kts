@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation("org.springframework.boot:spring-boot-loader:2.7.9")
+  api("org.springframework.boot:spring-boot-loader:2.7.9")
 }
 
 tasks.shadowJar {

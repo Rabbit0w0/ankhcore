@@ -38,14 +38,6 @@ public class AnkhClassLoader extends URLClassLoader {
   private Map<String, ClasspathLoadType> loadTypeMap = new HashMap<>();
   private List<AnkhClassLoader> dependClassLoaders = new CopyOnWriteArrayList<>();
 
-  /**
-   * Create a new {@link AnkhClassLoader} instance.
-   *
-   * @param rootArchive the root archive or {@code null}
-   * @param urls        the URLs from which to load classes and resources
-   * @param parent      the parent class loader for delegation
-   * @since 2.3.1
-   */
   public AnkhClassLoader(AnkhPluginYml pluginYml, Archive rootArchive, URL[] urls, ClassLoader parent) {
     super(urls, parent);
     this.pluginYml = pluginYml;

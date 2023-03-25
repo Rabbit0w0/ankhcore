@@ -3,6 +3,7 @@ package bot.inker.ankh.core.database;
 import bot.inker.ankh.core.api.plugin.PluginLifeCycle;
 import bot.inker.ankh.core.api.plugin.annotations.SubscriptLifecycle;
 import bot.inker.ankh.core.common.config.AnkhConfig;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.bukkit.event.EventPriority;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class DatabaseService {
   private final AnkhConfig config;
   private final Set<Class<?>> entityClasses = new LinkedHashSet<>();
+  @Getter
   private SessionFactory sessionFactory;
 
   public DatabaseService(AnkhConfig config) {

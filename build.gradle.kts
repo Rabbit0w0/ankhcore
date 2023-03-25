@@ -18,7 +18,7 @@ allprojects {
   } else {
     group = "bot.inker.ankh.core"
   }
-  version = "1.0.2-SNAPSHOT"
+  version = "1.0-${System.getenv("BUILD_NUMBER")}-SNAPSHOT"
 
   repositories {
     mavenCentral()

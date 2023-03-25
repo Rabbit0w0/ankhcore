@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -27,12 +28,11 @@ public abstract class AbstractAnkhItem implements AnkhItem {
   public final void updateItem(ItemStack item) {
     item.setType(material());
     NBTItem nbtItem = new NBTItem(item);
-    if (!key().asString().equals(nbtItem.getString(ITEM_ID_TAG))) {
-      nbtItem.setString(ITEM_ID_TAG, key().asString());
-    }
     onUpdateItemNbt(nbtItem);
     nbtItem.applyNBT(item);
     item.editMeta(meta -> {
+      meta.getPersistentDataContainer()
+        .set(ITEM_ID_KEY, PersistentDataType.STRING, key().asString());
       meta.displayName(itemName());
       meta.lore(lores());
       onUpdateItemMeta(meta);

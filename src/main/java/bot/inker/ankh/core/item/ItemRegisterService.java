@@ -4,7 +4,6 @@ import bot.inker.ankh.core.api.item.AnkhItem;
 import bot.inker.ankh.core.api.item.AnkhItemRegistry;
 import bot.inker.ankh.core.api.plugin.annotations.SubscriptEvent;
 import bot.inker.ankh.core.common.AbstractRegistry;
-import bot.inker.ankh.core.libs.nbtapi.NBTItem;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import net.kyori.adventure.key.Key;
@@ -15,6 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import javax.inject.Singleton;
 
@@ -73,17 +73,20 @@ public class ItemRegisterService extends AbstractRegistry<AnkhItem> implements A
     if (item.getType() == Material.AIR) {
       return null;
     }
-    val nbtItem = new NBTItem(item);
-    val itemId = nbtItem.getString("ankh-core:item-id");
-
-    if (itemId == null || itemId.isEmpty()) {
+    val itemMeta = item.getItemMeta();
+    if(itemMeta == null){
+      return null;
+    }
+    val dataContainer = itemMeta.getPersistentDataContainer();
+    val itemIdKeyString = dataContainer.get(AnkhItem.ITEM_ID_KEY, PersistentDataType.STRING);
+    if(itemIdKeyString == null || itemIdKeyString.isEmpty()){
       return null;
     }
 
-    val ankhItem = get(Key.key(itemId));
+    val ankhItem = get(Key.key(itemIdKeyString));
 
     if (ankhItem == null) {
-      logger.warn("No ankh-item '{}' found, maybe some extensions not loaded", itemId);
+      logger.warn("No ankh-item '{}' found, maybe some extensions not loaded", itemIdKeyString);
     }
     return ankhItem;
   }

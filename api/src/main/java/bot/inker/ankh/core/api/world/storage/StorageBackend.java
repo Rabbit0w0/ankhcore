@@ -12,11 +12,18 @@ import java.util.stream.Stream;
 public interface StorageBackend {
   /**
    * Provide a stream include all ankh-blocks in WorldChunkEmbedded
+   *
+   * @param worldChunk world chunk which contains ankh-blocks
+   * @return stream of entries
    */
   Stream<BlockStorageEntry> provide(@Nonnull ChunkStorage worldChunk);
 
+
   /**
    * Store ankh-blocks in WorldChunkEmbedded
+   *
+   * @param worldChunk world chunk which contains ankh-blocks
+   * @param entries ankh-blocks entry
    */
   void store(@Nonnull ChunkStorage worldChunk, @Nonnull List<BlockStorageEntry> entries);
 }

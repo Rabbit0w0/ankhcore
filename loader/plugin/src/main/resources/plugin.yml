@@ -1,7 +1,7 @@
 name: ankh-core
 version: 1.0-SNAPSHOT
 api-version: 1.16
-main: bot.inker.ankh.loader.AnkhCoreLoaderPlugin
+main: org.inksnow.ankh.loader.AnkhCoreLoaderPlugin
 load: STARTUP
 authors:
   - InkerBot

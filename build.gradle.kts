@@ -14,9 +14,9 @@ allprojects {
   apply(plugin = "maven-publish")
 
   if (rootProject == project) {
-    group = "bot.inker.ankh"
+    group = "org.inksnow.ankh"
   } else {
-    group = "bot.inker.ankh.core"
+    group = "org.inksnow.ankh.core"
   }
   version = "1.0-${System.getenv("BUILD_NUMBER")}-SNAPSHOT"
 

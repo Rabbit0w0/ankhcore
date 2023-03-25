@@ -7,7 +7,7 @@ dependencies {
 }
 
 tasks.shadowJar {
-  relocate("de.tr7zw.changeme.nbtapi", "bot.inker.ankh.core.libs.nbtapi")
+  relocate("de.tr7zw.changeme.nbtapi", "org.inksnow.ankh.core.libs.nbtapi")
 }
 
 tasks.assemble {

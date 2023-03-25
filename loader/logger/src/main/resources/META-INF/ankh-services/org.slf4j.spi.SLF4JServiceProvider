@@ -1,1 +1,1 @@
-bot.inker.ankh.loader.logger.AnkhSlf4jServiceProvider
+logger.org.inksnow.ankh.loader.AnkhSlf4jServiceProvider

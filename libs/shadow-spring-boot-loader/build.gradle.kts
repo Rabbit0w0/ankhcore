@@ -7,7 +7,7 @@ dependencies {
 }
 
 tasks.shadowJar {
-  relocate("org.springframework.boot.loader", "bot.inker.ankh.loader.libs")
+  relocate("org.springframework.boot.loader", "org.inksnow.ankh.loader.libs")
 }
 
 tasks.assemble {

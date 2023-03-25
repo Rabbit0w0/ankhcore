@@ -7,7 +7,7 @@ dependencies {
 }
 
 tasks.shadowJar {
-  relocate("io.papermc.lib", "bot.inker.ankh.core.libs.paperlib")
+  relocate("io.papermc.lib", "org.inksnow.ankh.core.libs.paperlib")
 }
 
 tasks.assemble {

@@ -5,7 +5,7 @@ plugins {
 
 bukkit {
   name = "ankh-test-plugin"
-  main = "bot.inker.ankh.testplugin.TestBukkitPluginLoader"
+  main = "org.inksnow.ankh.testplugin.TestBukkitPluginLoader"
   load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
   apiVersion = "1.16"
   depend = listOf("ankh-core")
@@ -28,7 +28,7 @@ tasks.jar {
   entryCompression = ZipEntryCompression.STORED
 
   manifest {
-    attributes["Main-Class"] = "bot.inker.ankh.testplugin.TestPluginMain"
+    attributes["Main-Class"] = "org.inksnow.ankh.testplugin.TestPluginMain"
   }
 
   from(configurations.getByName("ankhShadow").map {

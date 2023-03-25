@@ -7,10 +7,10 @@
 创建插件实现类，并在 `plugin.yml` 中设置
 
 ```java
-package bot.inker.ankh.testplugin;
+package org.inksnow.ankh.testplugin;
 
-import bot.inker.ankh.core.api.plugin.AnkhBukkitPlugin;
-import bot.inker.ankh.core.api.plugin.AnkhPluginContainer;
+import org.inksnow.ankh.core.api.plugin.AnkhBukkitPlugin;
+import org.inksnow.ankh.core.api.plugin.AnkhPluginContainer;
 
 public class TestBukkitPluginLoader extends AnkhBukkitPlugin {
   private static final AnkhPluginContainer container = AnkhBukkitPlugin.initial(TestBukkitPluginLoader.class);

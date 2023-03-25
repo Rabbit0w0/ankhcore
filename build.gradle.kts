@@ -18,7 +18,14 @@ allprojects {
   } else {
     group = "org.inksnow.ankh.core"
   }
-  version = "1.0-${System.getenv("BUILD_NUMBER")}-SNAPSHOT"
+
+
+  val buildNumber = System.getenv("BUILD_NUMBER")
+  version = if(buildNumber == null){
+    "1.0-dev-SNAPSHOT"
+  }else{
+    "1.0-${System.getenv("BUILD_NUMBER")}-SNAPSHOT"
+  }
 
   repositories {
     mavenCentral()

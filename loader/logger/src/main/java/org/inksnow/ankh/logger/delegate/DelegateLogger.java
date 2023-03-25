@@ -1,4 +1,4 @@
-package org.inksnow.ankh.loader.logger.delegate;
+package org.inksnow.ankh.logger.delegate;
 
 import org.slf4j.Logger;
 import org.slf4j.Marker;

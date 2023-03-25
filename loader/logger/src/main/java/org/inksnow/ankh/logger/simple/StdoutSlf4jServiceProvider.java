@@ -1,4 +1,4 @@
-package org.inksnow.ankh.loader.logger.simple;
+package org.inksnow.ankh.logger.simple;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.IMarkerFactory;

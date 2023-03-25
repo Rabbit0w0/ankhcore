@@ -1,7 +1,7 @@
-package org.inksnow.ankh.loader.logger;
+package org.inksnow.ankh.logger;
 
-import org.inksnow.ankh.loader.logger.delegate.DelegateLoggerFactory;
-import org.inksnow.ankh.loader.logger.simple.StdoutSlf4jServiceProvider;
+import org.inksnow.ankh.logger.delegate.DelegateLoggerFactory;
+import org.inksnow.ankh.logger.simple.StdoutSlf4jServiceProvider;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.IMarkerFactory;
 import org.slf4j.spi.MDCAdapter;

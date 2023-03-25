@@ -8,8 +8,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.inksnow.ankh.core.api.AnkhCoreLoader
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptEvent
 import org.inksnow.ankh.core.api.script.AnkhScriptEngine
-import org.inksnow.ankh.core.common.dsl.executeReport
 import org.inksnow.ankh.core.common.dsl.logger
+import org.inksnow.ankh.core.common.util.ExecuteReportUtil
 import org.inksnow.ankh.core.script.bsh.BshPlayerConsole
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,7 +30,7 @@ class BeanShellScriptEngine @Inject private constructor(
     val message = event.message
     Bukkit.getScheduler().runTask(coreLoader, Runnable {
       if (player.isOnline && (player.isOp || player.hasPermission("ankh.exec_script"))) {
-        player.executeReport {
+        ExecuteReportUtil.catchReport(player){
           runPlayerCommand(player, message.substring(1))
         }
       } else {

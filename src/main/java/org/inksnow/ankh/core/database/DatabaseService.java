@@ -16,6 +16,8 @@ import org.inksnow.ankh.core.api.plugin.PluginLifeCycle;
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptLifecycle;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
 
+import javax.annotation.WillNotClose;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -29,7 +31,8 @@ public class DatabaseService {
   @Getter
   private SessionFactory sessionFactory;
 
-  public DatabaseService(AnkhConfig config) {
+  @Inject
+  private DatabaseService(AnkhConfig config) {
     this.config = config;
   }
 

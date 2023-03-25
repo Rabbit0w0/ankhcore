@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 public class NopHologramService implements HologramService {
   @Inject
-  private NopHologramService(){
+  private NopHologramService() {
 
   }
 

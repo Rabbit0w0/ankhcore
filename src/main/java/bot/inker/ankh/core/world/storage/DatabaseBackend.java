@@ -26,7 +26,7 @@ public class DatabaseBackend implements StorageBackend {
 
   @Override
   public @Nonnull Stream<BlockStorageEntry> provide(@Nonnull ChunkStorage chunkStorage) {
-    try(val session = databaseService.getSessionFactory().openSession()) {
+    try (val session = databaseService.getSessionFactory().openSession()) {
       return session.createQuery("select E from stored_block E where E.location.chunk = :chunk", BlockStorageEntry.class)
         .setParameter("chunk", WorldChunkEmbedded.warp(chunkStorage))
         .list()
@@ -36,7 +36,7 @@ public class DatabaseBackend implements StorageBackend {
 
   @Override
   public void store(@Nonnull ChunkStorage chunkStorage, @Nonnull List<BlockStorageEntry> entries) {
-    try(val session = databaseService.getSessionFactory().openSession()) {
+    try (val session = databaseService.getSessionFactory().openSession()) {
       session.beginTransaction();
 
       session.createQuery("delete from stored_block E where E.location.chunk = :chunk", null)

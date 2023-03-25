@@ -3,10 +3,10 @@ package bot.inker.ankh.core.api.inventory.menu;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public enum ClickAction {
-  LEFT(true,false, false),
-  LEFT_SHIFT(true,false, true),
-  RIGHT(false,true, false),
-  RIGHT_SHIFT(false,true, true),
+  LEFT(true, false, false),
+  LEFT_SHIFT(true, false, true),
+  RIGHT(false, true, false),
+  RIGHT_SHIFT(false, true, true),
   NOTHING(false, false, false);
 
   private final boolean leftClicked;
@@ -20,15 +20,15 @@ public enum ClickAction {
   }
 
   public static ClickAction of(boolean leftClicked, boolean rightClicked, boolean shiftClicked) {
-    if(leftClicked == rightClicked){
+    if (leftClicked == rightClicked) {
       return NOTHING;
-    }else if(leftClicked){
+    } else if (leftClicked) {
       if (shiftClicked) {
         return LEFT_SHIFT;
       } else {
         return LEFT;
       }
-    }else if (rightClicked) {
+    } else if (rightClicked) {
       if (shiftClicked) {
         return RIGHT_SHIFT;
       } else {
@@ -38,7 +38,7 @@ public enum ClickAction {
     throw new IllegalStateException("Never happened");
   }
 
-  public static ClickAction of(InventoryClickEvent event){
+  public static ClickAction of(InventoryClickEvent event) {
     return of(event.isLeftClick(), event.isRightClick(), event.isShiftClick());
   }
 

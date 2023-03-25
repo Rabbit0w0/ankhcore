@@ -18,19 +18,19 @@ public class AnkhMenuService {
   private final Map<Player, InventoryMenu> menus = new WeakHashMap<>();
 
   @Inject
-  private AnkhMenuService(){
+  private AnkhMenuService() {
 
   }
 
   @SubscriptEvent
   private void onInventoryClose(InventoryCloseEvent event) {
     val humanEntity = event.getPlayer();
-    if(!(event.getPlayer() instanceof Player)){
+    if (!(event.getPlayer() instanceof Player)) {
       return;
     }
     val player = (Player) humanEntity;
     val menu = menus.remove(player);
-    if(menu != null){
+    if (menu != null) {
       menu.acceptCloseEvent(event);
     }
   }
@@ -38,28 +38,28 @@ public class AnkhMenuService {
   @SubscriptEvent(ignoreCancelled = true)
   private void onInventoryClick(InventoryClickEvent event) {
     val humanEntity = event.getWhoClicked();
-    if(!(event.getWhoClicked() instanceof Player)){
+    if (!(event.getWhoClicked() instanceof Player)) {
       return;
     }
     val player = (Player) humanEntity;
     val menu = menus.get(player);
-    if(menu != null){
+    if (menu != null) {
       player.sendMessage(event.getAction().name());
       menu.acceptClickEvent(event);
     }
   }
 
   @SubscriptEvent(ignoreCancelled = true)
-  private void onInventoryDrag(InventoryDragEvent event){
+  private void onInventoryDrag(InventoryDragEvent event) {
     event.getWhoClicked().sendMessage("DRAG");
 
     val humanEntity = event.getWhoClicked();
-    if(!(event.getWhoClicked() instanceof Player)){
+    if (!(event.getWhoClicked() instanceof Player)) {
       return;
     }
     val player = (Player) humanEntity;
     val menu = menus.get(player);
-    if(menu != null){
+    if (menu != null) {
       menu.acceptDragEvent(event);
     }
   }

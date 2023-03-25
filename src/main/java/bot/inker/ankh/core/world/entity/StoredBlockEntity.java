@@ -2,7 +2,6 @@ package bot.inker.ankh.core.world.entity;
 
 import bot.inker.ankh.core.api.world.storage.BlockStorageEntry;
 import bot.inker.ankh.core.common.entity.LocationEmbedded;
-import bot.inker.ankh.core.world.storage.BlockStorageEntryImpl;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

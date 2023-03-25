@@ -2,13 +2,13 @@ package bot.inker.ankh.core;
 
 import bot.inker.ankh.core.api.AnkhCoreLoader;
 import bot.inker.ankh.core.api.block.BlockRegistry;
-import bot.inker.ankh.core.api.storage.ChunkStorage;
-import bot.inker.ankh.core.api.storage.LocationStorage;
 import bot.inker.ankh.core.api.hologram.HologramService;
 import bot.inker.ankh.core.api.ioc.AnkhIocKey;
 import bot.inker.ankh.core.api.item.AnkhItemRegistry;
 import bot.inker.ankh.core.api.plugin.AnkhPluginManager;
 import bot.inker.ankh.core.api.plugin.annotations.PluginModule;
+import bot.inker.ankh.core.api.storage.ChunkStorage;
+import bot.inker.ankh.core.api.storage.LocationStorage;
 import bot.inker.ankh.core.api.world.WorldService;
 import bot.inker.ankh.core.api.world.storage.BlockStorageEntry;
 import bot.inker.ankh.core.api.world.storage.StorageBackend;
@@ -42,7 +42,7 @@ public class AnkhCorePluginModule extends AbstractModule {
   protected void configure() {
     bind(AnkhIocKey.Factory.class).to(BridgerKey.Factory.class);
 
-    bind(AnkhCoreLoader.class).toProvider(()->(AnkhCoreLoader) ((AnkhPluginContainerImpl) AnkhCoreLoaderPlugin.container).getBukkitPlugin());
+    bind(AnkhCoreLoader.class).toProvider(() -> (AnkhCoreLoader) ((AnkhPluginContainerImpl) AnkhCoreLoaderPlugin.container).getBukkitPlugin());
 
     bind(AnkhPluginManager.class).to(AnkhPluginManagerImpl.class);
     bind(AnkhPluginManagerImpl.class).toInstance(AnkhPluginManagerImpl.INSTANCE);

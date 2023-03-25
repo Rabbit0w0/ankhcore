@@ -19,31 +19,37 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 @Slf4j
 public class AbstractChestMenu implements InventoryMenu {
   private static final DcLazy<AnkhMenuService> menuService = IocLazy.of(AnkhMenuService.class);
 
-  @Getter @Setter
+  @Getter
+  @Setter
   private Component title = createTitle();
 
   @Getter
   private final Inventory inventory = createInventory();
 
-  @Getter @Setter
+  @Getter
+  @Setter
   private boolean modifiable = true;
 
-  @Getter @Setter
+  @Getter
+  @Setter
   private boolean playerModifiable = false;
 
   private boolean[] modifiableSlots = new boolean[54];
 
-  protected Component createTitle(){
+  protected static AnkhMenuService menuService() {
+    return menuService.get();
+  }
+
+  protected Component createTitle() {
     return Component.text("ankh chest menu");
   }
 
-  protected Inventory createInventory(){
+  protected Inventory createInventory() {
     Inventory inventory = Bukkit.createInventory(null, 54, title);
     for (int i = 0; i < 54; i++) {
       inventory.setItem(i, new ItemStack(Material.STONE));
@@ -51,27 +57,27 @@ public class AbstractChestMenu implements InventoryMenu {
     return inventory;
   }
 
-  protected void acceptMenuOpen(Player player, InventoryView view){
+  protected void acceptMenuOpen(Player player, InventoryView view) {
     //
   }
 
-  protected void acceptMenuClose(Player player, InventoryView view){
+  protected void acceptMenuClose(Player player, InventoryView view) {
     //
   }
 
-  public AbstractChestMenu modifiableSlot(int slot, boolean newValue){
+  public AbstractChestMenu modifiableSlot(int slot, boolean newValue) {
     modifiableSlots[slot] = newValue;
     return this;
   }
 
-  public boolean modifiableSlot(int slot){
-    if(slot >= 54){
-      throw new IllegalArgumentException("Invalid slot id: "+slot);
+  public boolean modifiableSlot(int slot) {
+    if (slot >= 54) {
+      throw new IllegalArgumentException("Invalid slot id: " + slot);
     }
     return modifiableSlots[slot];
   }
 
-  public void openForPlayer(Player ...players){
+  public void openForPlayer(Player... players) {
     CheckUtil.ensureMainThread();
     for (Player player : players) {
       menuService().registerMenu(player, this);
@@ -146,19 +152,19 @@ public class AbstractChestMenu implements InventoryMenu {
         break;
       }
       case MOVE_TO_OTHER_INVENTORY: {
-        if(!modifiable || !playerModifiable){
+        if (!modifiable || !playerModifiable) {
           cancelled = true;
         }
         break;
       }
       case HOTBAR_MOVE_AND_READD: {
-        if(!playerModifiable){
+        if (!playerModifiable) {
           cancelled = true;
         }
         break;
       }
       case HOTBAR_SWAP: {
-        if(!playerModifiable){
+        if (!playerModifiable) {
           cancelled = true;
         }
         break;
@@ -180,7 +186,7 @@ public class AbstractChestMenu implements InventoryMenu {
     if (isClickChest && !modifiable) {
       cancelled = true;
     }
-    if(!isClickChest && !playerModifiable){
+    if (!isClickChest && !playerModifiable) {
       cancelled = true;
     }
 
@@ -195,19 +201,15 @@ public class AbstractChestMenu implements InventoryMenu {
     var cancelled = false;
     for (Integer rawSlot : event.getRawSlots()) {
       val isClickChest = rawSlot < event.getInventory().getSize();
-      if(isClickChest && !modifiable){
+      if (isClickChest && !modifiable) {
         cancelled = true;
       }
-      if(!isClickChest && !playerModifiable){
+      if (!isClickChest && !playerModifiable) {
         cancelled = true;
       }
     }
-    if(cancelled){
+    if (cancelled) {
       event.setCancelled(true);
     }
-  }
-
-  protected static AnkhMenuService menuService(){
-    return menuService.get();
   }
 }

@@ -3,7 +3,9 @@ package bot.inker.ankh.core.api.util;
 import javax.annotation.Nonnull;
 
 public interface IBuilder<T extends IBuilder<T, R>, R> {
-  @Nonnull T getThis();
+  @Nonnull
+  T getThis();
 
-  @Nonnull R build();
+  @Nonnull
+  R build();
 }

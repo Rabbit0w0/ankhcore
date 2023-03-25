@@ -5,13 +5,15 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
 public interface InventoryMenu {
-  default void acceptCloseEvent(InventoryCloseEvent event){
+  default void acceptCloseEvent(InventoryCloseEvent event) {
     //
   }
-  default void acceptClickEvent(InventoryClickEvent event){
+
+  default void acceptClickEvent(InventoryClickEvent event) {
     //
   }
-  default void acceptDragEvent(InventoryDragEvent event){
+
+  default void acceptDragEvent(InventoryDragEvent event) {
     //
   }
 }

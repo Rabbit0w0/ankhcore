@@ -3,11 +3,11 @@ package bot.inker.ankh.testplugin.block
 import bot.inker.ankh.core.api.block.AnkhBlock
 import bot.inker.ankh.core.api.block.AsyncTickableBlock
 import bot.inker.ankh.core.api.block.TickableBlock
-import bot.inker.ankh.core.api.storage.LocationStorage
 import bot.inker.ankh.core.api.hologram.HologramService
 import bot.inker.ankh.core.api.hologram.HologramTask
 import bot.inker.ankh.core.api.plugin.AnkhPluginContainer
 import bot.inker.ankh.core.api.plugin.annotations.AutoRegistered
+import bot.inker.ankh.core.api.storage.LocationStorage
 import bot.inker.ankh.core.common.dsl.key
 import bot.inker.ankh.core.common.dsl.logger
 import bot.inker.ankh.testplugin.item.TestItem
@@ -87,7 +87,7 @@ class TestBlock private constructor(
     )
     val blockId = pluginContainer.key("test-block")
 
-    override fun key():Key = blockId
+    override fun key(): Key = blockId
 
     override fun load(id: Key, data: ByteArray): AnkhBlock {
       require(id == blockId)

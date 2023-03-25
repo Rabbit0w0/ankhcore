@@ -2,7 +2,6 @@ package bot.inker.ankh.core.common;
 
 import bot.inker.ankh.core.api.util.IRegistry;
 import bot.inker.ankh.core.common.util.CheckUtil;
-import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.Keyed;
@@ -24,8 +23,8 @@ public class AbstractRegistry<T extends Keyed> implements IRegistry<T> {
     val map = mapRef.get();
     val key = instance.key();
 
-    if(map.containsKey(key)){
-      throw new IllegalArgumentException("id '"+ key +"' have been registered.");
+    if (map.containsKey(key)) {
+      throw new IllegalArgumentException("id '" + key + "' have been registered.");
     }
 
     val newMap = new HashMap<Key, T>(map.size() + 1);
@@ -38,8 +37,8 @@ public class AbstractRegistry<T extends Keyed> implements IRegistry<T> {
   @Override
   public @Nonnull T require(@Nonnull Key key) {
     T instance = mapRef.get().get(key);
-    if(instance == null){
-      throw new IllegalArgumentException("id '"+key+"' not found in registry");
+    if (instance == null) {
+      throw new IllegalArgumentException("id '" + key + "' not found in registry");
     }
     return instance;
   }

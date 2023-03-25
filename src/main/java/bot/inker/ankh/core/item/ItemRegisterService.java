@@ -28,10 +28,10 @@ public class ItemRegisterService extends AbstractRegistry<AnkhItem> implements A
     }
     val item = event.getItem();
     val ankhItem = warpItem(item);
-    if(ankhItem == null){
+    if (ankhItem == null) {
       return;
     }
-    if(isUseItem(event)){
+    if (isUseItem(event)) {
       ankhItem.onUseItem(event);
     }
   }
@@ -40,14 +40,14 @@ public class ItemRegisterService extends AbstractRegistry<AnkhItem> implements A
   private void onBlockPlace(BlockPlaceEvent event) {
     val item = event.getItemInHand();
     val ankhItem = warpItem(item);
-    if(ankhItem != null){
+    if (ankhItem != null) {
       ankhItem.onBlockPlace(event);
     }
   }
 
-  private boolean isUseItem(PlayerInteractEvent event){
+  private boolean isUseItem(PlayerInteractEvent event) {
     // if deny use hand
-    if(event.useItemInHand() == Event.Result.DENY){
+    if (event.useItemInHand() == Event.Result.DENY) {
       return false;
     }
     // if default use block
@@ -59,7 +59,7 @@ public class ItemRegisterService extends AbstractRegistry<AnkhItem> implements A
       return true;
     }
     // if sneaking
-    if(event.getPlayer().isSneaking()) {
+    if (event.getPlayer().isSneaking()) {
       return true;
     }
     // if clicked block is interactable
@@ -67,10 +67,10 @@ public class ItemRegisterService extends AbstractRegistry<AnkhItem> implements A
   }
 
   private AnkhItem warpItem(ItemStack item) {
-    if(item == null){
+    if (item == null) {
       return null;
     }
-    if(item.getType() == Material.AIR){
+    if (item.getType() == Material.AIR) {
       return null;
     }
     val nbtItem = new NBTItem(item);

@@ -30,7 +30,7 @@ public class HologramProvider extends DcLazy<HologramService> implements Provide
   protected HologramService initialize() throws Throwable {
     // use config special hologram service
     val configHologram = config.getService().getHologram();
-    if(configHologram != null && !configHologram.isEmpty()){
+    if (configHologram != null && !configHologram.isEmpty()) {
       logger.info("use special hologram service: {}", configHologram);
       return injector.getInstance(Key.get(HologramService.class, Names.named(configHologram)));
     }

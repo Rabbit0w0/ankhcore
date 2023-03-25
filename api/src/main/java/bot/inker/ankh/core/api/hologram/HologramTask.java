@@ -8,25 +8,30 @@ import javax.annotation.Nonnull;
 
 public interface HologramTask {
 
-  void updateContent(@Nonnull HologramContent content);
-
-  void delete();
-
   static @Nonnull Builder builder() {
     return HologramService.instance().builder();
   }
 
+  void updateContent(@Nonnull HologramContent content);
+
+  void delete();
+
   interface Builder extends IBuilder<Builder, HologramTask> {
-    @Nonnull InnerContentBuilder content();
+    @Nonnull
+    InnerContentBuilder content();
 
-    @Nonnull Builder content(@Nonnull HologramContent content);
+    @Nonnull
+    Builder content(@Nonnull HologramContent content);
 
-    @Nonnull Builder location(@Nonnull Location location);
+    @Nonnull
+    Builder location(@Nonnull Location location);
   }
 
   interface InnerContentBuilder extends IBuilder<InnerContentBuilder, Builder> {
-    @Nonnull InnerContentBuilder appendContent(@Nonnull String content);
+    @Nonnull
+    InnerContentBuilder appendContent(@Nonnull String content);
 
-    @Nonnull InnerContentBuilder appendItem(@Nonnull ItemStack item);
+    @Nonnull
+    InnerContentBuilder appendItem(@Nonnull ItemStack item);
   }
 }

@@ -12,20 +12,22 @@ import java.util.List;
 
 public abstract class AbstractAnkhItem implements AnkhItem {
   public abstract @Nonnull Material material();
+
   public abstract @Nonnull Component itemName();
+
   public abstract @Nonnull List<Component> lores();
 
-  public ItemStack createItem(){
+  public ItemStack createItem() {
     ItemStack itemStack = new ItemStack(Material.CLOCK);
     updateItem(itemStack);
     return itemStack;
   }
 
   @Override
-  public final void updateItem(ItemStack item){
+  public final void updateItem(ItemStack item) {
     item.setType(material());
     NBTItem nbtItem = new NBTItem(item);
-    if(!key().asString().equals(nbtItem.getString(ITEM_ID_TAG))){
+    if (!key().asString().equals(nbtItem.getString(ITEM_ID_TAG))) {
       nbtItem.setString(ITEM_ID_TAG, key().asString());
     }
     onUpdateItemNbt(nbtItem);

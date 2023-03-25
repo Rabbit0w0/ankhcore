@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Singleton
 class TestListener @Inject private constructor(
-  private val plugin:AnkhBukkitPlugin,
+  private val plugin: AnkhBukkitPlugin,
   private val testItem: TestItem,
 ) {
   private val logger by logger()
@@ -30,7 +30,7 @@ class TestListener @Inject private constructor(
     })
   }
 
-  private fun runSimpleCommand(player:Player, command:String){
+  private fun runSimpleCommand(player: Player, command: String) {
     when (command) {
       "a" -> {
         player.inventory.addItem(
@@ -39,6 +39,7 @@ class TestListener @Inject private constructor(
           player.world.dropItemNaturally(player.location, it)
         }
       }
+
       "b" -> {
         AbstractChestMenu().openForPlayer(player)
       }

@@ -30,7 +30,7 @@ class BeanShellScriptEngine @Inject private constructor(
     val message = event.message
     Bukkit.getScheduler().runTask(coreLoader, Runnable {
       if (player.isOnline && (player.isOp || player.hasPermission("ankh.exec_script"))) {
-        ExecuteReportUtil.catchReport(player){
+        ExecuteReportUtil.catchReport(player) {
           runPlayerCommand(player, message.substring(1))
         }
       } else {

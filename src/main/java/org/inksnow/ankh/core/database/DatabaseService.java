@@ -16,7 +16,6 @@ import org.inksnow.ankh.core.api.plugin.PluginLifeCycle;
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptLifecycle;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
 
-import javax.annotation.WillNotClose;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.LinkedHashSet;

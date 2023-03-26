@@ -21,9 +21,9 @@ allprojects {
 
 
   val buildNumber = System.getenv("BUILD_NUMBER")
-  version = if(buildNumber == null){
+  version = if (buildNumber == null) {
     "1.0-dev-SNAPSHOT"
-  }else{
+  } else {
     "1.0-${System.getenv("BUILD_NUMBER")}-SNAPSHOT"
   }
 

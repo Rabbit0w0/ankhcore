@@ -27,6 +27,16 @@ public class ExecuteReportUtil {
     }
   }
 
+  public static boolean catchReport(Object sender, Runnable action) {
+    try {
+      action.run();
+      return true;
+    } catch (Exception e) {
+      reportForSender(sender, e);
+      return false;
+    }
+  }
+
   public static void reportForSender(Object rawSender, Exception exception) {
     try {
       if (!(rawSender instanceof CommandSender) || rawSender instanceof ConsoleCommandSender) {

@@ -52,11 +52,7 @@ public class AbstractChestMenu implements InventoryMenu {
   }
 
   protected Inventory createInventory() {
-    Inventory inventory = Bukkit.createInventory(this, 54, title);
-    for (int i = 0; i < 54; i++) {
-      inventory.setItem(i, new ItemStack(Material.STONE));
-    }
-    return inventory;
+    return Bukkit.createInventory(this, 54, title);
   }
 
   protected void acceptMenuOpen(Player player, InventoryView view) {
@@ -184,10 +180,13 @@ public class AbstractChestMenu implements InventoryMenu {
       }
     }
 
-    if (isClickChest && !modifiable) {
-      cancelled = true;
-    }
-    if (!isClickChest && !playerModifiable) {
+    if (isClickChest) {
+      if(modifiable){
+        cancelled = !modifiableSlot(event.getRawSlot());
+      }else{
+        cancelled = true;
+      }
+    }else if (!playerModifiable) {
       cancelled = true;
     }
 
@@ -202,10 +201,13 @@ public class AbstractChestMenu implements InventoryMenu {
     var cancelled = false;
     for (Integer rawSlot : event.getRawSlots()) {
       val isClickChest = rawSlot < event.getInventory().getSize();
-      if (isClickChest && !modifiable) {
-        cancelled = true;
-      }
-      if (!isClickChest && !playerModifiable) {
+      if (isClickChest) {
+        if(modifiable){
+          cancelled = !modifiableSlot(rawSlot);
+        }else{
+          cancelled = true;
+        }
+      }else if (!playerModifiable) {
         cancelled = true;
       }
     }

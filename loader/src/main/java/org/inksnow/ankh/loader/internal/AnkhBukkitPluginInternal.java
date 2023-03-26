@@ -138,6 +138,7 @@ public final class AnkhBukkitPluginInternal implements AnkhBukkitPlugin.$interna
       implUrlList.toArray(new URL[0]),
       parentClassLoader
     );
+    ankhClassLoader.registerLoadType(pluginDescriptionFile.getMain(), ClasspathLoadType.PARENT_FIRST);
     ankhClasspath.forEach(ankhClassLoader::registerLoadType);
 
     classLoaderByName.put(pluginDescriptionFile.getName(), ankhClassLoader);

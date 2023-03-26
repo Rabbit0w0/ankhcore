@@ -20,6 +20,8 @@ import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.ioc.IocLazy;
 import org.inksnow.ankh.core.common.util.CheckUtil;
 
+import javax.annotation.Nonnull;
+
 @Slf4j
 public class AbstractChestMenu implements InventoryMenu {
   private static final DcLazy<AnkhMenuService> menuService = IocLazy.of(AnkhMenuService.class);
@@ -50,7 +52,7 @@ public class AbstractChestMenu implements InventoryMenu {
   }
 
   protected Inventory createInventory() {
-    Inventory inventory = Bukkit.createInventory(null, 54, title);
+    Inventory inventory = Bukkit.createInventory(this, 54, title);
     for (int i = 0; i < 54; i++) {
       inventory.setItem(i, new ItemStack(Material.STONE));
     }
@@ -80,7 +82,6 @@ public class AbstractChestMenu implements InventoryMenu {
   public void openForPlayer(Player... players) {
     CheckUtil.ensureMainThread();
     for (Player player : players) {
-      menuService().registerMenu(player, this);
       acceptMenuOpen(player, player.openInventory(inventory));
     }
   }
@@ -211,5 +212,10 @@ public class AbstractChestMenu implements InventoryMenu {
     if (cancelled) {
       event.setCancelled(true);
     }
+  }
+
+  @Override
+  public @Nonnull Inventory getInventory() {
+    return inventory;
   }
 }

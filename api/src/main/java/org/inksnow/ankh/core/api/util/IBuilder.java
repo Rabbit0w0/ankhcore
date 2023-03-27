@@ -2,8 +2,26 @@ package org.inksnow.ankh.core.api.util;
 
 import javax.annotation.Nonnull;
 
+/**
+ * All builder interface
+ *
+ * @param <T> builder type
+ * @param <R> build artificial type
+ */
 public interface IBuilder<T extends IBuilder<T, R>, R> {
-  @Nonnull T getThis();
+  /**
+   * builder instance
+   *
+   * @return this
+   */
+  @Nonnull
+  T getThis();
 
-  @Nonnull R build();
+  /**
+   * build artificial
+   *
+   * @return instance built
+   */
+  @Nonnull
+  R build();
 }

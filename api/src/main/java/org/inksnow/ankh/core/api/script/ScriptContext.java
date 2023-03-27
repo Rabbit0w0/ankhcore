@@ -9,37 +9,147 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 
+/**
+ * ankh script engine context
+ */
 public interface ScriptContext {
-  @Nullable Player player();
-  @Nonnull Player requirePlayer();
-
-  @Nullable Object get(@Nonnull String key);
-  @Nonnull Object require(@Nonnull String key);
-  void set(@Nonnull String key, @Nullable Object value);
-  @Nullable Object remove(@Nonnull String key);
-  boolean contains(@Nonnull String key);
-  @Nonnull Map<String, Object> content();
-
-
-  static @Nonnull Factory factory(){
+  /**
+   * get factory instance
+   *
+   * @return factory instance
+   */
+  static @Nonnull Factory factory() {
     return $internal$actions$.FACTORY.get();
   }
 
-  static @Nonnull Builder builder(){
+  /**
+   * create builder instance
+   *
+   * @return builder instance
+   */
+  static @Nonnull Builder builder() {
     return factory().builder();
   }
 
+  /**
+   * get player
+   *
+   * @return player
+   */
+  @Nullable
+  Player player();
+
+  /**
+   * require player
+   *
+   * @return player
+   *
+   * @throws IllegalStateException if no player in context
+   */
+  @Nonnull
+  Player requirePlayer();
+
+  /**
+   * get context value by key
+   *
+   * @param key key
+   * @return context value
+   */
+  @Nullable
+  Object get(@Nonnull String key);
+
+  /**
+   * require context value by key
+   *
+   * @param key key
+   * @return context value
+   *
+   * @throws IllegalStateException if context not found
+   */
+  @Nonnull
+  Object require(@Nonnull String key);
+
+  /**
+   * set context value by key and value
+   *
+   * @param key key
+   * @param value context value
+   */
+  void set(@Nonnull String key, @Nullable Object value);
+
+  /**
+   * remove context value by key
+   *
+   * @param key key
+   * @return context value if contains, otherwise null
+   */
+  @Nullable
+  Object remove(@Nonnull String key);
+
+  /**
+   * get is context value exist by key
+   *
+   * @param key key
+   * @return is context value exist
+   */
+  boolean contains(@Nonnull String key);
+
+  /**
+   * get all context content
+   *
+   * @return all context content
+   */
+  @Nonnull
+  Map<String, Object> content();
+
+  /**
+   * script context factory
+   */
   interface Factory {
-    @Nonnull Builder builder();
+    /**
+     * create builder instance
+     *
+     * @return builder instance
+     */
+    @Nonnull
+    Builder builder();
+
+    /**
+     * create a empty instance
+     *
+     * @return empty instance
+     */
+    @Nonnull
+    default ScriptContext empty(){
+      return ScriptContext.builder().build();
+    }
   }
 
+  /**
+   * script context builder
+   */
   interface Builder extends IBuilder<Builder, ScriptContext> {
-    @Nonnull Builder player(@Nonnull Player player);
+    /**
+     * set context player
+     *
+     * @param player player instance
+     * @return this
+     */
+    @Nonnull
+    Builder player(@Nonnull Player player);
 
-    @Nonnull Builder with(@Nonnull String key, @Nullable Object value);
+    /**
+     * set context value by key
+     *
+     * @param key key
+     * @param value context value
+     * @return this
+     */
+    @Nonnull
+    Builder with(@Nonnull String key, @Nullable Object value);
   }
 
-  static class $internal$actions$ {
+  class $internal$actions$ {
     private static final DcLazy<Factory> FACTORY = IocLazy.of(Factory.class);
   }
 }

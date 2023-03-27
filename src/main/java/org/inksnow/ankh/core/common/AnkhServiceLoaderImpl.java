@@ -4,7 +4,6 @@ import com.google.inject.name.Names;
 import lombok.val;
 import net.kyori.adventure.key.Key;
 import org.inksnow.ankh.core.api.AnkhServiceLoader;
-import org.inksnow.ankh.core.api.plugin.AnkhPluginContainer;
 import org.inksnow.ankh.core.common.util.CheckUtil;
 import org.inksnow.ankh.core.plugin.AnkhPluginContainerImpl;
 

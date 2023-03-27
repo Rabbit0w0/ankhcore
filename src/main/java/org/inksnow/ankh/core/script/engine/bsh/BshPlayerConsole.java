@@ -13,10 +13,10 @@ import java.io.PrintStream;
 import java.io.Reader;
 
 public class BshPlayerConsole implements ConsoleInterface {
+  private static Reader nullReader = Reader.nullReader();
   private final Player player;
   private final PrintStream delegateOut;
   private final PrintStream delegateErr;
-  private static Reader nullReader = Reader.nullReader();
 
 
   public BshPlayerConsole(Player player) {
@@ -79,7 +79,7 @@ public class BshPlayerConsole implements ConsoleInterface {
     @Override
     public void text(String rawText) {
       val text = rawText.endsWith("\n") ? rawText.substring(0, rawText.length() - 1) : rawText;
-      if(!text.isEmpty()){
+      if (!text.isEmpty()) {
         player.sendMessage(Component.text(text, color));
       }
     }

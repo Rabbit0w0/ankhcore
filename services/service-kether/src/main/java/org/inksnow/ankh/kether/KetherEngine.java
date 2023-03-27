@@ -17,24 +17,24 @@ public class KetherEngine implements AnkhScriptEngine {
   private static final DcLazy<KetherEngine> INSTANCE = DcLazy.of((Supplier<KetherEngine>) KetherEngine::new);
   private final KetherScriptLoader scriptLoader = new KetherScriptLoader();
 
-  private KetherEngine(){
+  private KetherEngine() {
     //
   }
 
-  public static KetherEngine instance(){
+  public static KetherEngine instance() {
     return INSTANCE.get();
   }
 
   @Override
   public Object execute(ScriptContext context, String rawScript) throws Exception {
     final var player = context.get("player");
-    if(player instanceof CommandSender) {
+    if (player instanceof CommandSender) {
       context.set("@Sender", player);
-    }else{
+    } else {
       context.set("@Sender", Bukkit.getConsoleSender());
     }
 
-    final var script = rawScript.startsWith("def ") ? rawScript : "def main = { "+ rawScript + " }";
+    final var script = rawScript.startsWith("def ") ? rawScript : "def main = { " + rawScript + " }";
 
     final var quest = scriptLoader.load(
       ScriptService.INSTANCE,
@@ -42,7 +42,7 @@ public class KetherEngine implements AnkhScriptEngine {
       script.getBytes(StandardCharsets.UTF_8)
     );
 
-    final var rawResult =  new KetherContextBinding(context, ScriptService.INSTANCE, quest)
+    final var rawResult = new KetherContextBinding(context, ScriptService.INSTANCE, quest)
       .contextBinding()
       .runActions()
       .get();

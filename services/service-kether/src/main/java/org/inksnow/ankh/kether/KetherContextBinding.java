@@ -2,7 +2,10 @@ package org.inksnow.ankh.kether;
 
 import org.inksnow.ankh.core.api.script.ScriptContext;
 import org.jetbrains.annotations.NotNull;
-import taboolib.library.kether.*;
+import taboolib.library.kether.ParsedAction;
+import taboolib.library.kether.Quest;
+import taboolib.library.kether.QuestContext;
+import taboolib.library.kether.QuestFuture;
 import taboolib.module.kether.ScriptService;
 
 import javax.annotation.Nonnull;
@@ -10,7 +13,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
-public class KetherContextBinding{
+public class KetherContextBinding {
   private final ScriptContext context;
   private final AnkhBindingScriptContext contextBinding;
 
@@ -21,17 +24,6 @@ public class KetherContextBinding{
 
   public AnkhBindingScriptContext contextBinding() {
     return contextBinding;
-  }
-
-  public class AnkhBindingScriptContext extends taboolib.module.kether.ScriptContext {
-    public AnkhBindingScriptContext(@NotNull ScriptService service, @NotNull Quest script) {
-      super(service, script);
-    }
-
-    @Override
-    protected Frame createRootFrame() {
-      return new SimpleNamedFrame(null, new LinkedList<>(), new AnkhVarTable(null, context), QuestContext.BASE_BLOCK, this);
-    }
   }
 
   public static class AnkhVarTable implements QuestContext.VarTable {
@@ -82,7 +74,7 @@ public class KetherContextBinding{
     @Override
     public void set(@NotNull String name, Object value) {
       if (name.startsWith("~") || parent() == null) {
-         context.set(name, value);
+        context.set(name, value);
       } else {
         parent().set(name, value);
       }
@@ -131,6 +123,17 @@ public class KetherContextBinding{
           ((QuestFuture<?>) o).close();
         }
       }
+    }
+  }
+
+  public class AnkhBindingScriptContext extends taboolib.module.kether.ScriptContext {
+    public AnkhBindingScriptContext(@NotNull ScriptService service, @NotNull Quest script) {
+      super(service, script);
+    }
+
+    @Override
+    protected Frame createRootFrame() {
+      return new SimpleNamedFrame(null, new LinkedList<>(), new AnkhVarTable(null, context), QuestContext.BASE_BLOCK, this);
     }
   }
 }

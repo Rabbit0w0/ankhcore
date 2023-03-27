@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +35,7 @@ public class ScriptContextImpl implements ScriptContext {
   @Override
   public @Nonnull Object require(@Nonnull String key) {
     if (!content.containsKey(key)) {
-      throw new IllegalArgumentException("required script context " + key + " not found.");
+      throw new IllegalStateException("required script context " + key + " not found.");
     }
     return content.get(key);
   }

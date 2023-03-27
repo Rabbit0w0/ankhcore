@@ -26,7 +26,7 @@ public class AbstractRegistry<T extends Keyed> implements IRegistry<T> {
     val key = StoreKey.warp(instance.key());
 
     if (map.containsKey(key)) {
-      throw new IllegalArgumentException("id '" + key + "' have been registered.");
+      throw new IllegalStateException("id '" + key + "' have been registered.");
     }
 
     val newMap = new HashMap<StoreKey, T>(map.size() + 1);
@@ -40,7 +40,7 @@ public class AbstractRegistry<T extends Keyed> implements IRegistry<T> {
   public @Nonnull T require(@Nonnull Key key) {
     T instance = mapRef.get().get(StoreKey.warp(key));
     if (instance == null) {
-      throw new IllegalArgumentException("id '" + key + "' not found in registry");
+      throw new IllegalStateException("id '" + key + "' not found in registry");
     }
     return instance;
   }

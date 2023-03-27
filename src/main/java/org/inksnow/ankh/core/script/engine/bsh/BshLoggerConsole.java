@@ -2,24 +2,19 @@ package org.inksnow.ankh.core.script.engine.bsh;
 
 import bsh.ConsoleInterface;
 import lombok.val;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.entity.Player;
 import org.inksnow.ankh.core.common.linebuf.LineBufferingOutputStream;
 import org.inksnow.ankh.core.common.linebuf.TextStream;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.event.Level;
 
 import java.io.PrintStream;
 import java.io.Reader;
 
 public class BshLoggerConsole implements ConsoleInterface {
+  private static Reader nullReader = Reader.nullReader();
   private final Logger logger;
   private final PrintStream delegateOut;
   private final PrintStream delegateErr;
-  private static Reader nullReader = Reader.nullReader();
 
   public BshLoggerConsole(Logger logger) {
     this.logger = logger;
@@ -77,20 +72,20 @@ public class BshLoggerConsole implements ConsoleInterface {
 
     private DelegateOut(boolean isError) {
       this.isError = isError;
-      if (isError){
+      if (isError) {
         enabled = logger.isErrorEnabled();
-      }else{
+      } else {
         enabled = logger.isInfoEnabled();
       }
     }
 
     @Override
     public void text(String rawText) {
-      if(enabled){
+      if (enabled) {
         val text = rawText.endsWith("\n") ? rawText.substring(0, rawText.length() - 1) : rawText;
-        if(isError){
+        if (isError) {
           logger.error("{}", text);
-        }else{
+        } else {
           logger.info("{}", text);
         }
       }

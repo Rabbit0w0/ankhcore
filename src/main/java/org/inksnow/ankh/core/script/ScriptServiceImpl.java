@@ -19,6 +19,7 @@ import org.inksnow.ankh.core.api.script.AnkhScriptService;
 import org.inksnow.ankh.core.api.script.ScriptContext;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
 import org.inksnow.ankh.core.common.util.ExecuteReportUtil;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.helpers.MessageFormatter;
 
 import javax.annotation.Nullable;
@@ -36,18 +37,17 @@ import java.util.function.Supplier;
 public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScriptEngine> {
   private final AnkhCoreLoader coreLoader;
   private final AnkhConfig config;
-  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of((Supplier<AnkhScriptEngine>) this::defaultEngineImpl);
-  private final Map<String, AnkhScriptEngine> engineMap = new ConcurrentSkipListMap<>();
+  private final Map<String, AnkhScriptEngine> engineMap = new ConcurrentSkipListMap<>();  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of((Supplier<AnkhScriptEngine>) this::defaultEngineImpl);
   private final Function<String, AnkhScriptEngine> engineLoadFunction = this::loadEngineImpl;
-
   @Inject
   private ScriptServiceImpl(AnkhCoreLoader coreLoader, AnkhConfig config) {
     this.coreLoader = coreLoader;
     this.config = config;
   }
 
-  public AnkhScriptEngine engine(@Nullable String key){
-    if(key == null){
+  @Override
+  public @NotNull AnkhScriptEngine engine(@Nullable String key) {
+    if (key == null) {
       return defaultEngine.get();
     }
     return engineMap.computeIfAbsent(key, engineLoadFunction);
@@ -58,48 +58,38 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     return engine(configDefaultService == null ? "ankh-core:bsh" : configDefaultService);
   }
 
-  private AnkhScriptEngine loadEngineImpl(String key){
+  private AnkhScriptEngine loadEngineImpl(String key) {
     return AnkhServiceLoader.loadService(key, AnkhScriptEngine.class);
   }
 
   @Override
-  public AnkhScriptEngine get() {
+  public @NotNull AnkhScriptEngine get() {
     return defaultEngine.get();
   }
 
-  public void runPlayerShell(Player player, String shell){
-    String engineName;
-    String command;
-    if(shell.startsWith(":")){
-      val firstSplit = shell.indexOf(' ');
-      engineName = shell.substring(1, firstSplit == -1 ? shell.length() : firstSplit);
-      command = firstSplit == -1 ? "" : shell.substring(firstSplit + 1);
-    }else{
-      engineName = null;
-      command = shell;
-    }
-
+  @Override
+  public void runPlayerShell(@NotNull Player player, @NotNull String shell) {
     long passTime;
     Object result;
-    val engine = engineName == null ? get() : engine(engineName);
-    try{
+    try {
       val startTime = System.nanoTime();
-      result = engine.execute(ScriptContext.builder().player(player).build(), command);
+      result = executeShell(ScriptContext.builder().player(player).build(), shell);
       passTime = System.nanoTime() - startTime;
-    }catch (Exception e){
+    } catch (Exception e) {
       ExecuteReportUtil.reportForSender(player, e);
       return;
     }
+
     val resultMessage = MessageFormatter.format("{}", result).getMessage();
     Component layoutComponent;
-    if(resultMessage.length() > 45){
+    if (resultMessage.length() > 45) {
       layoutComponent = Component.text(resultMessage.substring(0, 42), NamedTextColor.WHITE)
         .append(Component.text("...", NamedTextColor.BLUE));
-    }else {
+    } else {
       layoutComponent = Component.text(resultMessage, NamedTextColor.WHITE);
     }
     Component hoverComponent;
-    if(resultMessage.length() > 1000){
+    if (resultMessage.length() > 1000) {
       hoverComponent = Component.text(resultMessage.substring(0, 800), NamedTextColor.WHITE)
         .append(Component.newline())
         .append(Component.newline())
@@ -109,8 +99,8 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
         .append(Component.text("type: ", NamedTextColor.GOLD))
         .append(Component.text(result == null ? "null" : result.getClass().getName()))
         .append(Component.newline())
-        .append(Component.text("result length="+resultMessage.length()+", cut first 800 chars", NamedTextColor.GOLD));
-    }else{
+        .append(Component.text("result length=" + resultMessage.length() + ", cut first 800 chars", NamedTextColor.GOLD));
+    } else {
       hoverComponent = Component.text(resultMessage, NamedTextColor.WHITE)
         .append(Component.newline())
         .append(Component.newline())
@@ -124,40 +114,42 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       .append(layoutComponent.hoverEvent(hoverComponent)));
   }
 
-  public void runConsoleShell(String shell){
-    String engineName;
-    String command;
-    if(shell.startsWith(":")){
-      val firstSplit = shell.indexOf(' ');
-      engineName = shell.substring(1, firstSplit == -1 ? shell.length() : firstSplit);
-      command = firstSplit == -1 ? "" : shell.substring(firstSplit + 1);
-    }else{
-      engineName = null;
-      command = shell;
-    }
-
-    val engine = engineName == null ? get() : engine(engineName);
-
+  @Override
+  public void runConsoleShell(@NotNull String shell) {
     long passtime;
-
     Object result;
-    try{
+    try {
       val startTime = System.nanoTime();
-      result = engine.execute(ScriptContext.builder()
-        .with("isConsole", true)
-        .build(), command);
+      result = executeShell(ScriptContext.builder().with("isConsole", true).build(), shell);
       passtime = System.nanoTime() - startTime;
     } catch (Exception e) {
       logger.error("Failed to run console shell", e);
       return;
     }
 
-    logger.info("[result] class={}, time={}ms", result.getClass().getName(), TimeUnit.NANOSECONDS.toMillis(passtime));
+    logger.info("[result] class={}, time={}ms", result == null ? "null" : result.getClass().getName(), TimeUnit.NANOSECONDS.toMillis(passtime));
     logger.info("[result] {}", result);
   }
 
+  @Override
+  public Object executeShell(@NotNull ScriptContext context, @NotNull String shell) throws Exception {
+    String engineName;
+    String command;
+    if (shell.startsWith(":")) {
+      val firstSplit = shell.indexOf(' ');
+      engineName = shell.substring(1, firstSplit == -1 ? shell.length() : firstSplit);
+      command = firstSplit == -1 ? "" : shell.substring(firstSplit + 1);
+    } else {
+      engineName = null;
+      command = shell;
+    }
+    val engine = engineName == null ? get() : engine(engineName);
+
+    return engine.execute(context, command);
+  }
+
   @SubscriptEvent(priority = EventPriority.LOW, ignoreCancelled = true)
-  private void onServerCommand(ServerCommandEvent event){
+  private void onServerCommand(ServerCommandEvent event) {
     val rawCommand = event.getCommand();
     if (rawCommand.startsWith(config.getPlayerShell().getPrefix())) {
       event.setCancelled(true);
@@ -166,12 +158,12 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
   }
 
   @SubscriptEvent(priority = EventPriority.LOW, ignoreCancelled = true)
-  private void onAsyncChat(AsyncChatEvent event){
-    if(!config.getPlayerShell().getEnabled()){
+  private void onAsyncChat(AsyncChatEvent event) {
+    if (!config.getPlayerShell().getEnabled()) {
       return;
     }
     val message = PlainComponentSerializer.plain().serialize(event.originalMessage());
-    if(message.startsWith(config.getPlayerShell().getPrefix())){
+    if (message.startsWith(config.getPlayerShell().getPrefix())) {
       event.setCancelled(true);
       val player = event.getPlayer();
       val command = message.substring(config.getPlayerShell().getPrefix().length());
@@ -181,10 +173,12 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
         }
         if (player.isOp() || player.hasPermission("ankh.script.execute-any")) {
           runPlayerShell(player, command);
-        }else{
+        } else {
           player.sendMessage(Component.text("Permission denied", NamedTextColor.RED));
         }
       });
     }
   }
+
+
 }

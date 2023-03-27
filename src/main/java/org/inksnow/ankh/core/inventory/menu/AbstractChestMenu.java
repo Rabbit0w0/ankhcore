@@ -6,14 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
 import org.inksnow.ankh.core.api.inventory.menu.ClickAction;
 import org.inksnow.ankh.core.api.inventory.menu.InventoryMenu;
 import org.inksnow.ankh.core.api.ioc.DcLazy;
@@ -181,12 +179,12 @@ public class AbstractChestMenu implements InventoryMenu {
     }
 
     if (isClickChest) {
-      if(modifiable){
+      if (modifiable) {
         cancelled = !modifiableSlot(event.getRawSlot());
-      }else{
+      } else {
         cancelled = true;
       }
-    }else if (!playerModifiable) {
+    } else if (!playerModifiable) {
       cancelled = true;
     }
 
@@ -202,12 +200,12 @@ public class AbstractChestMenu implements InventoryMenu {
     for (Integer rawSlot : event.getRawSlots()) {
       val isClickChest = rawSlot < event.getInventory().getSize();
       if (isClickChest) {
-        if(modifiable){
+        if (modifiable) {
           cancelled = !modifiableSlot(rawSlot);
-        }else{
+        } else {
           cancelled = true;
         }
-      }else if (!playerModifiable) {
+      } else if (!playerModifiable) {
         cancelled = true;
       }
     }

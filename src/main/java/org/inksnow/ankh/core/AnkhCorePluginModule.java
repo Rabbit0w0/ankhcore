@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import lombok.extern.slf4j.Slf4j;
 import org.inksnow.ankh.core.api.AnkhCoreLoader;
+import org.inksnow.ankh.core.api.AnkhServiceLoader;
 import org.inksnow.ankh.core.api.block.BlockRegistry;
 import org.inksnow.ankh.core.api.hologram.HologramService;
 import org.inksnow.ankh.core.api.ioc.AnkhIocKey;
@@ -16,6 +17,7 @@ import org.inksnow.ankh.core.api.world.WorldService;
 import org.inksnow.ankh.core.api.world.storage.BlockStorageEntry;
 import org.inksnow.ankh.core.api.world.storage.StorageBackend;
 import org.inksnow.ankh.core.block.BlockRegisterService;
+import org.inksnow.ankh.core.common.AnkhServiceLoaderImpl;
 import org.inksnow.ankh.core.common.entity.LocationEmbedded;
 import org.inksnow.ankh.core.common.entity.WorldChunkEmbedded;
 import org.inksnow.ankh.core.hologram.HologramProvider;
@@ -41,6 +43,7 @@ public class AnkhCorePluginModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(AnkhIocKey.Factory.class).to(BridgerKey.Factory.class);
+    bind(AnkhServiceLoader.class).to(AnkhServiceLoaderImpl.class);
 
     bind(AnkhCoreLoader.class).toProvider(() -> (AnkhCoreLoader) ((AnkhPluginContainerImpl) AnkhCoreLoaderPlugin.container).getBukkitPlugin());
 

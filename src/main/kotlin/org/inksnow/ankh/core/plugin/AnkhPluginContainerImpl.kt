@@ -11,6 +11,7 @@ import org.inksnow.ankh.core.api.AnkhCore
 import org.inksnow.ankh.core.api.plugin.AnkhBukkitPlugin
 import org.inksnow.ankh.core.api.plugin.AnkhPluginContainer
 import org.inksnow.ankh.core.api.plugin.AnkhPluginYml
+import org.inksnow.ankh.core.common.AnkhServiceLoaderImpl
 import org.inksnow.ankh.core.common.dsl.logger
 import org.inksnow.ankh.core.ioc.BridgerInjector
 import org.inksnow.ankh.loader.AnkhClassLoader
@@ -88,6 +89,7 @@ class AnkhPluginContainerImpl(
           },
         )
       }
+      AnkhServiceLoaderImpl.staticRegisterPlugin(pluginYml.name, this)
       initListeners.call()
     }
 

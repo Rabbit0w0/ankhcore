@@ -19,6 +19,8 @@ class AnkhConfig @Inject private constructor(
 
   val worldStorage = WorldStorageBean(configuration.getConfigurationSection("world-storage")!!)
 
+  val playerShell = PlayerShell(configuration.getConfigurationSection("player-shell")!!)
+
   val service = ServiceBean(configuration.getConfigurationSection("service")!!)
 
   val tickRate = configuration.getInt("tick-rate")
@@ -45,5 +47,11 @@ class AnkhConfig @Inject private constructor(
 
   class ServiceBean(configuration: ConfigurationSection) {
     val hologram = configuration.getString("hologram")
+    val script = configuration.getString("script")
+  }
+
+  class PlayerShell(configuration: ConfigurationSection) {
+    val enabled = configuration.getBoolean("enabled")
+    val prefix = configuration.getString("prefix")!!
   }
 }

@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.inksnow.ankh.core.api.AnkhCoreLoader;
 import org.inksnow.ankh.core.api.AnkhServiceLoader;
 import org.inksnow.ankh.core.api.block.BlockRegistry;
-import org.inksnow.ankh.core.api.hologram.HologramService;
 import org.inksnow.ankh.core.api.ioc.AnkhIocKey;
 import org.inksnow.ankh.core.api.item.AnkhItemRegistry;
 import org.inksnow.ankh.core.api.plugin.AnkhPluginManager;
@@ -20,9 +19,6 @@ import org.inksnow.ankh.core.block.BlockRegisterService;
 import org.inksnow.ankh.core.common.AnkhServiceLoaderImpl;
 import org.inksnow.ankh.core.common.entity.LocationEmbedded;
 import org.inksnow.ankh.core.common.entity.WorldChunkEmbedded;
-import org.inksnow.ankh.core.hologram.HologramProvider;
-import org.inksnow.ankh.core.hologram.hds.HdsHologramService;
-import org.inksnow.ankh.core.hologram.nop.NopHologramService;
 import org.inksnow.ankh.core.ioc.BridgerKey;
 import org.inksnow.ankh.core.item.ItemRegisterService;
 import org.inksnow.ankh.core.plugin.AnkhPluginContainerImpl;
@@ -55,10 +51,6 @@ public class AnkhCorePluginModule extends AbstractModule {
 
     bind(LocationStorage.Factory.class).to(LocationEmbedded.Factory.class);
     bind(ChunkStorage.Factory.class).to(WorldChunkEmbedded.Factory.class);
-
-    bind(HologramService.class).toProvider(HologramProvider.class);
-    bind(HologramService.class).annotatedWith(Names.named("holographic-displays")).to(HdsHologramService.class);
-    bind(HologramService.class).annotatedWith(Names.named("nop")).to(NopHologramService.class);
 
     bind(WorldService.class).to(AnkhWorldService.class);
     bind(BlockStorageEntry.Factory.class).to(BlockStorageEntryImpl.Factory.class);

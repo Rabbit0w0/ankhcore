@@ -10,3 +10,5 @@ include("gradle-plugin")
 include("libs:shadow-spring-boot-loader")
 include("libs:shadow-paper-lib")
 include("libs:shadow-nbtapi")
+
+include("services:service-kether")

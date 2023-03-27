@@ -33,6 +33,7 @@ allprojects {
     maven("https://repo.codemc.io/repository/maven-public/")
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://redempt.dev")
   }
 
   java {

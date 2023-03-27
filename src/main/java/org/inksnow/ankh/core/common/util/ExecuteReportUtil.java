@@ -69,9 +69,8 @@ public class ExecuteReportUtil {
               .append(Component.text("CodeSource: " + getCodeSource(element.getClassName()), NamedTextColor.GRAY))
               .build()
             ));
-
-          sender.sendMessage(component);
         }
+        sender.sendMessage(component);
       }
     } catch (Exception e) {
       logger.error("Failed to handle command", e);

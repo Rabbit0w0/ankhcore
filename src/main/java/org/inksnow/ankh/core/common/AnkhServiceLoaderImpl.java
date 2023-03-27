@@ -57,11 +57,19 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
 
   public static void staticRegisterPlugin(@Nonnull String name, @Nonnull AnkhPluginContainerImpl container) {
     CheckUtil.ensureMainThread();
+
+    for (KeyCacheKey key : keyInstanceMap.get().keySet()) {
+      if (name.equals(key.namespace)) {
+        throw new IllegalStateException("namespace '" + key.namespace + "' is a plugin namespace, it should be registered by ioc");
+      }
+    }
+
     val rawMap = pluginRegistry.get();
     val newMap = new HashMap<String, AnkhPluginContainerImpl>(rawMap.size() + 1);
     newMap.putAll(rawMap);
     newMap.put(name, container);
     pluginRegistry.set(newMap);
+
     keyCacheMap.set(new ConcurrentHashMap<>());
     stringCacheMap.set(new ConcurrentHashMap<>());
   }

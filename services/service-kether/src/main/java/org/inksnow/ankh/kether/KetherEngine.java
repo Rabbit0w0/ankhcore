@@ -5,10 +5,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.script.AnkhScriptEngine;
+import org.inksnow.ankh.core.api.script.PreparedScript;
 import org.inksnow.ankh.core.api.script.ScriptContext;
 import taboolib.module.kether.KetherScriptLoader;
 import taboolib.module.kether.ScriptService;
 
+import javax.annotation.Nonnull;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -26,15 +28,8 @@ public class KetherEngine implements AnkhScriptEngine {
   }
 
   @Override
-  public Object execute(ScriptContext context, String rawScript) throws Exception {
-    final var player = context.get("player");
-    if (player instanceof CommandSender) {
-      context.set("@Sender", player);
-    } else {
-      context.set("@Sender", Bukkit.getConsoleSender());
-    }
-
-    final var script = rawScript.startsWith("def ") ? rawScript : "def main = { " + rawScript + " }";
+  public @Nonnull PreparedScript prepare(@Nonnull String shell) throws Exception {
+    final var script = shellToScript(shell);
 
     final var quest = scriptLoader.load(
       ScriptService.INSTANCE,
@@ -42,10 +37,10 @@ public class KetherEngine implements AnkhScriptEngine {
       script.getBytes(StandardCharsets.UTF_8)
     );
 
-    final var rawResult = new KetherContextBinding(context, ScriptService.INSTANCE, quest)
-      .contextBinding()
-      .runActions()
-      .get();
-    return rawResult == Unit.INSTANCE ? null : rawResult;
+    return new KetherPreparedScript(quest);
+  }
+
+  private static @Nonnull String shellToScript(@Nonnull String shell){
+    return shell.startsWith("def ") ? shell : "def main = { " + shell + " }";
   }
 }

@@ -14,12 +14,20 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 public class KetherContextBinding {
-  private final ScriptContext context;
+  private final ScriptContext[] contextRef;
   private final AnkhBindingScriptContext contextBinding;
 
-  public KetherContextBinding(@Nonnull ScriptContext context, @Nonnull ScriptService service, @Nonnull Quest script) {
-    this.context = context;
+  public KetherContextBinding(@Nonnull ScriptService service, @Nonnull Quest script) {
+    this.contextRef = new ScriptContext[1];
     this.contextBinding = new AnkhBindingScriptContext(service, script);
+  }
+
+  public ScriptContext context() {
+    return contextRef[0];
+  }
+
+  public void context(ScriptContext context){
+    contextRef[0] = context;
   }
 
   public AnkhBindingScriptContext contextBinding() {
@@ -28,15 +36,12 @@ public class KetherContextBinding {
 
   public static class AnkhVarTable implements QuestContext.VarTable {
     private final QuestContext.Frame parent;
-    private final ScriptContext context;
+    private final ScriptContext[] contextRef;
 
-    public AnkhVarTable(QuestContext.Frame parent) {
-      this(parent, ScriptContext.builder().build());
-    }
 
-    public AnkhVarTable(QuestContext.Frame parent, ScriptContext context) {
+    public AnkhVarTable(QuestContext.Frame parent, ScriptContext[] contextRef) {
       this.parent = parent;
-      this.context = context;
+      this.contextRef = contextRef;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class KetherContextBinding {
     @Override
     @SuppressWarnings("unchecked")
     public <T> Optional<T> get(@NotNull String name) throws CompletionException {
-      Object o = context.get(name);
+      Object o = contextRef[0].get(name);
       if (o == null && parent != null) {
         return parent.variables().get(name);
       }
@@ -60,7 +65,7 @@ public class KetherContextBinding {
     @Override
     @SuppressWarnings("unchecked")
     public <T> Optional<QuestFuture<T>> getFuture(@NotNull String name) {
-      Object o = context.get(name);
+      Object o = contextRef[0].get(name);
       if (o == null && parent != null) {
         return parent.variables().getFuture(name);
       }
@@ -74,7 +79,7 @@ public class KetherContextBinding {
     @Override
     public void set(@NotNull String name, Object value) {
       if (name.startsWith("~") || parent() == null) {
-        context.set(name, value);
+        contextRef[0].set(name, value);
       } else {
         parent().set(name, value);
       }
@@ -82,34 +87,35 @@ public class KetherContextBinding {
 
     @Override
     public <T> void set(@NotNull String name, @NotNull ParsedAction<T> owner, @NotNull CompletableFuture<T> future) {
-      this.context.set(name, new QuestFuture<>(owner, future));
+      this.contextRef[0].set(name, new QuestFuture<>(owner, future));
     }
 
     @Override
     public void remove(@NotNull String name) {
-      this.context.remove(name);
+      this.contextRef[0].remove(name);
     }
 
     @Override
     public void clear() {
-      for (String key : this.context.content().keySet()) {
-        this.context.remove(key);
+      ScriptContext context = contextRef[0];
+      for (String key : context.content().keySet()) {
+        context.remove(key);
       }
     }
 
     @Override
     public Set<String> keys() {
-      return Collections.unmodifiableSet(this.context.content().keySet());
+      return Collections.unmodifiableSet(this.contextRef[0].content().keySet());
     }
 
     @Override
     public Collection<Map.Entry<String, Object>> values() {
-      return Collections.unmodifiableCollection(this.context.content().entrySet());
+      return Collections.unmodifiableCollection(this.contextRef[0].content().entrySet());
     }
 
     @Override
     public void initialize(@NotNull QuestContext.Frame frame) {
-      for (Object o : this.context.content().values()) {
+      for (Object o : this.contextRef[0].content().values()) {
         if (o instanceof QuestFuture) {
           ((QuestFuture<?>) o).run(frame);
         }
@@ -118,7 +124,7 @@ public class KetherContextBinding {
 
     @Override
     public void close() {
-      for (Object o : this.context.content().values()) {
+      for (Object o : this.contextRef[0].content().values()) {
         if (o instanceof QuestFuture) {
           ((QuestFuture<?>) o).close();
         }
@@ -133,7 +139,7 @@ public class KetherContextBinding {
 
     @Override
     protected Frame createRootFrame() {
-      return new SimpleNamedFrame(null, new LinkedList<>(), new AnkhVarTable(null, context), QuestContext.BASE_BLOCK, this);
+      return new SimpleNamedFrame(null, new LinkedList<>(), new AnkhVarTable(null, contextRef), QuestContext.BASE_BLOCK, this);
     }
   }
 }

@@ -1,5 +1,7 @@
 package org.inksnow.ankh.core.api.script;
 
+import javax.annotation.Nonnull;
+
 /**
  * Ankh script engine can execure script
  */
@@ -13,5 +15,16 @@ public interface AnkhScriptEngine {
    *
    * @throws Exception exception when run script
    */
-  Object execute(ScriptContext context, String script) throws Exception;
+  default @Nonnull Object execute(@Nonnull ScriptContext context, @Nonnull String script) throws Exception {
+    return prepare(script).execute(context);
+  }
+
+  /**
+   * prepare script with engine
+   *
+   * @param script script text
+   * @return prepared script
+   * @throws Exception exception when parse script
+   */
+  @Nonnull PreparedScript prepare(@Nonnull String script) throws Exception;
 }

@@ -1,15 +1,18 @@
 package org.inksnow.ankh.core.script.engine.groovy;
 
 import groovy.lang.Binding;
+import lombok.Getter;
+import lombok.Setter;
 import org.inksnow.ankh.core.api.script.ScriptContext;
 
 import java.util.Map;
 
 public class GroovyContextBinding extends Binding {
-  private final ScriptContext context;
+  @Getter @Setter
+  private ScriptContext context;
 
-  public GroovyContextBinding(ScriptContext context) {
-    this.context = context;
+  public GroovyContextBinding() {
+    this.context = ScriptContext.factory().empty();
   }
 
   @Override

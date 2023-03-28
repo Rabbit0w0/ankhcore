@@ -19,9 +19,9 @@ import org.inksnow.ankh.core.api.script.AnkhScriptService;
 import org.inksnow.ankh.core.api.script.ScriptContext;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
 import org.inksnow.ankh.core.common.util.ExecuteReportUtil;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.helpers.MessageFormatter;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -46,7 +46,7 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
   }
 
   @Override
-  public @NotNull AnkhScriptEngine engine(@Nullable String key) {
+  public @Nonnull AnkhScriptEngine engine(@Nullable String key) {
     if (key == null || key.isEmpty()) {
       return defaultEngine.get();
     }
@@ -63,12 +63,12 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
   }
 
   @Override
-  public @NotNull AnkhScriptEngine get() {
+  public @Nonnull AnkhScriptEngine get() {
     return defaultEngine.get();
   }
 
   @Override
-  public void runPlayerShell(@NotNull Player player, @NotNull String shell) {
+  public void runPlayerShell(@Nonnull Player player, @Nonnull String shell) {
     long passTime;
     Object result;
     try {
@@ -94,7 +94,8 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
         .append(Component.newline())
         .append(Component.newline())
         .append(Component.text("time: ", NamedTextColor.GOLD))
-        .append(Component.text(TimeUnit.NANOSECONDS.toMillis(passTime), NamedTextColor.WHITE))
+        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(passTime), NamedTextColor.WHITE))
+        .append(Component.text("ns", NamedTextColor.GOLD))
         .append(Component.newline())
         .append(Component.text("type: ", NamedTextColor.GOLD))
         .append(Component.text(result == null ? "null" : result.getClass().getName()))
@@ -115,7 +116,7 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
   }
 
   @Override
-  public void runConsoleShell(@NotNull String shell) {
+  public void runConsoleShell(@Nonnull String shell) {
     long passtime;
     Object result;
     try {
@@ -127,12 +128,12 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       return;
     }
 
-    logger.info("[result] class={}, time={}ms", result == null ? "null" : result.getClass().getName(), TimeUnit.NANOSECONDS.toMillis(passtime));
+    logger.info("[result] class={}, time={}ns", result == null ? "null" : result.getClass().getName(), TimeUnit.NANOSECONDS.toNanos(passtime));
     logger.info("[result] {}", result);
   }
 
   @Override
-  public Object executeShell(@NotNull ScriptContext context, @NotNull String shell) throws Exception {
+  public Object executeShell(@Nonnull ScriptContext context, @Nonnull String shell) throws Exception {
     String engineName;
     String command;
     if (shell.startsWith(":")) {
@@ -179,6 +180,4 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       });
     }
   }
-
-
 }

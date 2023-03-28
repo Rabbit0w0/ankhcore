@@ -47,7 +47,7 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
 
   @Override
   public @NotNull AnkhScriptEngine engine(@Nullable String key) {
-    if (key == null) {
+    if (key == null || key.isEmpty()) {
       return defaultEngine.get();
     }
     return engineMap.computeIfAbsent(key, engineLoadFunction);

@@ -12,7 +12,8 @@ public class AnkhHologramModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(HologramService.class).toProvider(HologramProvider.class);
-    bind(HologramService.class).annotatedWith(Names.named("holographic-displays")).to(HdsHologramService.class);
+
+    bind(HologramService.class).annotatedWith(Names.named("hds")).to(HdsHologramService.class);
     bind(HologramService.class).annotatedWith(Names.named("nop")).to(NopHologramService.class);
   }
 }

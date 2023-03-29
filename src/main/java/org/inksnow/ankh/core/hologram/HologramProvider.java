@@ -6,6 +6,7 @@ import com.google.inject.name.Names;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.bukkit.Bukkit;
+import org.inksnow.ankh.core.api.AnkhServiceLoader;
 import org.inksnow.ankh.core.api.hologram.HologramService;
 import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
@@ -32,7 +33,7 @@ public class HologramProvider extends DcLazy<HologramService> implements Provide
     val configHologram = config.service().hologram();
     if (configHologram != null && !configHologram.isEmpty()) {
       logger.info("use special hologram service: {}", configHologram);
-      return injector.getInstance(Key.get(HologramService.class, Names.named(configHologram)));
+      return AnkhServiceLoader.loadService(configHologram, HologramService.class);
     }
 
     // test and use support service

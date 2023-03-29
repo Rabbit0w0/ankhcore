@@ -39,14 +39,14 @@ import java.util.List;
 public class StreamByteBuffer {
   private static final int DEFAULT_CHUNK_SIZE = 4096;
   private static final int MAX_CHUNK_SIZE = 1024 * 1024;
-  private LinkedList<StreamByteBufferChunk> chunks = new LinkedList<StreamByteBufferChunk>();
+  private final LinkedList<StreamByteBufferChunk> chunks = new LinkedList<StreamByteBufferChunk>();
+  private final int chunkSize;
+  private final int maxChunkSize;
+  private final StreamByteBufferOutputStream output;
+  private final StreamByteBufferInputStream input;
   private StreamByteBufferChunk currentWriteChunk;
   private StreamByteBufferChunk currentReadChunk;
-  private int chunkSize;
   private int nextChunkSize;
-  private int maxChunkSize;
-  private StreamByteBufferOutputStream output;
-  private StreamByteBufferInputStream input;
   private int totalBytesUnreadInList;
 
   public StreamByteBuffer() {
@@ -93,7 +93,7 @@ public class StreamByteBuffer {
   }
 
   private static <T extends Buffer> Buffer castBuffer(T byteBuffer) {
-    return (Buffer) byteBuffer;
+    return byteBuffer;
   }
 
   private static <T extends Throwable> RuntimeException uncheckException(Throwable e) throws T {
@@ -311,9 +311,9 @@ public class StreamByteBuffer {
   }
 
   static class StreamByteBufferChunk {
+    private final byte[] buffer;
+    private final int size;
     private int pointer;
-    private byte[] buffer;
-    private int size;
     private int used;
 
     public StreamByteBufferChunk(int size) {

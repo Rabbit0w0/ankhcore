@@ -29,7 +29,7 @@ class TestBlock private constructor(
 
   override fun key(): Key = factory.blockId
 
-  override fun runTick(location: LocationStorage) {
+  override fun runTick() {
     val location = this.location ?: return
 
     nextMaterial.set(factory.materials[factory.random.nextInt(factory.materials.size)])
@@ -44,7 +44,7 @@ class TestBlock private constructor(
     }
   }
 
-  override fun runAsyncTick(location: LocationStorage) {
+  override fun runAsyncTick() {
     // nextMaterial.set(materials[random.nextInt(materials.size)])
   }
 

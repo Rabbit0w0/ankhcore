@@ -8,7 +8,8 @@ import org.inksnow.ankh.core.api.script.ScriptContext;
 import java.util.Map;
 
 public class GroovyContextBinding extends Binding {
-  @Getter @Setter
+  @Getter
+  @Setter
   private ScriptContext context;
 
   public GroovyContextBinding() {

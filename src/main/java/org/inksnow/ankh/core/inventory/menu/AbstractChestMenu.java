@@ -23,23 +23,18 @@ import javax.annotation.Nonnull;
 @Slf4j
 public class AbstractChestMenu implements InventoryMenu {
   private static final DcLazy<AnkhMenuService> menuService = IocLazy.of(AnkhMenuService.class);
-
+  private final boolean[] modifiableSlots = new boolean[54];
   @Getter
   @Setter
   private Component title = createTitle();
-
   @Getter
   private final Inventory inventory = createInventory();
-
   @Getter
   @Setter
   private boolean modifiable = true;
-
   @Getter
   @Setter
   private boolean playerModifiable = false;
-
-  private boolean[] modifiableSlots = new boolean[54];
 
   protected static AnkhMenuService menuService() {
     return menuService.get();

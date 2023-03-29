@@ -13,7 +13,7 @@ import java.io.PrintStream;
 import java.io.Reader;
 
 public class BshPlayerConsole implements ConsoleInterface {
-  private static Reader nullReader = Reader.nullReader();
+  private static final Reader nullReader = Reader.nullReader();
   private final Player player;
   private final PrintStream delegateOut;
   private final PrintStream delegateErr;

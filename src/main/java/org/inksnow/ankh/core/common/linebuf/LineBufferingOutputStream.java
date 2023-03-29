@@ -27,8 +27,8 @@ public class LineBufferingOutputStream extends OutputStream {
   private final OutputStream output;
   private final byte lastLineSeparatorByte;
   private final int lineMaxLength;
+  private final StreamByteBuffer buffer;
   private boolean hasBeenClosed;
-  private StreamByteBuffer buffer;
   private int counter;
 
   public LineBufferingOutputStream(TextStream handler, String lineSeparator) {

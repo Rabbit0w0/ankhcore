@@ -11,7 +11,7 @@ import java.io.PrintStream;
 import java.io.Reader;
 
 public class BshLoggerConsole implements ConsoleInterface {
-  private static Reader nullReader = Reader.nullReader();
+  private static final Reader nullReader = Reader.nullReader();
   private final Logger logger;
   private final PrintStream delegateOut;
   private final PrintStream delegateErr;

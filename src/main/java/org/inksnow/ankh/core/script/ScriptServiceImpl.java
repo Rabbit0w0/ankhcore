@@ -16,6 +16,7 @@ import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptEvent;
 import org.inksnow.ankh.core.api.script.AnkhScriptEngine;
 import org.inksnow.ankh.core.api.script.AnkhScriptService;
+import org.inksnow.ankh.core.api.script.PreparedScript;
 import org.inksnow.ankh.core.api.script.ScriptContext;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
 import org.inksnow.ankh.core.common.util.ExecuteReportUtil;
@@ -37,13 +38,13 @@ import java.util.function.Supplier;
 public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScriptEngine> {
   private final AnkhCoreLoader coreLoader;
   private final AnkhConfig config;
-  private final Map<String, AnkhScriptEngine> engineMap = new ConcurrentSkipListMap<>();  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of((Supplier<AnkhScriptEngine>) this::defaultEngineImpl);
+  private final Map<String, AnkhScriptEngine> engineMap = new ConcurrentSkipListMap<>();
   private final Function<String, AnkhScriptEngine> engineLoadFunction = this::loadEngineImpl;
   @Inject
   private ScriptServiceImpl(AnkhCoreLoader coreLoader, AnkhConfig config) {
     this.coreLoader = coreLoader;
     this.config = config;
-  }
+  }  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of((Supplier<AnkhScriptEngine>) this::defaultEngineImpl);
 
   @Override
   public @Nonnull AnkhScriptEngine engine(@Nullable String key) {
@@ -54,7 +55,7 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
   }
 
   private AnkhScriptEngine defaultEngineImpl() {
-    val configDefaultService = config.getService().getScript();
+    val configDefaultService = config.service().script();
     return engine(configDefaultService == null ? "ankh-core:bsh" : configDefaultService);
   }
 
@@ -69,12 +70,20 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
 
   @Override
   public void runPlayerShell(@Nonnull Player player, @Nonnull String shell) {
-    long passTime;
+    long ppsCost;
+    long executeCost;
     Object result;
+
     try {
+      val context = ScriptContext.builder().with("isConsole", true).build();
       val startTime = System.nanoTime();
-      result = executeShell(ScriptContext.builder().player(player).build(), shell);
-      passTime = System.nanoTime() - startTime;
+      val script = prepareShell(shell);
+      val ppsTime = System.nanoTime();
+      result = script.execute(context);
+      val finishedTime = System.nanoTime();
+
+      ppsCost = ppsTime - startTime;
+      executeCost = finishedTime - ppsTime;
     } catch (Exception e) {
       ExecuteReportUtil.reportForSender(player, e);
       return;
@@ -93,8 +102,12 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       hoverComponent = Component.text(resultMessage.substring(0, 800), NamedTextColor.WHITE)
         .append(Component.newline())
         .append(Component.newline())
-        .append(Component.text("time: ", NamedTextColor.GOLD))
-        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(passTime), NamedTextColor.WHITE))
+        .append(Component.text("prepare: ", NamedTextColor.GOLD))
+        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(ppsCost), NamedTextColor.WHITE))
+        .append(Component.text("ns", NamedTextColor.GOLD))
+        .append(Component.newline())
+        .append(Component.text("execute: ", NamedTextColor.GOLD))
+        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(executeCost), NamedTextColor.WHITE))
         .append(Component.text("ns", NamedTextColor.GOLD))
         .append(Component.newline())
         .append(Component.text("type: ", NamedTextColor.GOLD))
@@ -105,8 +118,13 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       hoverComponent = Component.text(resultMessage, NamedTextColor.WHITE)
         .append(Component.newline())
         .append(Component.newline())
-        .append(Component.text("time: ", NamedTextColor.GOLD))
-        .append(Component.text(TimeUnit.NANOSECONDS.toMillis(passTime), NamedTextColor.WHITE))
+        .append(Component.text("prepare: ", NamedTextColor.GOLD))
+        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(ppsCost), NamedTextColor.WHITE))
+        .append(Component.text("ns", NamedTextColor.GOLD))
+        .append(Component.newline())
+        .append(Component.text("execute: ", NamedTextColor.GOLD))
+        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(executeCost), NamedTextColor.WHITE))
+        .append(Component.text("ns", NamedTextColor.GOLD))
         .append(Component.newline())
         .append(Component.text("type: ", NamedTextColor.GOLD))
         .append(Component.text(result == null ? "null" : result.getClass().getName()));
@@ -117,23 +135,39 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
 
   @Override
   public void runConsoleShell(@Nonnull String shell) {
-    long passtime;
+    long ppsCost;
+    long executeCost;
     Object result;
+
     try {
+      val context = ScriptContext.builder().with("isConsole", true).build();
       val startTime = System.nanoTime();
-      result = executeShell(ScriptContext.builder().with("isConsole", true).build(), shell);
-      passtime = System.nanoTime() - startTime;
+      val script = prepareShell(shell);
+      val ppsTime = System.nanoTime();
+      result = script.execute(context);
+      val finishedTime = System.nanoTime();
+
+      ppsCost = ppsTime - startTime;
+      executeCost = finishedTime - ppsTime;
     } catch (Exception e) {
       logger.error("Failed to run console shell", e);
       return;
     }
 
-    logger.info("[result] class={}, time={}ns", result == null ? "null" : result.getClass().getName(), TimeUnit.NANOSECONDS.toNanos(passtime));
+    logger.info("[result] class={}, prepare={}ns execute={}ns",
+      result == null ? "null" : result.getClass().getName(),
+      TimeUnit.NANOSECONDS.toNanos(ppsCost),
+      TimeUnit.NANOSECONDS.toNanos(executeCost)
+    );
     logger.info("[result] {}", result);
   }
 
   @Override
   public Object executeShell(@Nonnull ScriptContext context, @Nonnull String shell) throws Exception {
+    return prepareShell(shell).execute(context);
+  }
+
+  public PreparedScript prepareShell(@Nonnull String shell) throws Exception {
     String engineName;
     String command;
     if (shell.startsWith(":")) {
@@ -146,28 +180,28 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     }
     val engine = engineName == null ? get() : engine(engineName);
 
-    return engine.execute(context, command);
+    return engine.prepare(command);
   }
 
   @SubscriptEvent(priority = EventPriority.LOW, ignoreCancelled = true)
   private void onServerCommand(ServerCommandEvent event) {
     val rawCommand = event.getCommand();
-    if (rawCommand.startsWith(config.getPlayerShell().getPrefix())) {
+    if (rawCommand.startsWith(config.playerShell().prefix())) {
       event.setCancelled(true);
-      runConsoleShell(rawCommand.substring(config.getPlayerShell().getPrefix().length()));
+      runConsoleShell(rawCommand.substring(config.playerShell().prefix().length()));
     }
   }
 
   @SubscriptEvent(priority = EventPriority.LOW, ignoreCancelled = true)
   private void onAsyncChat(AsyncChatEvent event) {
-    if (!config.getPlayerShell().getEnabled()) {
+    if (!config.playerShell().enable()) {
       return;
     }
     val message = PlainComponentSerializer.plain().serialize(event.originalMessage());
-    if (message.startsWith(config.getPlayerShell().getPrefix())) {
+    if (message.startsWith(config.playerShell().prefix())) {
       event.setCancelled(true);
       val player = event.getPlayer();
-      val command = message.substring(config.getPlayerShell().getPrefix().length());
+      val command = message.substring(config.playerShell().prefix().length());
       Bukkit.getScheduler().runTask(coreLoader, () -> {
         if (!player.isOnline()) {
           return;
@@ -180,4 +214,8 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       });
     }
   }
+
+
+
+
 }

@@ -16,9 +16,9 @@ public class ScriptCacheStack<T, E extends Throwable> {
 
   public T borrow() throws E {
     T result = juStack.pop();
-    if(result == null){
+    if (result == null) {
       return supplier.create();
-    }else{
+    } else {
       return result;
     }
   }
@@ -36,10 +36,24 @@ public class ScriptCacheStack<T, E extends Throwable> {
 
   private static class FastJuStack<T> extends Stack<T> {
     @Override
+    public synchronized T pop() {
+      T obj;
+      int len = size();
+
+      obj = peek();
+      if (obj == null) {
+        return null;
+      }
+      removeElementAt(len - 1);
+
+      return obj;
+    }
+
+    @Override
     public synchronized T peek() {
       int len = size();
 
-      if (len == 0){
+      if (len == 0) {
         return null;
       }
 

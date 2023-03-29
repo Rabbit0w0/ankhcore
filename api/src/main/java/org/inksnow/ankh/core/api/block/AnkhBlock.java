@@ -1,5 +1,6 @@
 package org.inksnow.ankh.core.api.block;
 
+import com.destroystokyo.paper.event.block.BlockDestroyEvent;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.Keyed;
 import org.bukkit.Location;
@@ -86,6 +87,16 @@ public interface AnkhBlock extends Keyed {
    * @see PlayerInteractEvent
    */
   default void onPlayerInteract(@Nonnull PlayerInteractEvent event) {
+    //
+  }
+
+  /**
+   * Called on BlockDestroyEvent
+   *
+   * @param event the event
+   * @see BlockDestroyEvent
+   */
+  default void onBlockDestroy(@Nonnull BlockDestroyEvent event){
     //
   }
 

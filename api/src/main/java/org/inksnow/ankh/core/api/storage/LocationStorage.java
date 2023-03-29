@@ -42,6 +42,12 @@ public interface LocationStorage {
 
   /**
    * same as <code>LocationStorage.factory().of(worldId, x, y, z);</code>
+   *
+   * @param worldId worldId, get from org.bukkit.World#getUID
+   * @param x       block x location
+   * @param y       block y location
+   * @param z       block z location
+   * @return location storage instance
    */
   static @Nonnull LocationStorage of(@Nonnull UUID worldId, int x, int y, int z) {
     return factory().of(worldId, x, y, z);
@@ -49,6 +55,9 @@ public interface LocationStorage {
 
   /**
    * same as <code>LocationStorage.factory().of(location);</code>
+   *
+   * @param location bukkit location instance
+   * @return location storage instance
    */
   static @Nonnull LocationStorage of(@Nonnull Location location) {
     return factory().of(location);

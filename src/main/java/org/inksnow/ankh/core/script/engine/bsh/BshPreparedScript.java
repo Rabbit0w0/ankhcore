@@ -17,7 +17,7 @@ public class BshPreparedScript implements PreparedScript {
   private final String shell;
 
   @Override
-  public Object execute(@Nonnull ScriptContext context) throws Exception{
+  public Object execute(@Nonnull ScriptContext context) throws Exception {
     val interpreter = new Interpreter();
     val player = context.player();
     interpreter.setClassLoader(this.getClass().getClassLoader());

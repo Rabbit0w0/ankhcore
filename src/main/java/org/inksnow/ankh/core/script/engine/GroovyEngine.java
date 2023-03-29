@@ -15,7 +15,7 @@ import javax.inject.Singleton;
 @Singleton
 public class GroovyEngine implements AnkhScriptEngine {
   private final GroovyShell publicGroovyShell = new GroovyShell(this.getClass().getClassLoader());
-  private final ScriptCacheStack<GroovyShell, Exception> groovyShellCache = new ScriptCacheStack<>(()->new GroovyShell(
+  private final ScriptCacheStack<GroovyShell, Exception> groovyShellCache = new ScriptCacheStack<>(() -> new GroovyShell(
     this.getClass().getClassLoader(),
     new GroovyContextBinding()
   ));
@@ -24,9 +24,9 @@ public class GroovyEngine implements AnkhScriptEngine {
   public @Nonnull Object execute(@Nonnull ScriptContext context, @Nonnull String script) throws Exception {
     val groovyShell = groovyShellCache.borrow();
     try {
-     ((GroovyContextBinding) groovyShell.getContext()).context(context);
-     return groovyShell.evaluate(script);
-    }finally {
+      ((GroovyContextBinding) groovyShell.getContext()).context(context);
+      return groovyShell.evaluate(script);
+    } finally {
       groovyShellCache.sendBack(groovyShell);
     }
   }

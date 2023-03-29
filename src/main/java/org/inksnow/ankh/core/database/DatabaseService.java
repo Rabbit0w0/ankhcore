@@ -42,17 +42,17 @@ public class DatabaseService {
 
   @SubscriptLifecycle(PluginLifeCycle.ENABLE)
   private void onEnable() {
-    val database = config.getDatabase();
+    val database = config.database();
     val configuration = new Configuration();
     configuration.setProperty(
       AvailableSettings.CONNECTION_PROVIDER,
       HikariCPConnectionProvider.class.getName()
     );
-    configuration.setProperty(AvailableSettings.DRIVER, database.getDriver().getDriverClass());
-    configuration.setProperty(AvailableSettings.DIALECT, database.getDriver().getDialectClass());
-    configuration.setProperty(AvailableSettings.URL, database.getUrl());
-    configuration.setProperty(AvailableSettings.USER, database.getUsername());
-    configuration.setProperty(AvailableSettings.PASS, database.getPassword());
+    configuration.setProperty(AvailableSettings.DRIVER, database.driver().driverClass());
+    configuration.setProperty(AvailableSettings.DIALECT, database.driver().dialectClass());
+    configuration.setProperty(AvailableSettings.URL, database.url());
+    configuration.setProperty(AvailableSettings.USER, database.username());
+    configuration.setProperty(AvailableSettings.PASS, database.password());
     configuration.setProperty(AvailableSettings.HBM2DDL_AUTO, "update");
     configuration.setProperty(AvailableSettings.AUTO_CLOSE_SESSION, "true");
 

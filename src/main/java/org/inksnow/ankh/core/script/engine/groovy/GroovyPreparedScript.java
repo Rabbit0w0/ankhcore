@@ -20,7 +20,8 @@ public class GroovyPreparedScript implements PreparedScript {
     this.localCache = new ScriptCacheStack<>(this::provideScript);
     localCache.prepare(1);
   }
-  private Script provideScript(){
+
+  private Script provideScript() {
     return publicGroovyShell.parse(script, new GroovyContextBinding());
   }
 
@@ -30,7 +31,7 @@ public class GroovyPreparedScript implements PreparedScript {
     try {
       ((GroovyContextBinding) script.getBinding()).context(context);
       return script.run();
-    }finally {
+    } finally {
       localCache.sendBack(script);
     }
   }

@@ -38,7 +38,7 @@ public class HologramProvider extends DcLazy<HologramService> implements Provide
 
     // test and use support service
     if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
-      return injector.getInstance(Key.get(HologramService.class, Names.named("holographic-displays")));
+      return injector.getInstance(Key.get(HologramService.class, Names.named("hds")));
     }
 
     // no support service found, use nop

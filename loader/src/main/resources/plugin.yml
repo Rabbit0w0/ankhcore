@@ -13,5 +13,8 @@ ankh-classpath:
   "org.apache.logging.": SELF_ONLY
   "io.github.bakedlibs.": SELF_ONLY
   "com.google.inject.": SELF_ONLY
+  "com.google.common.": SELF_ONLY
   "org.hibernate.": SELF_ONLY
   "it.unimi.dsi.fastutil.": SELF_ONLY
+  "org.codehaus.groovy.": SELF_ONLY
+  "groovy.": SELF_ONLY

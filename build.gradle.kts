@@ -51,10 +51,10 @@ allprojects {
           "https://repo.inker.bot/repository/maven-releases/"
         }
       ) {
-        credentials {
-          username = System.getenv("NEXUS_USERNAME")
-          password = System.getenv("NEXUS_PASSWORD")
-        }
+        // credentials {
+        //   username = System.getenv("NEXUS_USERNAME")
+        //   password = System.getenv("NEXUS_PASSWORD")
+        // }
       }
     }
 

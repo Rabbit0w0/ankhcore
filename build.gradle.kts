@@ -44,23 +44,25 @@ allprojects {
 
   publishing {
     repositories {
-      maven(
-        if (project.version.toString().endsWith("-SNAPSHOT")) {
-          "https://repo.inker.bot/repository/maven-snapshots/"
-        } else {
-          "https://repo.inker.bot/repository/maven-releases/"
+      if (project.version.toString().endsWith("-SNAPSHOT")) {
+        maven("https://repo.inker.bot/repository/maven-snapshots/"){
+          credentials {
+            username = System.getenv("NEXUS_USERNAME")
+            password = System.getenv("NEXUS_PASSWORD")
+          }
         }
-      ) {
-        credentials {
-          username = System.getenv("NEXUS_USERNAME")
-          password = System.getenv("NEXUS_PASSWORD")
+      }else{
+        maven("https://repo.inker.bot/repository/maven-releases/"){
+          credentials {
+            username = System.getenv("NEXUS_USERNAME")
+            password = System.getenv("NEXUS_PASSWORD")
+          }
         }
-      }
-
-      maven("https://s0.blobs.inksnow.org/") {
-        credentials {
-          username = ""
-          password = System.getenv("IREPO_PASSWORD")
+        maven("https://s0.blobs.inksnow.org/") {
+          credentials {
+            username = ""
+            password = System.getenv("IREPO_PASSWORD")
+          }
         }
       }
     }

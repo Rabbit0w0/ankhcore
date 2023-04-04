@@ -13,10 +13,10 @@ allprojects {
   apply(plugin = "java-library")
   apply(plugin = "maven-publish")
 
-  if (rootProject == project) {
-    group = "org.inksnow.ankh"
+  group = if (rootProject == project) {
+    "org.inksnow.ankh"
   } else {
-    group = "org.inksnow.ankh.core"
+    "org.inksnow.ankh.core"
   }
 
 

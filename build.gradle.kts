@@ -77,7 +77,7 @@ allprojects {
         pom {
           name.set("AnkhCore${project.name}")
           description.set("A bukkit plugin loader named AnkhCore")
-          url.set("https://github.com/InkerBot/AnkhCore")
+          url.set("https://github.com/ankhorg/ankhcore")
           properties.set(mapOf())
           licenses {
             license {
@@ -94,9 +94,9 @@ allprojects {
             }
           }
           scm {
-            connection.set("scm:git:git://github.com/InkerBot/AnkhCore.git")
-            developerConnection.set("scm:git:ssh://github.com/InkerBot/AnkhCore.git")
-            url.set("https://github.com/InkerBot/AnkhCore")
+            connection.set("scm:git:git://github.com/ankhorg/ankhcore.git")
+            developerConnection.set("scm:git:ssh://github.com/ankhorg/ankhcore.git")
+            url.set("https://github.com/ankhorg/ankhcore")
           }
         }
         from(components["java"])

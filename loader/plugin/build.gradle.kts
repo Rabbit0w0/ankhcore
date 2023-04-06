@@ -44,3 +44,15 @@ tasks.jar {
     into("ankh-logger")
   })
 }
+
+tasks.publish {
+  enabled = false
+}
+
+tasks.javadocJar {
+  enabled = false
+}
+
+tasks.sourcesJar {
+  enabled = false
+}

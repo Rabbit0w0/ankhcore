@@ -1,0 +1,15 @@
+{
+  "projectName": "ankhcore",
+  "projectFriendlyName": "Ankh Core",
+  "versionGroupName": "1.0",
+  "versionName": "1.0-SNAPSHOT",
+  "buildChannel": "DEFAULT",
+  "repositoryPath": ".",
+  "downloads": [
+    {
+      "type": "application",
+      "name": "jar",
+      "path": "loader/plugin/build/libs/*.jar"
+    }
+  ]
+}

@@ -59,11 +59,9 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     return engine(configDefaultService == null ? "ankh-core:bsh" : configDefaultService);
   }
 
-  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of(this::defaultEngineImpl);
-
   private AnkhScriptEngine loadEngineImpl(String key) {
     return AnkhServiceLoader.loadService(key, AnkhScriptEngine.class);
-  }
+  }  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of(this::defaultEngineImpl);
 
   @Override
   public @Nonnull AnkhScriptEngine get() {
@@ -217,4 +215,6 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       });
     }
   }
+
+
 }

@@ -5,6 +5,7 @@ import org.inksnow.ankh.core.api.ioc.IocLazy;
 import org.inksnow.ankh.core.api.util.DcLazy;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * Ankh service loader, as based named ioc
@@ -67,8 +68,20 @@ public interface AnkhServiceLoader {
    * @return the service instance
    * @throws IllegalStateException if the service not found
    */
-  static <T> @Nonnull T configLoadService(@Nonnull Class<T> clazz) {
-    return instance().configLoadServiceImpl(clazz);
+  static <T> @Nonnull T service(@Nonnull Class<T> clazz) {
+    return instance().serviceImpl(clazz);
+  }
+
+  /**
+   * get service list from config
+   *
+   * @param clazz the service class
+   * @param <T>   the service type (same as the service class)
+   * @return the service instance list
+   * @throws IllegalStateException if the service not found
+   */
+  static <T> @Nonnull List<T> serviceList(@Nonnull Class<T> clazz) {
+    return instance().serviceListImpl(clazz);
   }
 
   /**
@@ -111,7 +124,17 @@ public interface AnkhServiceLoader {
    * @return the service instance
    * @throws IllegalStateException if the service not found
    */
-  <T> @Nonnull T configLoadServiceImpl(@Nonnull Class<T> clazz);
+  <T> @Nonnull T serviceImpl(@Nonnull Class<T> clazz);
+
+  /**
+   * get service list from config
+   *
+   * @param clazz the service class
+   * @param <T>   the service type (same as the service class)
+   * @return the service instance list
+   * @throws IllegalStateException if the service not found
+   */
+  <T> @Nonnull List<T> serviceListImpl(@Nonnull Class<T> clazz);
 
   public static class $internal$actions$ {
     private static DcLazy<AnkhServiceLoader> INSTANCE = IocLazy.of(AnkhServiceLoader.class);

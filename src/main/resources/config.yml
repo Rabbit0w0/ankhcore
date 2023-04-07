@@ -24,6 +24,11 @@ player-shell:
 # tick rate, run ankh-tick in x ticks
 tick-rate: 3
 
+item:
+  lore-fetcher:
+    mark-start: '@ankh-item '
+    mark-end: '@'
+
 # select service
 service:
   # hologram service, empty to auto-detect
@@ -31,3 +36,8 @@ service:
   # 'nop': no operation
   hologram: ''
   script: 'bsh'
+  # pdc
+  # database
+  # filesystem
+  world-storage: 'database'
+  item-tagger: 'pdc'

@@ -7,6 +7,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectRBTreeMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectAVLTreeMap;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -31,6 +32,7 @@ import org.inksnow.ankh.core.api.plugin.annotations.SubscriptEvent;
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptLifecycle;
 import org.inksnow.ankh.core.api.world.WorldService;
 import org.inksnow.ankh.core.api.world.storage.BlockStorageEntry;
+import org.inksnow.ankh.core.block.ProtectDataBlock;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
 import org.inksnow.ankh.core.common.entity.LocationEmbedded;
 import org.inksnow.ankh.core.common.entity.WorldChunkEmbedded;
@@ -216,15 +218,11 @@ public class PdcWorldService implements WorldService {
         Bukkit.getScheduler().runTask(coreLoader, () -> {
           try {
             for (val entry : entryList) {
-              val blockFactory = blockRegistry.get(entry.blockId());
-              if (blockFactory == null) {
-                continue;
-              }
               handleBlockSet(
                 chunkStorage,
                 new Location(chunk.getWorld(), entry.location().x(), entry.location().y(), entry.location().z()),
                 LocationEmbedded.warp(entry.location()).position(),
-                blockFactory.load(entry.blockId(), entry.content())
+                loadBlock(entry.blockId(), entry.content())
               );
             }
             chunkStorage.loaded.set(true);
@@ -238,6 +236,19 @@ public class PdcWorldService implements WorldService {
         logger.error("Failed to load chunk storage", e);
       }
     });
+  }
+
+  private AnkhBlock loadBlock(Key blockId, byte[] content){
+    val blockFactory = blockRegistry.get(blockId);
+    if (blockFactory == null) {
+      return new ProtectDataBlock(blockId, content);
+    }
+    try {
+      return blockFactory.load(blockId, content);
+    }catch (Exception e){
+      logger.warn("Failed to load block {}", blockId, e);
+      return new ProtectDataBlock(blockId, content);
+    }
   }
 
   @SubscriptLifecycle(PluginLifeCycle.ENABLE)

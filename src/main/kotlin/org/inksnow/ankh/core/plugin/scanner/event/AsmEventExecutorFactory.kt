@@ -32,7 +32,8 @@ object AsmEventExecutorFactory {
     val classNode = ClassNode()
     classNode.version = Opcodes.V1_8
     classNode.access = Opcodes.ACC_PUBLIC
-    classNode.name = Type.getInternalName(ownerClass) + "\$" + methodName + "\$" + idAllocator.incrementAndGet()
+    classNode.name =
+      Type.getInternalName(ownerClass) + "\$" + methodName + "\$ankh-core-asm-event-executor\$" + idAllocator.incrementAndGet()
     classNode.superName = "java/lang/Object"
     classNode.interfaces = listOf("org/bukkit/plugin/EventExecutor")
     classNode.fields.add(
@@ -133,7 +134,8 @@ object AsmEventExecutorFactory {
     val classNode = ClassNode()
     classNode.version = Opcodes.V1_8
     classNode.access = Opcodes.ACC_PUBLIC
-    classNode.name = ownerInternalName + "\$" + methodName + "\$" + idAllocator.incrementAndGet()
+    classNode.name =
+      ownerInternalName + "\$" + methodName + "\$ankh-core-asm-event-executor\$" + idAllocator.incrementAndGet()
     classNode.superName = "java/lang/Object"
     classNode.interfaces = listOf("org/bukkit/plugin/EventExecutor")
     if (owner != null) {

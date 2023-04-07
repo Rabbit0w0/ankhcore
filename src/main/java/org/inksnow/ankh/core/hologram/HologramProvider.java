@@ -8,7 +8,7 @@ import lombok.val;
 import org.bukkit.Bukkit;
 import org.inksnow.ankh.core.api.AnkhServiceLoader;
 import org.inksnow.ankh.core.api.hologram.HologramService;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
+import org.inksnow.ankh.core.api.util.DcLazy;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
 
 import javax.inject.Inject;

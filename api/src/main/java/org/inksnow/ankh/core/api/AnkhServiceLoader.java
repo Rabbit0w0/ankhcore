@@ -1,8 +1,8 @@
 package org.inksnow.ankh.core.api;
 
 import net.kyori.adventure.key.Key;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.ioc.IocLazy;
+import org.inksnow.ankh.core.api.util.DcLazy;
 
 import javax.annotation.Nonnull;
 
@@ -63,11 +63,11 @@ public interface AnkhServiceLoader {
    * get a service from config
    *
    * @param clazz the service class
-   * @param <T> the service type (same as the service class)
+   * @param <T>   the service type (same as the service class)
    * @return the service instance
    * @throws IllegalStateException if the service not found
    */
-  static <T> @Nonnull T configLoadService(@Nonnull Class<T> clazz){
+  static <T> @Nonnull T configLoadService(@Nonnull Class<T> clazz) {
     return instance().configLoadServiceImpl(clazz);
   }
 
@@ -107,7 +107,7 @@ public interface AnkhServiceLoader {
    * get a service from config
    *
    * @param clazz the service class
-   * @param <T> the service type (same as the service class)
+   * @param <T>   the service type (same as the service class)
    * @return the service instance
    * @throws IllegalStateException if the service not found
    */

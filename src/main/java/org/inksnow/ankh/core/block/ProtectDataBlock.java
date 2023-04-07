@@ -32,6 +32,13 @@ public class ProtectDataBlock implements AnkhBlock {
     this.data = data;
   }
 
+  private static void sendProtectMessage(@Nullable Player player) {
+    if (player == null) {
+      return;
+    }
+    player.sendMessage(PROTECT_MESSAGE);
+  }
+
   @Override
   public void load(@Nonnull Location location) {
     location.getWorld().getBlockAt(location).setType(Material.BEDROCK);
@@ -72,12 +79,5 @@ public class ProtectDataBlock implements AnkhBlock {
   @Override
   public byte[] save() {
     return data;
-  }
-
-  private static void sendProtectMessage(@Nullable Player player) {
-    if (player == null) {
-      return;
-    }
-    player.sendMessage(PROTECT_MESSAGE);
   }
 }

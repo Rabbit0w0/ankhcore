@@ -1,8 +1,8 @@
 package org.inksnow.ankh.core.api.storage;
 
 import org.bukkit.Location;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.ioc.IocLazy;
+import org.inksnow.ankh.core.api.util.DcLazy;
 import org.jetbrains.annotations.ApiStatus;
 
 import javax.annotation.Nonnull;

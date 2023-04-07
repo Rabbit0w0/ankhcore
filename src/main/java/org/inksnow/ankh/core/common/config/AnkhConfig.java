@@ -3,31 +3,24 @@ package org.inksnow.ankh.core.common.config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.val;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.inksnow.ankh.core.api.AnkhCore;
-import org.inksnow.ankh.core.api.AnkhCoreLoader;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
+import org.inksnow.ankh.core.api.util.DcLazy;
 
-import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
-import java.util.concurrent.Callable;
-import java.util.function.Supplier;
 
 @Singleton
 public class AnkhConfig {
-  private static final DcLazy<AnkhConfig> instance = DcLazy.of((Callable<AnkhConfig>) AnkhConfig::new);
+  private static final DcLazy<AnkhConfig> instance = DcLazy.of(AnkhConfig::new);
   @Getter
   private static final Provider<AnkhConfig> provider = instance::get;
 
@@ -40,15 +33,11 @@ public class AnkhConfig {
   @Getter
   private final ServiceConfig service;
 
-  public static AnkhConfig instance() {
-    return instance.get();
-  }
-
   private AnkhConfig() throws IOException {
     val configFile = new File("plugins/" + AnkhCore.PLUGIN_ID + "/config.yml");
     if (!configFile.exists()) {
-      try(val in = this.getClass().getClassLoader().getResourceAsStream("config.yml")) {
-        try(val out = new FileOutputStream(configFile)) {
+      try (val in = this.getClass().getClassLoader().getResourceAsStream("config.yml")) {
+        try (val out = new FileOutputStream(configFile)) {
           in.transferTo(out);
         }
       }
@@ -60,6 +49,10 @@ public class AnkhConfig {
     this.database = new DatabaseConfig(required(configuration.getConfigurationSection("database"), "database"));
     this.playerShell = new PlayerShellConfig(required(configuration.getConfigurationSection("player-shell"), "player-shell"));
     this.service = new ServiceConfig(required(configuration.getConfigurationSection("service"), "service"));
+  }
+
+  public static AnkhConfig instance() {
+    return instance.get();
   }
 
   private static <R> R required(R value, String path) {

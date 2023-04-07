@@ -3,12 +3,11 @@ package org.inksnow.ankh.core.common.util;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.val;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
+import org.inksnow.ankh.core.api.util.DcLazy;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -24,24 +23,24 @@ public class LazyProxyUtil {
     addInnerClass(DcLazy.class);
   }
 
-  private static void addInnerClass(Class<?> clazz){
+  private static void addInnerClass(Class<?> clazz) {
     innerClasses.put(clazz.getName(), clazz);
   }
 
   @SneakyThrows
-  public <T> T generate(Class<T> clazz, DcLazy<?> dcLazy){
+  public <T> T generate(Class<T> clazz, DcLazy<?> dcLazy) {
     val classLoader = clazz.getClassLoader();
     val classWriter = new ClassWriterWithClassLoader(classLoader, ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
     val interfaceInternalName = Type.getInternalName(clazz);
     val interfaceDescriptor = Type.getDescriptor(clazz);
-    val generateClassInternalName = interfaceInternalName + "$ankh-core-asm-lazy-proxy$"+ idAllocator.incrementAndGet();
+    val generateClassInternalName = interfaceInternalName + "$ankh-core-asm-lazy-proxy$" + idAllocator.incrementAndGet();
     classWriter.visit(
         Opcodes.V1_8,
         Opcodes.ACC_PUBLIC,
         generateClassInternalName,
         null,
         "java/lang/Object",
-        new String[]{ interfaceInternalName }
+        new String[]{interfaceInternalName}
     );
     val generateFieldName = "delegate$ankh-core-asm-lazy-proxy$" + idAllocator.incrementAndGet();
 
@@ -72,11 +71,11 @@ public class LazyProxyUtil {
       methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
       methodVisitor.visitFieldInsn(Opcodes.PUTFIELD, generateClassInternalName, generateFieldName, DCLAZY_DESCRIPTOR);
       methodVisitor.visitInsn(Opcodes.RETURN);
-      methodVisitor.visitMaxs(0,0);
+      methodVisitor.visitMaxs(0, 0);
       methodVisitor.visitEnd();
     }
     val delegateMethodName = "delegate$ankh-core-asm-lazy-proxy$" + idAllocator.incrementAndGet();
-    val delegateMethodDescriptor = "()"+interfaceDescriptor;
+    val delegateMethodDescriptor = "()" + interfaceDescriptor;
     {
       val methodVisitor = classWriter.visitMethod(
           Opcodes.ACC_PUBLIC,
@@ -95,7 +94,7 @@ public class LazyProxyUtil {
           false
       );
       methodVisitor.visitInsn(Opcodes.ARETURN);
-      methodVisitor.visitMaxs(0,0);
+      methodVisitor.visitMaxs(0, 0);
       methodVisitor.visitEnd();
     }
     for (val method : clazz.getDeclaredMethods()) {
@@ -131,13 +130,13 @@ public class LazyProxyUtil {
           true
       );
       methodVisitor.visitInsn(methodType.getReturnType().getOpcode(Opcodes.IRETURN));
-      methodVisitor.visitMaxs(0,0);
+      methodVisitor.visitMaxs(0, 0);
       methodVisitor.visitEnd();
     }
     classWriter.visitEnd();
     val bytes = classWriter.toByteArray();
     val defineClass = new CodeDefClassLoader(classLoader)
-        .define(generateClassInternalName.replace('/','.'), bytes, 0, bytes.length);
+        .define(generateClassInternalName.replace('/', '.'), bytes, 0, bytes.length);
     return (T) defineClass.getConstructor(DcLazy.class).newInstance(dcLazy);
   }
 
@@ -155,7 +154,7 @@ public class LazyProxyUtil {
       return super.loadClass(name, resolve);
     }
 
-    public Class<?> define(String name, byte[] b, int off, int len){
+    public Class<?> define(String name, byte[] b, int off, int len) {
       return defineClass(name, b, off, len);
     }
   }

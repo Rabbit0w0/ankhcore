@@ -1,6 +1,7 @@
 package org.inksnow.ankh.core.api.ioc;
 
 import org.inksnow.ankh.core.api.AnkhCore;
+import org.inksnow.ankh.core.api.util.DcLazy;
 
 public class IocLazy<T> extends DcLazy<T> {
   private final Class<T> instanceClass;

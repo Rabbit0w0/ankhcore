@@ -14,8 +14,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.inksnow.ankh.core.api.inventory.menu.ClickAction;
 import org.inksnow.ankh.core.api.inventory.menu.InventoryMenu;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.ioc.IocLazy;
+import org.inksnow.ankh.core.api.util.DcLazy;
 import org.inksnow.ankh.core.common.util.CheckUtil;
 
 import javax.annotation.Nonnull;

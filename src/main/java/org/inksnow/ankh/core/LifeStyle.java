@@ -18,7 +18,7 @@ public class LifeStyle {
     val worldList = Bukkit.getWorlds();
     for (World world : worldList) {
       for (Chunk chunk : world.getLoadedChunks()) {
-        if(chunk.isLoaded()){
+        if (chunk.isLoaded()) {
           logger.error("====================================================");
           logger.error("AnkhCore is not designed to load after server running, It's very dangerous");
           logger.error("To protect your saves or data, AnkhCore will stop your server");

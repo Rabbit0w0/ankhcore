@@ -70,7 +70,13 @@ class PluginClassScanner @Inject private constructor(
             val methodProcessor = injector.getInstance(
               methodProcessors[annotationType.className] ?: continue
             )
-            logger.trace("processed {} for {}{}{}", annotationType, classNode.name, methodNode.name, methodNode.desc)
+            logger.trace(
+              "processed {} for {}{}{}",
+              annotationType,
+              classNode.name,
+              methodNode.name,
+              methodNode.desc
+            )
             methodProcessor.process(this, classNode, methodNode, annotationNode)
           }
         }

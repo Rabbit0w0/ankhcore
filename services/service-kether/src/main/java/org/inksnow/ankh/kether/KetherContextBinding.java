@@ -26,7 +26,7 @@ public class KetherContextBinding {
     return contextRef[0];
   }
 
-  public void context(ScriptContext context){
+  public void context(ScriptContext context) {
     contextRef[0] = context;
   }
 

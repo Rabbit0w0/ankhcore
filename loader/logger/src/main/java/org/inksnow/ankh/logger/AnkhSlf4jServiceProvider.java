@@ -11,8 +11,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class AnkhSlf4jServiceProvider implements SLF4JServiceProvider {
   private static final String[] PROVIDER_CLASSES = new String[]{
-    "org.apache.logging.slf4j.SLF4JServiceProvider",
-    "org.slf4j.jul.JULServiceProvider"
+      "org.apache.logging.slf4j.SLF4JServiceProvider",
+      "org.slf4j.jul.JULServiceProvider"
   };
 
   private final SLF4JServiceProvider delegate = tryDelegate();

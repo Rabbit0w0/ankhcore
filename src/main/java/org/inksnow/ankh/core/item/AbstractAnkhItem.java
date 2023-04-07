@@ -32,7 +32,7 @@ public abstract class AbstractAnkhItem implements AnkhItem {
     nbtItem.applyNBT(item);
     item.editMeta(meta -> {
       meta.getPersistentDataContainer()
-        .set(ITEM_ID_KEY, PersistentDataType.STRING, key().asString());
+          .set(ITEM_ID_KEY, PersistentDataType.STRING, key().asString());
       meta.displayName(itemName());
       meta.lore(lores());
       onUpdateItemMeta(meta);

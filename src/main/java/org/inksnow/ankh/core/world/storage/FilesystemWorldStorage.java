@@ -25,7 +25,7 @@ public class FilesystemWorldStorage extends AbstractIoWorldStorage {
   private Path getChunkStoragePath(WorldChunkEmbedded worldChunk) {
     val chunkIdHex = HexUtil.toHex(Longs.toByteArray(worldChunk.chunkId()));
     return basePath.resolve(UUIDUtil.toPlainString(worldChunk.worldId()))
-      .resolve(chunkIdHex + ".bin");
+        .resolve(chunkIdHex + ".bin");
   }
 
 

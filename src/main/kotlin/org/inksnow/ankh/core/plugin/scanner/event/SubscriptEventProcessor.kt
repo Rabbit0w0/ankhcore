@@ -45,12 +45,23 @@ class SubscriptEventProcessor @Inject private constructor(
           annotationNode,
           ankhClassLoader
         )
-      val eventClass = Class.forName(methodType.argumentTypes[0].className, true, ankhClassLoader) as Class<out Event>
+      val eventClass =
+        Class.forName(methodType.argumentTypes[0].className, true, ankhClassLoader) as Class<out Event>
       val executor =
         if ((classNode.access and Opcodes.ACC_PUBLIC == 0) || (methodNode.access and Opcodes.ACC_PUBLIC) == 0) {
-          AsmEventExecutorFactory.generateDynamicExecutor(listenerClass, listenerInstance, methodNode.name, methodType)
+          AsmEventExecutorFactory.generateDynamicExecutor(
+            listenerClass,
+            listenerInstance,
+            methodNode.name,
+            methodType
+          )
         } else {
-          AsmEventExecutorFactory.generateDirectExecutor(listenerClass, listenerInstance, methodNode.name, methodType)
+          AsmEventExecutorFactory.generateDirectExecutor(
+            listenerClass,
+            listenerInstance,
+            methodNode.name,
+            methodType
+          )
         }
       Bukkit.getPluginManager().registerEvent(
         eventClass,

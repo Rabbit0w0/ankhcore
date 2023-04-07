@@ -45,8 +45,8 @@ public class DatabaseService {
     val database = config.database();
     val configuration = new Configuration();
     configuration.setProperty(
-      AvailableSettings.CONNECTION_PROVIDER,
-      HikariCPConnectionProvider.class.getName()
+        AvailableSettings.CONNECTION_PROVIDER,
+        HikariCPConnectionProvider.class.getName()
     );
     configuration.setProperty(AvailableSettings.DRIVER, database.driver().driverClass());
     configuration.setProperty(AvailableSettings.DIALECT, database.driver().dialectClass());
@@ -59,23 +59,23 @@ public class DatabaseService {
     entityClasses.forEach(configuration::addAnnotatedClass);
 
     val serviceRegistry = new StandardServiceRegistryBuilder()
-      .applySettings(configuration.getProperties())
-      .addService(
-        ClassLoaderService.class,
-        new ClassLoaderServiceImpl(
-          entityClasses.stream()
-            .map(Class::getClassLoader)
-            .collect(Collectors.toSet()),
-          TcclLookupPrecedence.NEVER
+        .applySettings(configuration.getProperties())
+        .addService(
+            ClassLoaderService.class,
+            new ClassLoaderServiceImpl(
+                entityClasses.stream()
+                    .map(Class::getClassLoader)
+                    .collect(Collectors.toSet()),
+                TcclLookupPrecedence.NEVER
+            )
         )
-      )
-      .build();
+        .build();
     sessionFactory = configuration.buildSessionFactory(serviceRegistry);
   }
 
   @SubscriptLifecycle(
-    value = PluginLifeCycle.DISABLE,
-    priority = EventPriority.MONITOR
+      value = PluginLifeCycle.DISABLE,
+      priority = EventPriority.MONITOR
   )
   private void onDisable() {
     sessionFactory.close();

@@ -181,8 +181,8 @@ public class StreamByteBuffer {
 
   private CharBuffer readAsCharBuffer(Charset charset) throws CharacterCodingException {
     CharsetDecoder decoder = charset.newDecoder().onMalformedInput(
-      CodingErrorAction.REPLACE).onUnmappableCharacter(
-      CodingErrorAction.REPLACE);
+        CodingErrorAction.REPLACE).onUnmappableCharacter(
+        CodingErrorAction.REPLACE);
     CharBuffer charbuffer = CharBuffer.allocate(totalBytesUnread());
     ByteBuffer buf = null;
     boolean wasUnderflow = false;
@@ -428,7 +428,7 @@ public class StreamByteBuffer {
       }
 
       if ((off < 0) || (off > b.length) || (len < 0)
-        || ((off + len) > b.length) || ((off + len) < 0)) {
+          || ((off + len) > b.length) || ((off + len) < 0)) {
         throw new IndexOutOfBoundsException();
       }
 
@@ -485,7 +485,7 @@ public class StreamByteBuffer {
       }
 
       if ((off < 0) || (off > b.length) || (len < 0)
-        || ((off + len) > b.length) || ((off + len) < 0)) {
+          || ((off + len) > b.length) || ((off + len) < 0)) {
         throw new IndexOutOfBoundsException();
       }
 

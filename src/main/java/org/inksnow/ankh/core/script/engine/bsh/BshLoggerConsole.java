@@ -19,20 +19,20 @@ public class BshLoggerConsole implements ConsoleInterface {
   public BshLoggerConsole(Logger logger) {
     this.logger = logger;
     this.delegateOut = new PrintStream(
-      new LineBufferingOutputStream(
-        new DelegateOut(false),
-        "\n",
-        8192,
-        52
-      )
+        new LineBufferingOutputStream(
+            new DelegateOut(false),
+            "\n",
+            8192,
+            52
+        )
     );
     this.delegateErr = new PrintStream(
-      new LineBufferingOutputStream(
-        new DelegateOut(true),
-        "\n",
-        8192,
-        52
-      )
+        new LineBufferingOutputStream(
+            new DelegateOut(true),
+            "\n",
+            8192,
+            52
+        )
     );
   }
 

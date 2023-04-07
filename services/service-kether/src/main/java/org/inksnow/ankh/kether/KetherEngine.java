@@ -28,15 +28,15 @@ public class KetherEngine implements AnkhScriptEngine {
     final var script = shellToScript(shell);
 
     final var quest = scriptLoader.load(
-      ScriptService.INSTANCE,
-      "temp_" + UUID.randomUUID(),
-      script.getBytes(StandardCharsets.UTF_8)
+        ScriptService.INSTANCE,
+        "temp_" + UUID.randomUUID(),
+        script.getBytes(StandardCharsets.UTF_8)
     );
 
     return new KetherPreparedScript(quest);
   }
 
-  private static @Nonnull String shellToScript(@Nonnull String shell){
+  private static @Nonnull String shellToScript(@Nonnull String shell) {
     return shell.startsWith("def ") ? shell : "def main = { " + shell + " }";
   }
 }

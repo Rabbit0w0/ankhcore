@@ -28,17 +28,17 @@ public final class LocationEmbedded implements LocationStorage, Serializable {
 
   public static @Nonnull LocationEmbedded of(UUID worldId, int x, int y, int z) {
     return of(
-      WorldChunkEmbedded.of(worldId, x >> 4, z >> 4),
-      positionFromLocation((short) (x & 0xf), y, (short) (z & 0xf))
+        WorldChunkEmbedded.of(worldId, x >> 4, z >> 4),
+        positionFromLocation((short) (x & 0xf), y, (short) (z & 0xf))
     );
   }
 
   public static @Nonnull LocationEmbedded of(Location location) {
     return of(
-      location.getWorld().getUID(),
-      location.getBlockX(),
-      location.getBlockY(),
-      location.getBlockZ()
+        location.getWorld().getUID(),
+        location.getBlockX(),
+        location.getBlockY(),
+        location.getBlockZ()
     );
   }
 
@@ -124,11 +124,11 @@ public final class LocationEmbedded implements LocationStorage, Serializable {
   @Override
   public String toString() {
     return "LocationStorage{" +
-      "world=" + chunk.worldId() +
-      ", x=" + x() +
-      ", y=" + y() +
-      ", z=" + z() +
-      '}';
+        "world=" + chunk.worldId() +
+        ", x=" + x() +
+        ", y=" + y() +
+        ", z=" + z() +
+        '}';
   }
 
   @Override

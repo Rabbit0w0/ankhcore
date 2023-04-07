@@ -43,7 +43,6 @@ public interface ScriptContext {
    * require player
    *
    * @return player
-   *
    * @throws IllegalStateException if no player in context
    */
   @Nonnull
@@ -63,7 +62,6 @@ public interface ScriptContext {
    *
    * @param key key
    * @return context value
-   *
    * @throws IllegalStateException if context not found
    */
   @Nonnull
@@ -72,7 +70,7 @@ public interface ScriptContext {
   /**
    * set context value by key and value
    *
-   * @param key key
+   * @param key   key
    * @param value context value
    */
   void set(@Nonnull String key, @Nullable Object value);
@@ -120,7 +118,7 @@ public interface ScriptContext {
      * @return empty instance
      */
     @Nonnull
-    default ScriptContext empty(){
+    default ScriptContext empty() {
       return ScriptContext.builder().build();
     }
   }
@@ -141,7 +139,7 @@ public interface ScriptContext {
     /**
      * set context value by key
      *
-     * @param key key
+     * @param key   key
      * @param value context value
      * @return this
      */

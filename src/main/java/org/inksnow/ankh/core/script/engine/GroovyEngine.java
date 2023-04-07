@@ -16,8 +16,8 @@ import javax.inject.Singleton;
 public class GroovyEngine implements AnkhScriptEngine {
   private final GroovyShell publicGroovyShell = new GroovyShell(this.getClass().getClassLoader());
   private final ScriptCacheStack<GroovyShell, Exception> groovyShellCache = new ScriptCacheStack<>(() -> new GroovyShell(
-    this.getClass().getClassLoader(),
-    new GroovyContextBinding()
+      this.getClass().getClassLoader(),
+      new GroovyContextBinding()
   ));
 
   @Override

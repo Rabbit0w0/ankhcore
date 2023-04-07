@@ -96,7 +96,7 @@ public interface AnkhBlock extends Keyed {
    * @param event the event
    * @see BlockDestroyEvent
    */
-  default void onBlockDestroy(@Nonnull BlockDestroyEvent event){
+  default void onBlockDestroy(@Nonnull BlockDestroyEvent event) {
     //
   }
 

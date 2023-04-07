@@ -78,19 +78,19 @@ public class DelegateJarFile extends JarFile {
   public Stream<JarEntry> stream() {
     Enumeration<JarEntry> entries = entries();
     return StreamSupport.stream(
-      Spliterators.spliteratorUnknownSize(
-        new Iterator<JarEntry>() {
-          @Override
-          public boolean hasNext() {
-            return entries.hasMoreElements();
-          }
+        Spliterators.spliteratorUnknownSize(
+            new Iterator<JarEntry>() {
+              @Override
+              public boolean hasNext() {
+                return entries.hasMoreElements();
+              }
 
-          @Override
-          public JarEntry next() {
-            return entries.nextElement();
-          }
-        }, Spliterator.ORDERED
-      ), false
+              @Override
+              public JarEntry next() {
+                return entries.nextElement();
+              }
+            }, Spliterator.ORDERED
+        ), false
     );
   }
 
@@ -98,7 +98,7 @@ public class DelegateJarFile extends JarFile {
   public InputStream getInputStream(ZipEntry ze) throws IOException {
     DelegateJarEntry jarEntry = (DelegateJarEntry) ze;
     return jarEntry.getDelegateJarFile().getInputStream(
-      jarEntry.getDelegateJarEntry()
+        jarEntry.getDelegateJarEntry()
     );
   }
 

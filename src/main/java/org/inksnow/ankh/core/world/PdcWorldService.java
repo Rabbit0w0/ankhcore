@@ -68,7 +68,7 @@ public class PdcWorldService implements WorldService {
     this.ankhConfig = ankhConfig;
     this.blockRegistry = blockRegistry;
     this.storageBackend = DcLazy.of((Supplier<org.inksnow.ankh.core.api.world.storage.WorldStorage>) () ->
-      AnkhServiceLoader.loadService(ankhConfig.service().worldStorage(), org.inksnow.ankh.core.api.world.storage.WorldStorage.class)
+        AnkhServiceLoader.loadService(ankhConfig.service().worldStorage(), org.inksnow.ankh.core.api.world.storage.WorldStorage.class)
     );
   }
 
@@ -192,9 +192,9 @@ public class PdcWorldService implements WorldService {
     for (val entry : entrySet) {
       val locationEmbedded = LocationEmbedded.of(chunkEmbedded, entry.getLongKey());
       entryList.add(BlockStorageEntry.of(
-        locationEmbedded,
-        entry.getValue().key(),
-        entry.getValue().save()
+          locationEmbedded,
+          entry.getValue().key(),
+          entry.getValue().save()
       ));
     }
 
@@ -219,10 +219,10 @@ public class PdcWorldService implements WorldService {
           try {
             for (val entry : entryList) {
               handleBlockSet(
-                chunkStorage,
-                new Location(chunk.getWorld(), entry.location().x(), entry.location().y(), entry.location().z()),
-                LocationEmbedded.warp(entry.location()).position(),
-                loadBlock(entry.blockId(), entry.content())
+                  chunkStorage,
+                  new Location(chunk.getWorld(), entry.location().x(), entry.location().y(), entry.location().z()),
+                  LocationEmbedded.warp(entry.location()).position(),
+                  loadBlock(entry.blockId(), entry.content())
               );
             }
             chunkStorage.loaded.set(true);
@@ -238,14 +238,14 @@ public class PdcWorldService implements WorldService {
     });
   }
 
-  private AnkhBlock loadBlock(Key blockId, byte[] content){
+  private AnkhBlock loadBlock(Key blockId, byte[] content) {
     val blockFactory = blockRegistry.get(blockId);
     if (blockFactory == null) {
       return new ProtectDataBlock(blockId, content);
     }
     try {
       return blockFactory.load(blockId, content);
-    }catch (Exception e){
+    } catch (Exception e) {
       logger.warn("Failed to load block {}", blockId, e);
       return new ProtectDataBlock(blockId, content);
     }
@@ -261,12 +261,12 @@ public class PdcWorldService implements WorldService {
               blockEntry.getValue().runTick();
             } catch (Exception e) {
               logger.error(
-                "Failed to run tick for block chunk(x={}, z={}), location(x={}, y={}, z={})",
-                FastEmbeddedUtil.chunkX(chunkStorageEntry.getLongKey()),
-                FastEmbeddedUtil.chunkZ(chunkStorageEntry.getLongKey()),
-                FastEmbeddedUtil.chunk_blockId_x(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
-                FastEmbeddedUtil.chunk_blockId_z(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
-                e
+                  "Failed to run tick for block chunk(x={}, z={}), location(x={}, y={}, z={})",
+                  FastEmbeddedUtil.chunkX(chunkStorageEntry.getLongKey()),
+                  FastEmbeddedUtil.chunkZ(chunkStorageEntry.getLongKey()),
+                  FastEmbeddedUtil.chunk_blockId_x(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
+                  FastEmbeddedUtil.chunk_blockId_z(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
+                  e
               );
             }
           }
@@ -281,12 +281,12 @@ public class PdcWorldService implements WorldService {
               blockEntry.getValue().runAsyncTick();
             } catch (Exception e) {
               logger.error(
-                "Failed to run async tick for block chunk(x={}, z={}), location(x={}, y={}, z={})",
-                FastEmbeddedUtil.chunkX(chunkStorageEntry.getLongKey()),
-                FastEmbeddedUtil.chunkZ(chunkStorageEntry.getLongKey()),
-                FastEmbeddedUtil.chunk_blockId_x(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
-                FastEmbeddedUtil.chunk_blockId_z(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
-                e
+                  "Failed to run async tick for block chunk(x={}, z={}), location(x={}, y={}, z={})",
+                  FastEmbeddedUtil.chunkX(chunkStorageEntry.getLongKey()),
+                  FastEmbeddedUtil.chunkZ(chunkStorageEntry.getLongKey()),
+                  FastEmbeddedUtil.chunk_blockId_x(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
+                  FastEmbeddedUtil.chunk_blockId_z(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
+                  e
               );
             }
           }
@@ -314,7 +314,7 @@ public class PdcWorldService implements WorldService {
     }
     for (val loadedChunk : event.getWorld().getLoadedChunks()) {
       val chunkStorage = worldStorage.chunks.get(
-        FastEmbeddedUtil.chunk_chunkId(loadedChunk.getX(), loadedChunk.getZ())
+          FastEmbeddedUtil.chunk_chunkId(loadedChunk.getX(), loadedChunk.getZ())
       );
       if (chunkStorage == null) {
         continue;
@@ -486,8 +486,8 @@ public class PdcWorldService implements WorldService {
   @SubscriptEvent(priority = EventPriority.MONITOR, ignoreCancelled = true)
   private void onPlayerInteract(PlayerInteractEvent event) {
     if ((event.getAction() != Action.LEFT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_BLOCK)
-      || event.useInteractedBlock() == Event.Result.DENY
-      || event.getPlayer().isSneaking()) {
+        || event.useInteractedBlock() == Event.Result.DENY
+        || event.getPlayer().isSneaking()) {
       return;
     }
     val block = event.getClickedBlock();

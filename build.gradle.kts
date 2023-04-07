@@ -45,14 +45,14 @@ allprojects {
   publishing {
     repositories {
       if (project.version.toString().endsWith("-SNAPSHOT")) {
-        maven("https://repo.inker.bot/repository/maven-snapshots/"){
+        maven("https://repo.inker.bot/repository/maven-snapshots/") {
           credentials {
             username = System.getenv("NEXUS_USERNAME")
             password = System.getenv("NEXUS_PASSWORD")
           }
         }
-      }else{
-        maven("https://repo.inker.bot/repository/maven-releases/"){
+      } else {
+        maven("https://repo.inker.bot/repository/maven-releases/") {
           credentials {
             username = System.getenv("NEXUS_USERNAME")
             password = System.getenv("NEXUS_PASSWORD")

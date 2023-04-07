@@ -44,8 +44,8 @@ public final class WorldChunkEmbedded implements ChunkStorage, Serializable {
       return (WorldChunkEmbedded) chunk;
     }
     return WorldChunkEmbedded.of(
-      chunk.worldId(),
-      chunkKeyFromLocation(chunk.x(), chunk.z())
+        chunk.worldId(),
+        chunkKeyFromLocation(chunk.x(), chunk.z())
     );
   }
 
@@ -107,10 +107,10 @@ public final class WorldChunkEmbedded implements ChunkStorage, Serializable {
   @Override
   public String toString() {
     return "WorldChunkEmbedded{" +
-      "worldId=" + worldId +
-      ", x=" + x() +
-      ", z=" + z() +
-      '}';
+        "worldId=" + worldId +
+        ", x=" + x() +
+        ", z=" + z() +
+        '}';
   }
 
   @Override

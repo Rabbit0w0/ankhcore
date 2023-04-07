@@ -51,24 +51,24 @@ public class ExecuteReportUtil {
           component.append(Component.newline());
           component.append(Component.text("- ", NamedTextColor.WHITE));
           component.append(Component.text(getElementName(element), NamedTextColor.RED)
-            .hoverEvent(Component.text()
-              .append(Component.text(AnkhCore.PLUGIN_ID))
-              .append(Component.text(" StackTrace", NamedTextColor.RED))
-              .append(Component.newline())
-              .append(Component.text(element.toString(), NamedTextColor.WHITE)).append(Component.newline())
-              .append(Component.newline())
-              .append(Component.text("ClassName: " + element.getClassName(), NamedTextColor.RED))
-              .append(Component.newline())
-              .append(Component.text("MethodName: " + element.getMethodName(), NamedTextColor.RED))
-              .append(Component.newline())
-              .append(Component.text("FileName: " + element.getFileName(), NamedTextColor.RED))
-              .append(Component.newline())
-              .append(Component.text("LineNumber: " + element.getLineNumber(), NamedTextColor.RED))
-              .append(Component.newline())
-              .append(Component.newline())
-              .append(Component.text("CodeSource: " + getCodeSource(element.getClassName()), NamedTextColor.GRAY))
-              .build()
-            ));
+              .hoverEvent(Component.text()
+                  .append(Component.text(AnkhCore.PLUGIN_ID))
+                  .append(Component.text(" StackTrace", NamedTextColor.RED))
+                  .append(Component.newline())
+                  .append(Component.text(element.toString(), NamedTextColor.WHITE)).append(Component.newline())
+                  .append(Component.newline())
+                  .append(Component.text("ClassName: " + element.getClassName(), NamedTextColor.RED))
+                  .append(Component.newline())
+                  .append(Component.text("MethodName: " + element.getMethodName(), NamedTextColor.RED))
+                  .append(Component.newline())
+                  .append(Component.text("FileName: " + element.getFileName(), NamedTextColor.RED))
+                  .append(Component.newline())
+                  .append(Component.text("LineNumber: " + element.getLineNumber(), NamedTextColor.RED))
+                  .append(Component.newline())
+                  .append(Component.newline())
+                  .append(Component.text("CodeSource: " + getCodeSource(element.getClassName()), NamedTextColor.GRAY))
+                  .build()
+              ));
         }
         sender.sendMessage(component);
       }
@@ -90,9 +90,9 @@ public class ExecuteReportUtil {
   private static String getCodeSource(String className) {
     try {
       return Class.forName(className)
-        .getProtectionDomain()
-        .getCodeSource()
-        .toString();
+          .getProtectionDomain()
+          .getCodeSource()
+          .toString();
     } catch (Exception e) {
       return UNKNOWN_MESSAGE;
     }

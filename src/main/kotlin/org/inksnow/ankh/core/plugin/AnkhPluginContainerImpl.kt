@@ -75,19 +75,20 @@ class AnkhPluginContainerImpl(
         )
         AnkhCore.`$internal$actions$`.setInjector(BridgerInjector(this.injector))
       } else {
-        this.injector = (AnkhCoreLoaderPlugin.container as AnkhPluginContainerImpl).injector.createChildInjector(
-          pluginModules.map { it.getConstructor().newInstance() }.let(Modules::combine),
-          { binder ->
-            binder.bind(AnkhPluginContainer::class.java)
-              .to(AnkhPluginContainerImpl::class.java)
-            binder.bind(AnkhPluginContainerImpl::class.java).toInstance(this)
+        this.injector =
+          (AnkhCoreLoaderPlugin.container as AnkhPluginContainerImpl).injector.createChildInjector(
+            pluginModules.map { it.getConstructor().newInstance() }.let(Modules::combine),
+            { binder ->
+              binder.bind(AnkhPluginContainer::class.java)
+                .to(AnkhPluginContainerImpl::class.java)
+              binder.bind(AnkhPluginContainerImpl::class.java).toInstance(this)
 
-            binder.bind(AnkhBukkitPlugin::class.java)
-              .to(bukkitPlugin::class.java)
-            binder.bind(bukkitPlugin::class.java as Class<AnkhBukkitPlugin>)
-              .toInstance(bukkitPlugin)
-          },
-        )
+              binder.bind(AnkhBukkitPlugin::class.java)
+                .to(bukkitPlugin::class.java)
+              binder.bind(bukkitPlugin::class.java as Class<AnkhBukkitPlugin>)
+                .toInstance(bukkitPlugin)
+            },
+          )
       }
       AnkhServiceLoaderImpl.staticRegisterPlugin(pluginYml.name, this)
       initListeners.call()

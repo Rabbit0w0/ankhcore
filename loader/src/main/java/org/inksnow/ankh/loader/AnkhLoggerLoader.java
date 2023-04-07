@@ -104,8 +104,8 @@ public class AnkhLoggerLoader extends URLClassLoader {
   @Override
   public Enumeration<URL> getResources(String name) throws IOException {
     return new CompoundEnumeration<>((Enumeration<URL>[]) new Enumeration<?>[]{
-      findResources(name),
-      getParent().getResources(name)
+        findResources(name),
+        getParent().getResources(name)
     });
   }
 

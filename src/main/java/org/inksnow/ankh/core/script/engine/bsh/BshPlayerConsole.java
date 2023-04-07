@@ -22,20 +22,20 @@ public class BshPlayerConsole implements ConsoleInterface {
   public BshPlayerConsole(Player player) {
     this.player = player;
     this.delegateOut = new PrintStream(
-      new LineBufferingOutputStream(
-        new DelegateOut(NamedTextColor.GREEN),
-        "\n",
-        8192,
-        52
-      )
+        new LineBufferingOutputStream(
+            new DelegateOut(NamedTextColor.GREEN),
+            "\n",
+            8192,
+            52
+        )
     );
     this.delegateErr = new PrintStream(
-      new LineBufferingOutputStream(
-        new DelegateOut(NamedTextColor.RED),
-        "\n",
-        8192,
-        52
-      )
+        new LineBufferingOutputStream(
+            new DelegateOut(NamedTextColor.RED),
+            "\n",
+            8192,
+            52
+        )
     );
   }
 

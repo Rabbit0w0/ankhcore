@@ -34,7 +34,7 @@ tasks.jar {
   with(copySpec {
     from(configurations.getByName("ankhImpl").filter {
       !configurations.getByName("ankhShadow").contains(it) &&
-        !configurations.getByName("ankhApi").contains(it)
+          !configurations.getByName("ankhApi").contains(it)
     })
     into("ankh-impl")
   })

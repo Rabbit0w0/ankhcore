@@ -16,7 +16,6 @@ public interface IRegistry<T extends Keyed> {
    * register the instance
    *
    * @param instance the instance to register
-   *
    * @throws IllegalStateException if key have been used
    */
   void register(@Nonnull T instance);
@@ -26,7 +25,6 @@ public interface IRegistry<T extends Keyed> {
    *
    * @param key key
    * @return instance
-   *
    * @throws IllegalStateException if key not exist
    */
   @Nonnull

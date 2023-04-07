@@ -1,5 +1,7 @@
 package org.inksnow.ankh.core.api;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.inksnow.ankh.core.api.ioc.AnkhInjector;
 import org.inksnow.ankh.core.api.ioc.AnkhIocKey;
 
@@ -7,6 +9,11 @@ import javax.inject.Provider;
 
 public class AnkhCore {
   public static final String PLUGIN_ID = "ankh-core";
+  public static final String PLUGIN_NAME = "Ankh Core";
+  public static final Component PLUGIN_NAME_COMPONENT = Component.text()
+      .append(Component.text("Ankh", NamedTextColor.YELLOW))
+      .append(Component.text("Core", NamedTextColor.GREEN))
+      .build();
   private static AnkhInjector injector;
 
   public static AnkhInjector getInjector() {

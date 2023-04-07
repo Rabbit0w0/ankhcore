@@ -202,7 +202,7 @@ public class AnkhClassLoader extends URLClassLoader {
             // indicates that the package has already been defined and,
             // therefore, getPackage(name) should not have returned null.
             throw new AssertionError(
-              "Package " + packageName + " has already been defined but it could not be found");
+                "Package " + packageName + " has already been defined but it could not be found");
           }
         }
       }
@@ -218,7 +218,7 @@ public class AnkhClassLoader extends URLClassLoader {
         if (connection instanceof JarURLConnection) {
           JarFile jarFile = ((JarURLConnection) connection).getJarFile();
           if (jarFile.getEntry(classEntryName) != null && jarFile.getEntry(packageEntryName) != null
-            && jarFile.getManifest() != null) {
+              && jarFile.getManifest() != null) {
             definePackage(packageName, jarFile.getManifest(), url);
             return;
           }
@@ -250,7 +250,7 @@ public class AnkhClassLoader extends URLClassLoader {
         }
       }
       return doDefinePackage(DefinePackageCallType.ATTRIBUTES, () -> super.definePackage(name, specTitle,
-        specVersion, specVendor, implTitle, implVersion, implVendor, sealBase));
+          specVersion, specVendor, implTitle, implVersion, implVendor, sealBase));
     }
   }
 

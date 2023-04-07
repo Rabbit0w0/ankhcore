@@ -68,20 +68,18 @@ public interface AnkhScriptService {
    * @param context script context
    * @param shell   shell as doc in class
    * @return shell result
-   *
    * @throws Exception exception when execute shell
    */
   @Nullable
   Object executeShell(@Nonnull ScriptContext context, @Nonnull String shell) throws Exception;
 
   /**
-   *
    * @param shell shell as doc in class
    * @return prepared script
-   *
    * @throws Exception exception when parse script
    */
-  @Nullable PreparedScript prepareShell(@Nonnull String shell) throws Exception;
+  @Nullable
+  PreparedScript prepareShell(@Nonnull String shell) throws Exception;
 
 
   class $internal$actions$ {

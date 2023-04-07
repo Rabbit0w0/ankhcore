@@ -61,6 +61,12 @@ public class AbstractChestMenu implements InventoryMenu {
     return this;
   }
 
+  /**
+   * Override this to custom modifiable slot
+   *
+   * @param slot slot id
+   * @return this slot can be modifiable
+   */
   public boolean modifiableSlot(int slot) {
     if (slot >= 54) {
       throw new IllegalArgumentException("Invalid slot id: " + slot);

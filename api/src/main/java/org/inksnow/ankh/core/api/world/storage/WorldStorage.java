@@ -21,8 +21,8 @@ public interface WorldStorage {
   /**
    * Store ankh-blocks in WorldChunkEmbedded
    *
-   * @param chunk chunk which contains ankh-blocks
-   * @param entries    ankh-blocks entry
+   * @param chunk   chunk which contains ankh-blocks
+   * @param entries ankh-blocks entry
    */
   void store(@Nonnull Chunk chunk, @Nonnull List<BlockStorageEntry> entries);
 }

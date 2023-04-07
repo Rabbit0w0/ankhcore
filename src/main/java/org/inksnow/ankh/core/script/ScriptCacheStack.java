@@ -7,12 +7,12 @@ import java.util.Stack;
  * `borrow` will get a script instance, and create new one if no exist
  * `sendBack` will send a instance to stack
  * <code>
- *   T instance = stack.borrow();
- *   try{
- *     // do something with instance
- *   }finally{
- *     stack.sendBack(instance);
- *   }
+ * T instance = stack.borrow();
+ * try{
+ * // do something with instance
+ * }finally{
+ * stack.sendBack(instance);
+ * }
  * </code>
  *
  * @param <T> script instance type

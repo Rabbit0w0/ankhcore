@@ -133,10 +133,10 @@ public final class AnkhBukkitPluginInternal implements AnkhBukkitPlugin.$interna
       parentClassLoader = pluginClassLoader;
     }
     AnkhClassLoader ankhClassLoader = new AnkhClassLoader(
-      pluginYml,
-      new JarFileArchive(file),
-      implUrlList.toArray(new URL[0]),
-      parentClassLoader
+        pluginYml,
+        new JarFileArchive(file),
+        implUrlList.toArray(new URL[0]),
+        parentClassLoader
     );
     ankhClassLoader.registerLoadType(pluginDescriptionFile.getMain(), ClasspathLoadType.PARENT_FIRST);
     ankhClasspath.forEach(ankhClassLoader::registerLoadType);

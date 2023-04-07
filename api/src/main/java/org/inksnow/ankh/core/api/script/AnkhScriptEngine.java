@@ -10,9 +10,8 @@ public interface AnkhScriptEngine {
    * execute script with engine
    *
    * @param context script context
-   * @param script script text
+   * @param script  script text
    * @return script result
-   *
    * @throws Exception exception when run script
    */
   default @Nonnull Object execute(@Nonnull ScriptContext context, @Nonnull String script) throws Exception {
@@ -26,5 +25,6 @@ public interface AnkhScriptEngine {
    * @return prepared script
    * @throws Exception exception when parse script
    */
-  @Nonnull PreparedScript prepare(@Nonnull String script) throws Exception;
+  @Nonnull
+  PreparedScript prepare(@Nonnull String script) throws Exception;
 }

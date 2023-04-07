@@ -8,18 +8,18 @@ import java.util.UUID;
 public class UUIDUtil {
   public static String unDash(final String id) {
     return id.substring(0, 8) +
-      id.substring(9, 13) +
-      id.substring(14, 18) +
-      id.substring(19, 23) +
-      id.substring(24, 36);
+        id.substring(9, 13) +
+        id.substring(14, 18) +
+        id.substring(19, 23) +
+        id.substring(24, 36);
   }
 
   public static String withDash(final String id) {
     return id.substring(0, 8) + '-' +
-      id.substring(8, 12) + '-' +
-      id.substring(12, 16) + '-' +
-      id.substring(16, 20) + '-' +
-      id.substring(20, 32);
+        id.substring(8, 12) + '-' +
+        id.substring(12, 16) + '-' +
+        id.substring(16, 20) + '-' +
+        id.substring(20, 32);
   }
 
   public static String toPlainString(final UUID id) {
@@ -98,21 +98,21 @@ public class UUIDUtil {
 
   private static UUID fromBytes0(byte[] bytes, int start) {
     long msb = (bytes[start] & 255L) << 56
-      | (bytes[start + 1] & 255L) << 48
-      | (bytes[start + 2] & 255L) << 40
-      | (bytes[start + 3] & 255L) << 32
-      | (bytes[start + 4] & 255L) << 24
-      | (bytes[start + 5] & 255L) << 16
-      | (bytes[start + 6] & 255L) << 8
-      | bytes[start + 7] & 255L;
+        | (bytes[start + 1] & 255L) << 48
+        | (bytes[start + 2] & 255L) << 40
+        | (bytes[start + 3] & 255L) << 32
+        | (bytes[start + 4] & 255L) << 24
+        | (bytes[start + 5] & 255L) << 16
+        | (bytes[start + 6] & 255L) << 8
+        | bytes[start + 7] & 255L;
     long lsb = (bytes[start + 8] & 255L) << 56
-      | (bytes[start + 9] & 255L) << 48
-      | (bytes[start + 10] & 255L) << 40
-      | (bytes[start + 11] & 255L) << 32
-      | (bytes[start + 12] & 255L) << 24
-      | (bytes[start + 13] & 255L) << 16
-      | (bytes[start + 14] & 255L) << 8
-      | bytes[start + 15] & 255L;
+        | (bytes[start + 9] & 255L) << 48
+        | (bytes[start + 10] & 255L) << 40
+        | (bytes[start + 11] & 255L) << 32
+        | (bytes[start + 12] & 255L) << 24
+        | (bytes[start + 13] & 255L) << 16
+        | (bytes[start + 14] & 255L) << 8
+        | bytes[start + 15] & 255L;
     return new UUID(msb, lsb);
   }
 }

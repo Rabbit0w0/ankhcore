@@ -27,8 +27,8 @@ public class DatabaseWorldStorage implements WorldStorage {
   public @Nonnull List<BlockStorageEntry> provide(@Nonnull Chunk chunk) {
     try (val session = databaseService.sessionFactory().openSession()) {
       return session.createQuery("select E from stored_block E where E.location.chunk = :chunk", BlockStorageEntry.class)
-        .setParameter("chunk", WorldChunkEmbedded.of(chunk))
-        .list();
+          .setParameter("chunk", WorldChunkEmbedded.of(chunk))
+          .list();
     }
   }
 
@@ -38,13 +38,13 @@ public class DatabaseWorldStorage implements WorldStorage {
       session.beginTransaction();
 
       session.createQuery("delete from stored_block E where E.location.chunk = :chunk", null)
-        .setParameter("chunk", WorldChunkEmbedded.of(chunk))
-        .executeUpdate();
+          .setParameter("chunk", WorldChunkEmbedded.of(chunk))
+          .executeUpdate();
       for (val entry : entries) {
         val entity = new StoredBlockEntity(
-          LocationEmbedded.warp(entry.location()),
-          entry.blockId(),
-          entry.content()
+            LocationEmbedded.warp(entry.location()),
+            entry.blockId(),
+            entry.content()
         );
         session.persist(entity);
       }

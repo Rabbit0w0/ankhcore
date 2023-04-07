@@ -18,7 +18,7 @@ public class KetherPreparedScript implements PreparedScript {
     this.quest = quest;
   }
 
-  private KetherContextBinding create(){
+  private KetherContextBinding create() {
     return new KetherContextBinding(ScriptService.INSTANCE, quest);
   }
 

@@ -36,9 +36,9 @@ public abstract class AbstractIoWorldStorage implements WorldStorage {
         val fullData = new byte[in.readInt()];
         in.readFully(fullData);
         entryList.add(BlockStorageEntry.of(
-          LocationEmbedded.of(chunkEmbedded, blockId),
-          Key.key(key),
-          fullData
+            LocationEmbedded.of(chunkEmbedded, blockId),
+            Key.key(key),
+            fullData
         ));
       }
       return entryList;

@@ -11,7 +11,6 @@ public interface PreparedScript {
    *
    * @param context script context
    * @return script result
-   *
    * @throws Exception exception when run prepared script
    */
   Object execute(@Nonnull ScriptContext context) throws Exception;

@@ -40,11 +40,14 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
   private final AnkhConfig config;
   private final Map<String, AnkhScriptEngine> engineMap = new ConcurrentSkipListMap<>();
   private final Function<String, AnkhScriptEngine> engineLoadFunction = this::loadEngineImpl;
+
   @Inject
   private ScriptServiceImpl(AnkhCoreLoader coreLoader, AnkhConfig config) {
     this.coreLoader = coreLoader;
     this.config = config;
-  }  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of((Supplier<AnkhScriptEngine>) this::defaultEngineImpl);
+  }
+
+  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of((Supplier<AnkhScriptEngine>) this::defaultEngineImpl);
 
   @Override
   public @Nonnull AnkhScriptEngine engine(@Nullable String key) {
@@ -93,44 +96,44 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     Component layoutComponent;
     if (resultMessage.length() > 45) {
       layoutComponent = Component.text(resultMessage.substring(0, 42), NamedTextColor.WHITE)
-        .append(Component.text("...", NamedTextColor.BLUE));
+          .append(Component.text("...", NamedTextColor.BLUE));
     } else {
       layoutComponent = Component.text(resultMessage, NamedTextColor.WHITE);
     }
     Component hoverComponent;
     if (resultMessage.length() > 1000) {
       hoverComponent = Component.text(resultMessage.substring(0, 800), NamedTextColor.WHITE)
-        .append(Component.newline())
-        .append(Component.newline())
-        .append(Component.text("prepare: ", NamedTextColor.GOLD))
-        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(ppsCost), NamedTextColor.WHITE))
-        .append(Component.text("ns", NamedTextColor.GOLD))
-        .append(Component.newline())
-        .append(Component.text("execute: ", NamedTextColor.GOLD))
-        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(executeCost), NamedTextColor.WHITE))
-        .append(Component.text("ns", NamedTextColor.GOLD))
-        .append(Component.newline())
-        .append(Component.text("type: ", NamedTextColor.GOLD))
-        .append(Component.text(result == null ? "null" : result.getClass().getName()))
-        .append(Component.newline())
-        .append(Component.text("result length=" + resultMessage.length() + ", cut first 800 chars", NamedTextColor.GOLD));
+          .append(Component.newline())
+          .append(Component.newline())
+          .append(Component.text("prepare: ", NamedTextColor.GOLD))
+          .append(Component.text(TimeUnit.NANOSECONDS.toNanos(ppsCost), NamedTextColor.WHITE))
+          .append(Component.text("ns", NamedTextColor.GOLD))
+          .append(Component.newline())
+          .append(Component.text("execute: ", NamedTextColor.GOLD))
+          .append(Component.text(TimeUnit.NANOSECONDS.toNanos(executeCost), NamedTextColor.WHITE))
+          .append(Component.text("ns", NamedTextColor.GOLD))
+          .append(Component.newline())
+          .append(Component.text("type: ", NamedTextColor.GOLD))
+          .append(Component.text(result == null ? "null" : result.getClass().getName()))
+          .append(Component.newline())
+          .append(Component.text("result length=" + resultMessage.length() + ", cut first 800 chars", NamedTextColor.GOLD));
     } else {
       hoverComponent = Component.text(resultMessage, NamedTextColor.WHITE)
-        .append(Component.newline())
-        .append(Component.newline())
-        .append(Component.text("prepare: ", NamedTextColor.GOLD))
-        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(ppsCost), NamedTextColor.WHITE))
-        .append(Component.text("ns", NamedTextColor.GOLD))
-        .append(Component.newline())
-        .append(Component.text("execute: ", NamedTextColor.GOLD))
-        .append(Component.text(TimeUnit.NANOSECONDS.toNanos(executeCost), NamedTextColor.WHITE))
-        .append(Component.text("ns", NamedTextColor.GOLD))
-        .append(Component.newline())
-        .append(Component.text("type: ", NamedTextColor.GOLD))
-        .append(Component.text(result == null ? "null" : result.getClass().getName()));
+          .append(Component.newline())
+          .append(Component.newline())
+          .append(Component.text("prepare: ", NamedTextColor.GOLD))
+          .append(Component.text(TimeUnit.NANOSECONDS.toNanos(ppsCost), NamedTextColor.WHITE))
+          .append(Component.text("ns", NamedTextColor.GOLD))
+          .append(Component.newline())
+          .append(Component.text("execute: ", NamedTextColor.GOLD))
+          .append(Component.text(TimeUnit.NANOSECONDS.toNanos(executeCost), NamedTextColor.WHITE))
+          .append(Component.text("ns", NamedTextColor.GOLD))
+          .append(Component.newline())
+          .append(Component.text("type: ", NamedTextColor.GOLD))
+          .append(Component.text(result == null ? "null" : result.getClass().getName()));
     }
     player.sendMessage(Component.text("[result] ", NamedTextColor.GOLD)
-      .append(layoutComponent.hoverEvent(hoverComponent)));
+        .append(layoutComponent.hoverEvent(hoverComponent)));
   }
 
   @Override
@@ -155,9 +158,9 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     }
 
     logger.info("[result] class={}, prepare={}ns execute={}ns",
-      result == null ? "null" : result.getClass().getName(),
-      TimeUnit.NANOSECONDS.toNanos(ppsCost),
-      TimeUnit.NANOSECONDS.toNanos(executeCost)
+        result == null ? "null" : result.getClass().getName(),
+        TimeUnit.NANOSECONDS.toNanos(ppsCost),
+        TimeUnit.NANOSECONDS.toNanos(executeCost)
     );
     logger.info("[result] {}", result);
   }
@@ -214,8 +217,6 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       });
     }
   }
-
-
 
 
 }

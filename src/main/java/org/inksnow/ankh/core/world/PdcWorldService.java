@@ -26,7 +26,6 @@ import org.inksnow.ankh.core.api.block.AnkhBlock;
 import org.inksnow.ankh.core.api.block.AsyncTickableBlock;
 import org.inksnow.ankh.core.api.block.BlockRegistry;
 import org.inksnow.ankh.core.api.block.TickableBlock;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.plugin.PluginLifeCycle;
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptEvent;
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptLifecycle;
@@ -48,17 +47,16 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 @Singleton
 @Slf4j
 @SuppressWarnings("DuplicatedCode") // for fast
 public class PdcWorldService implements WorldService {
+  private static final org.inksnow.ankh.core.api.world.storage.WorldStorage storageBackend =
+      AnkhServiceLoader.configLoadService(org.inksnow.ankh.core.api.world.storage.WorldStorage.class);
   private final AnkhCoreLoader coreLoader;
   private final AnkhConfig ankhConfig;
   private final BlockRegistry blockRegistry;
-  private final DcLazy<org.inksnow.ankh.core.api.world.storage.WorldStorage> storageBackend;
-
   private final Map<UUID, WorldStorage> worldMap = new Object2ObjectAVLTreeMap<>();
   private final Predicate<Block> isUnloadOrAnkh = this::isUnloadOrAnkh;
 
@@ -67,9 +65,6 @@ public class PdcWorldService implements WorldService {
     this.coreLoader = coreLoader;
     this.ankhConfig = ankhConfig;
     this.blockRegistry = blockRegistry;
-    this.storageBackend = DcLazy.of((Supplier<org.inksnow.ankh.core.api.world.storage.WorldStorage>) () ->
-        AnkhServiceLoader.loadService(ankhConfig.service().worldStorage(), org.inksnow.ankh.core.api.world.storage.WorldStorage.class)
-    );
   }
 
   @Override
@@ -198,7 +193,6 @@ public class PdcWorldService implements WorldService {
       ));
     }
 
-    val storageBackend = this.storageBackend.get();
     val asyncTask = (Runnable) () -> {
       storageBackend.store(chunk, entryList);
     };
@@ -213,7 +207,7 @@ public class PdcWorldService implements WorldService {
   private void loadChunk(ChunkStorage chunkStorage, Chunk chunk) {
     Bukkit.getScheduler().runTaskAsynchronously(coreLoader, () -> {
       try {
-        val entryList = storageBackend.get().provide(chunk);
+        val entryList = storageBackend.provide(chunk);
 
         Bukkit.getScheduler().runTask(coreLoader, () -> {
           try {

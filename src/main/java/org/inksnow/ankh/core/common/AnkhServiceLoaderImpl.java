@@ -1,17 +1,23 @@
 package org.inksnow.ankh.core.common;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.inject.name.Names;
 import lombok.val;
 import net.kyori.adventure.key.Key;
+import org.hibernate.cfg.DefaultNamingStrategy;
 import org.inksnow.ankh.core.api.AnkhServiceLoader;
+import org.inksnow.ankh.core.api.ioc.DcLazy;
+import org.inksnow.ankh.core.common.config.AnkhConfig;
 import org.inksnow.ankh.core.common.util.CheckUtil;
+import org.inksnow.ankh.core.common.util.LazyProxyUtil;
 import org.inksnow.ankh.core.plugin.AnkhPluginContainerImpl;
 
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -23,7 +29,12 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
   private static final AtomicReference<Map<StringCacheKey, Object>> stringInstanceMap = new AtomicReference<>(new HashMap<>());
   private static final AtomicReference<Map<KeyCacheKey, Object>> keyCacheMap = new AtomicReference<>(new ConcurrentHashMap<>());
   private static final AtomicReference<Map<StringCacheKey, Object>> stringCacheMap = new AtomicReference<>(new ConcurrentHashMap<>());
+  private static final Map<Class<?>, Object> configLoadService = new ConcurrentHashMap<>();
+
   private static final Function<KeyCacheKey, Object> keyLoadFunction = it -> {
+    if(!it.clazz.isInterface()){
+      throw new IllegalArgumentException("service class must be interface");
+    }
     val keyInstance = keyInstanceMap.get().get(it);
     if (keyInstance != null) {
       return keyInstance;
@@ -34,8 +45,10 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
     val binding = injector.getExistingBinding(iocKey);
     return binding != null ? injector.getInstance(iocKey) : null;
   };
-
   private static final Function<StringCacheKey, Object> stringLoadFunction = it -> {
+    if(!it.clazz.isInterface()){
+      throw new IllegalArgumentException("service class must be interface");
+    }
     val stringInstance = stringInstanceMap.get().get(it);
     if (stringInstance != null) {
       return stringInstance;
@@ -52,6 +65,31 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
       }
     }
     return null;
+  };
+  private static final Function<Class<?>, Object> configLoadFunction = clazz -> {
+    if(!clazz.isInterface()){
+      throw new IllegalArgumentException("service class must be interface");
+    }
+    val serviceNames = new LinkedHashSet<String>();
+    serviceNames.add(clazz.getName());
+    for (val named : clazz.getAnnotationsByType(javax.inject.Named.class)) {
+      serviceNames.add(named.value());
+    }
+    for (val named : clazz.getAnnotationsByType(com.google.inject.name.Named.class)) {
+      serviceNames.add(named.value());
+    }
+    serviceNames.add(translateName(clazz.getSimpleName(), '-').toLowerCase(Locale.ENGLISH));
+    serviceNames.add(clazz.getSimpleName());
+
+    val config = AnkhConfig.instance().service();
+    val loadConfigValue = serviceNames.stream()
+        .map(config::get)
+        .filter(Objects::nonNull)
+        .findFirst()
+        .orElseThrow(()->new IllegalStateException(
+            "Failed to load service, no config found. try keys: '" + String.join("', '", serviceNames) + "'"
+        ));
+    return LazyProxyUtil.generate(clazz, DcLazy.of((Callable<?>) ()->staticLoadService(loadConfigValue, clazz)));
   };
 
   public static void staticRegisterPlugin(@Nonnull String name, @Nonnull AnkhPluginContainerImpl container) {
@@ -124,6 +162,15 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
     return result;
   }
 
+  @SuppressWarnings("unchecked")
+  public static <T> @Nonnull T staticConfigLoadService(@Nonnull Class<T> clazz){
+    val result = (T) configLoadService.computeIfAbsent(clazz, configLoadFunction);
+    if (result == null) {
+      throw new IllegalStateException("No config service " + clazz + " found");
+    }
+    return result;
+  }
+
   @Override
   public <T> void registerServiceImpl(@Nonnull Key key, @Nonnull Class<T> serviceClass, T instance) {
     staticRegisterService(key, serviceClass, instance);
@@ -137,6 +184,23 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
   @Override
   public <T> T loadServiceImpl(@Nonnull Key key, @Nonnull Class<T> clazz) {
     return staticLoadService(key, clazz);
+  }
+
+  @Override
+  public <T> @Nonnull T configLoadServiceImpl(@Nonnull Class<T> clazz) {
+    return staticConfigLoadService(clazz);
+  }
+
+  private static String translateName(String name, char separator){
+    StringBuilder translation = new StringBuilder();
+    for (int i = 0; i < name.length(); i++) {
+      char character = name.charAt(i);
+      if (Character.isUpperCase(character) && translation.length() != 0) {
+        translation.append(separator);
+      }
+      translation.append(character);
+    }
+    return translation.toString();
   }
 
   private static class StringCacheKey {

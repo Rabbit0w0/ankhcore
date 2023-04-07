@@ -60,6 +60,18 @@ public interface AnkhServiceLoader {
   }
 
   /**
+   * get a service from config
+   *
+   * @param clazz the service class
+   * @param <T> the service type (same as the service class)
+   * @return the service instance
+   * @throws IllegalStateException if the service not found
+   */
+  static <T> @Nonnull T configLoadService(@Nonnull Class<T> clazz){
+    return instance().configLoadServiceImpl(clazz);
+  }
+
+  /**
    * register a service by key
    *
    * @param key          the service key
@@ -90,6 +102,16 @@ public interface AnkhServiceLoader {
    * @throws IllegalStateException if the service not found
    */
   <T> T loadServiceImpl(@Nonnull Key key, @Nonnull Class<T> clazz);
+
+  /**
+   * get a service from config
+   *
+   * @param clazz the service class
+   * @param <T> the service type (same as the service class)
+   * @return the service instance
+   * @throws IllegalStateException if the service not found
+   */
+  <T> @Nonnull T configLoadServiceImpl(@Nonnull Class<T> clazz);
 
   public static class $internal$actions$ {
     private static DcLazy<AnkhServiceLoader> INSTANCE = IocLazy.of(AnkhServiceLoader.class);

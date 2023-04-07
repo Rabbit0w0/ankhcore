@@ -135,6 +135,7 @@ dependencies {
   api("org.ow2.asm:asm:9.4")
   api("org.ow2.asm:asm-tree:9.4")
   api("it.unimi.dsi:fastutil:8.5.12")
+  api("net.bytebuddy:byte-buddy:1.14.4")
 
   // database
   api("org.hibernate.orm:hibernate-core:6.1.7.Final")

@@ -9,6 +9,7 @@ import org.inksnow.ankh.core.api.plugin.AnkhBukkitPlugin
 import org.inksnow.ankh.core.api.plugin.AnkhPluginContainer
 import org.inksnow.ankh.core.api.plugin.AnkhPluginManager
 import org.inksnow.ankh.core.api.plugin.AnkhPluginYml
+import org.inksnow.ankh.core.common.config.AnkhConfig
 import org.inksnow.ankh.core.plugin.scanner.PluginClassScanner
 import org.inksnow.ankh.loader.AnkhClassLoader
 import org.slf4j.Logger
@@ -29,6 +30,7 @@ object AnkhPluginManagerImpl : AbstractModule(), AnkhPluginManager {
     val container = AnkhPluginContainerImpl(pluginClass, classLoader, descriptionFile, pluginYml)
 
     val scannerInjector = Guice.createInjector({ binder ->
+      binder.bind(AnkhConfig::class.java).toProvider { AnkhConfig.instance() }
       binder.bind(Logger::class.java).toInstance(logger)
       binder.bind(Class::class.java).annotatedWith(Names.named("pluginClass")).toInstance(pluginClass)
       binder.bind(File::class.java).annotatedWith(Names.named("pluginFile")).toInstance(file)

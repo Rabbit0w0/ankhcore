@@ -3,11 +3,13 @@ package org.inksnow.ankh.core.api.world.storage;
 import org.bukkit.Chunk;
 
 import javax.annotation.Nonnull;
+import javax.inject.Named;
 import java.util.List;
 
 /**
  * StorageBackend store world data, likes block's pos and meta
  */
+@Named("world-storage")
 public interface WorldStorage {
   /**
    * Provide a stream include all ankh-blocks in WorldChunkEmbedded

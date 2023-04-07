@@ -13,6 +13,7 @@ import org.inksnow.ankh.core.api.storage.ChunkStorage;
 import org.inksnow.ankh.core.api.storage.LocationStorage;
 import org.inksnow.ankh.core.block.BlockRegisterService;
 import org.inksnow.ankh.core.common.AnkhServiceLoaderImpl;
+import org.inksnow.ankh.core.common.config.AnkhConfig;
 import org.inksnow.ankh.core.common.entity.LocationEmbedded;
 import org.inksnow.ankh.core.common.entity.WorldChunkEmbedded;
 import org.inksnow.ankh.core.ioc.BridgerKey;
@@ -30,6 +31,7 @@ public class AnkhCorePluginModule extends AbstractModule {
 
   @Override
   protected void configure() {
+    bind(AnkhConfig.class).toProvider(AnkhConfig.provider());
     bind(AnkhIocKey.Factory.class).to(BridgerKey.Factory.class);
     bind(AnkhServiceLoader.class).to(AnkhServiceLoaderImpl.class);
 
@@ -42,6 +44,5 @@ public class AnkhCorePluginModule extends AbstractModule {
     bind(ChunkStorage.Factory.class).to(WorldChunkEmbedded.Factory.class);
 
     bind(BlockRegistry.class).to(BlockRegisterService.class);
-    bind(AnkhItemRegistry.class).to(ItemRegisterService.class);
   }
 }

@@ -23,6 +23,10 @@ public class KetherEngine implements AnkhScriptEngine {
     return INSTANCE.get();
   }
 
+  private static @Nonnull String shellToScript(@Nonnull String shell) {
+    return shell.startsWith("def ") ? shell : "def main = { " + shell + " }";
+  }
+
   @Override
   public @Nonnull PreparedScript prepare(@Nonnull String shell) throws Exception {
     final var script = shellToScript(shell);
@@ -34,9 +38,5 @@ public class KetherEngine implements AnkhScriptEngine {
     );
 
     return new KetherPreparedScript(quest);
-  }
-
-  private static @Nonnull String shellToScript(@Nonnull String shell) {
-    return shell.startsWith("def ") ? shell : "def main = { " + shell + " }";
   }
 }

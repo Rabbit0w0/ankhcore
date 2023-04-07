@@ -25,11 +25,9 @@ public class AnkhMenuService {
     if (!(holder instanceof InventoryMenu)) {
       return;
     }
-    val humanEntity = event.getPlayer();
     if (!(event.getPlayer() instanceof Player)) {
       return;
     }
-    val player = (Player) humanEntity;
     val menu = (InventoryMenu) holder;
     menu.acceptCloseEvent(event);
   }
@@ -40,11 +38,9 @@ public class AnkhMenuService {
     if (!(holder instanceof InventoryMenu)) {
       return;
     }
-    val humanEntity = event.getWhoClicked();
     if (!(event.getWhoClicked() instanceof Player)) {
       return;
     }
-    val player = (Player) humanEntity;
     val menu = (InventoryMenu) holder;
     menu.acceptClickEvent(event);
   }
@@ -55,11 +51,9 @@ public class AnkhMenuService {
     if (!(holder instanceof InventoryMenu)) {
       return;
     }
-    val humanEntity = event.getWhoClicked();
     if (!(event.getWhoClicked() instanceof Player)) {
       return;
     }
-    val player = (Player) humanEntity;
     val menu = (InventoryMenu) holder;
     menu.acceptDragEvent(event);
   }

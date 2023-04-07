@@ -42,3 +42,15 @@ tasks.compileKotlin {
     freeCompilerArgs = listOf("-Xjvm-default=all")
   }
 }
+
+tasks.publish {
+  enabled = false
+}
+
+tasks.javadocJar {
+  enabled = false
+}
+
+tasks.sourcesJar {
+  enabled = false
+}

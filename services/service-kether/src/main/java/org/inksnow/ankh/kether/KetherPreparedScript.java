@@ -12,13 +12,10 @@ import javax.annotation.Nonnull;
 
 public class KetherPreparedScript implements PreparedScript {
   private final Quest quest;
-  private final ScriptCacheStack<KetherContextBinding, Exception> localCache;
+  // private final ScriptCacheStack<KetherContextBinding, Exception> localCache;
 
   public KetherPreparedScript(Quest quest) throws Exception {
     this.quest = quest;
-    this.localCache = new ScriptCacheStack<>(this::create);
-
-    this.localCache.prepare(1);
   }
 
   private KetherContextBinding create(){
@@ -33,16 +30,10 @@ public class KetherPreparedScript implements PreparedScript {
     } else {
       context.set("@Sender", Bukkit.getConsoleSender());
     }
-
-    final var binding = localCache.borrow();
-    try{
-      binding.context(context);
-      final var rawResult =  binding.contextBinding()
+    final var rawResult = new KetherContextBinding(ScriptService.INSTANCE, quest)
+        .contextBinding()
         .runActions()
         .join();
-      return rawResult == Unit.INSTANCE ? null : rawResult;
-    }finally {
-      localCache.sendBack(binding);
-    }
+    return rawResult == Unit.INSTANCE ? null : rawResult;
   }
 }

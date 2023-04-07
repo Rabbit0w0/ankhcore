@@ -1,12 +1,8 @@
 package org.inksnow.ankh.kether;
 
-import kotlin.Unit;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.script.AnkhScriptEngine;
 import org.inksnow.ankh.core.api.script.PreparedScript;
-import org.inksnow.ankh.core.api.script.ScriptContext;
 import taboolib.module.kether.KetherScriptLoader;
 import taboolib.module.kether.ScriptService;
 

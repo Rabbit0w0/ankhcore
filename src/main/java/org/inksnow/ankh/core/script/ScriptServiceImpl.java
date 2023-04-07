@@ -169,7 +169,8 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     return prepareShell(shell).execute(context);
   }
 
-  public PreparedScript prepareShell(@Nonnull String shell) throws Exception {
+  @Override
+  public @Nonnull PreparedScript prepareShell(@Nonnull String shell) throws Exception {
     String engineName;
     String command;
     if (shell.startsWith(":")) {

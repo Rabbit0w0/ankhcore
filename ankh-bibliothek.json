@@ -10,6 +10,11 @@
       "type": "application",
       "name": "jar",
       "path": "loader/plugin/build/libs/*.jar"
+    },
+    {
+      "type": "service-kether",
+      "name": "service-kether.jar",
+      "path": "services/service-kether/build/libs/*-all.jar"
     }
   ]
 }

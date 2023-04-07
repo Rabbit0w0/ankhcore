@@ -185,7 +185,7 @@ public class PdcWorldService implements WorldService {
   private void saveChunk(ChunkStorage chunkStorage, Chunk chunk) {
     val chunkEmbedded = WorldChunkEmbedded.of(chunk);
 
-    val entrySet = chunkStorage.blockTickers.long2ObjectEntrySet();
+    val entrySet = chunkStorage.blockMap.long2ObjectEntrySet();
     val entryList = new ArrayList<BlockStorageEntry>(entrySet.size());
     for (val entry : entrySet) {
       val locationEmbedded = LocationEmbedded.of(chunkEmbedded, entry.getLongKey());

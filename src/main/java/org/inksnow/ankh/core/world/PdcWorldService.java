@@ -265,6 +265,7 @@ public class PdcWorldService implements WorldService {
                   FastEmbeddedUtil.chunkX(chunkStorageEntry.getLongKey()),
                   FastEmbeddedUtil.chunkZ(chunkStorageEntry.getLongKey()),
                   FastEmbeddedUtil.chunk_blockId_x(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
+                  FastEmbeddedUtil.blockId_y(blockEntry.getLongKey()),
                   FastEmbeddedUtil.chunk_blockId_z(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
                   e
               );
@@ -285,6 +286,7 @@ public class PdcWorldService implements WorldService {
                   FastEmbeddedUtil.chunkX(chunkStorageEntry.getLongKey()),
                   FastEmbeddedUtil.chunkZ(chunkStorageEntry.getLongKey()),
                   FastEmbeddedUtil.chunk_blockId_x(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
+                  FastEmbeddedUtil.blockId_y(blockEntry.getLongKey()),
                   FastEmbeddedUtil.chunk_blockId_z(chunkStorageEntry.getLongKey(), blockEntry.getLongKey()),
                   e
               );

@@ -11,9 +11,8 @@ import org.inksnow.ankh.core.api.hologram.HologramService
 import org.inksnow.ankh.core.api.hologram.HologramTask
 import org.inksnow.ankh.core.api.plugin.AnkhPluginContainer
 import org.inksnow.ankh.core.api.plugin.annotations.AutoRegistered
-import org.inksnow.ankh.core.common.dsl.key
-import org.inksnow.ankh.core.common.dsl.logger
 import org.inksnow.ankh.testplugin.item.TestItem
+import org.slf4j.LoggerFactory
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Inject
@@ -77,14 +76,14 @@ class TestBlock private constructor(
     val pluginContainer: AnkhPluginContainer,
   ) : AnkhBlock.Factory {
     val testItem by lazy { injector.getInstance(TestItem::class.java) }
-    val logger by logger()
+    val logger = LoggerFactory.getLogger(this.javaClass)
     val random = Random()
     val materials = arrayOf(
       Material.IRON_BLOCK,
       Material.GOLD_BLOCK,
       Material.DIAMOND_BLOCK
     )
-    val blockId = pluginContainer.key("test-block")
+    val blockId = Key.key(pluginContainer.plugin().name, "test-block")
 
     override fun key(): Key = blockId
 

@@ -12,10 +12,10 @@ import org.inksnow.ankh.core.api.plugin.AnkhBukkitPlugin
 import org.inksnow.ankh.core.api.plugin.AnkhPluginContainer
 import org.inksnow.ankh.core.api.plugin.AnkhPluginYml
 import org.inksnow.ankh.core.common.AnkhServiceLoaderImpl
-import org.inksnow.ankh.core.common.dsl.logger
 import org.inksnow.ankh.core.ioc.BridgerInjector
 import org.inksnow.ankh.loader.AnkhClassLoader
 import org.inksnow.ankh.loader.AnkhCoreLoaderPlugin
+import org.slf4j.LoggerFactory
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -25,7 +25,7 @@ class AnkhPluginContainerImpl(
   val descriptionFile: PluginDescriptionFile,
   val pluginYml: AnkhPluginYml,
 ) : AnkhPluginContainer {
-  private val logger by logger(descriptionFile.name)
+  private val logger = LoggerFactory.getLogger(descriptionFile.name)
   lateinit var injector: Injector private set
   lateinit var bukkitPlugin: AnkhBukkitPlugin private set
   val pluginModules = ArrayList<Class<out Module>>()

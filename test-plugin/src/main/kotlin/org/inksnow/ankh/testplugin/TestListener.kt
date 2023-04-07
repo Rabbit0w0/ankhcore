@@ -7,9 +7,9 @@ import org.inksnow.ankh.core.api.plugin.AnkhBukkitPlugin
 import org.inksnow.ankh.core.api.plugin.PluginLifeCycle
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptEvent
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptLifecycle
-import org.inksnow.ankh.core.common.dsl.logger
 import org.inksnow.ankh.core.inventory.menu.AbstractChestMenu
 import org.inksnow.ankh.testplugin.item.TestItem
+import org.slf4j.LoggerFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,7 +18,7 @@ class TestListener @Inject private constructor(
   private val plugin: AnkhBukkitPlugin,
   private val testItem: TestItem,
 ) {
-  private val logger by logger()
+  private val logger = LoggerFactory.getLogger(this.javaClass)
 
   @SubscriptEvent
   private fun onAsyncPlayerChat(event: AsyncPlayerChatEvent) {

@@ -1,8 +1,8 @@
 package org.inksnow.ankh.core.api.storage;
 
 import org.bukkit.Chunk;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.ioc.IocLazy;
+import org.inksnow.ankh.core.api.util.DcLazy;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;

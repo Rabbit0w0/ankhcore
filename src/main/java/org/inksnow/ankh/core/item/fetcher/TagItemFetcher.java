@@ -19,9 +19,9 @@ public class TagItemFetcher implements ItemFetcher {
   @Override
   public @Nonnull List<Key> fetchItem(@Nonnull ItemStack itemStack) {
     val tag = itemTagger.getTag(itemStack);
-    if(tag == null){
+    if (tag == null) {
       return Collections.emptyList();
-    }else{
+    } else {
       return Collections.singletonList(tag);
     }
   }

@@ -2,7 +2,6 @@ package org.inksnow.ankh.core.item.tagger;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import net.kyori.adventure.key.InvalidKeyException;
 import net.kyori.adventure.key.Key;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -22,11 +21,11 @@ public class PdcItemTagger implements ItemTagger {
   @Override
   public void setTag(@Nonnull ItemStack itemStack, @Nullable Key itemId) {
     val itemMeta = itemStack.getItemMeta();
-    if(itemId == null){
+    if (itemId == null) {
       itemMeta.getPersistentDataContainer().remove(ITEM_ID_KEY);
-    }else if(itemMeta == null){
-      throw new UnsupportedOperationException("item "+itemStack.getType()+" can't be tagged");
-    }else{
+    } else if (itemMeta == null) {
+      throw new UnsupportedOperationException("item " + itemStack.getType() + " can't be tagged");
+    } else {
       itemMeta.getPersistentDataContainer().set(ITEM_ID_KEY, PersistentDataType.STRING, itemId.asString());
     }
   }
@@ -34,11 +33,11 @@ public class PdcItemTagger implements ItemTagger {
   @Override
   public @Nullable Key getTag(@Nonnull ItemStack itemStack) {
     val itemMeta = itemStack.getItemMeta();
-    if(itemMeta == null){
+    if (itemMeta == null) {
       return null;
     }
     val idString = itemMeta.getPersistentDataContainer().get(ITEM_ID_KEY, PersistentDataType.STRING);
-    if(idString == null){
+    if (idString == null) {
       return null;
     }
     return Key.key(idString);

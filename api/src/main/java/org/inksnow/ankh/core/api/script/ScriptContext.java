@@ -1,8 +1,8 @@
 package org.inksnow.ankh.core.api.script;
 
 import org.bukkit.entity.Player;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.ioc.IocLazy;
+import org.inksnow.ankh.core.api.util.DcLazy;
 import org.inksnow.ankh.core.api.util.IBuilder;
 
 import javax.annotation.Nonnull;

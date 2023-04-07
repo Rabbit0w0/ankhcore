@@ -1,7 +1,6 @@
-package org.inksnow.ankh.core.api.ioc;
+package org.inksnow.ankh.core.api.util;
 
 import java.util.concurrent.Callable;
-import java.util.function.Supplier;
 
 /**
  * This class provides a generic implementation of the lazy initialization
@@ -70,15 +69,6 @@ public abstract class DcLazy<T> {
   @SuppressWarnings("unchecked")
   // Stores the managed object.
   private volatile T object = (T) NO_INIT;
-
-  public static <T> DcLazy<T> of(Supplier<T> supplier) {
-    return new DcLazy<T>() {
-      @Override
-      protected T initialize() throws Throwable {
-        return supplier.get();
-      }
-    };
-  }
 
   public static <T> DcLazy<T> of(Callable<T> supplier) {
     return new CallableInitializer<>(supplier);

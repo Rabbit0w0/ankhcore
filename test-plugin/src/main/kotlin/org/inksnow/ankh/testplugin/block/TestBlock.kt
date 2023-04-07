@@ -11,7 +11,6 @@ import org.inksnow.ankh.core.api.hologram.HologramService
 import org.inksnow.ankh.core.api.hologram.HologramTask
 import org.inksnow.ankh.core.api.plugin.AnkhPluginContainer
 import org.inksnow.ankh.core.api.plugin.annotations.AutoRegistered
-import org.inksnow.ankh.core.api.storage.LocationStorage
 import org.inksnow.ankh.core.common.dsl.key
 import org.inksnow.ankh.core.common.dsl.logger
 import org.inksnow.ankh.testplugin.item.TestItem

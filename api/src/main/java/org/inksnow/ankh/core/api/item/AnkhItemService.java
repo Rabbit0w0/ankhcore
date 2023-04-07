@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface AnkhItemService {
   List<Key> fetchItem(@Nonnull ItemStack itemStack);
+
   void tagItem(@Nonnull ItemStack stack, Key tag);
 }

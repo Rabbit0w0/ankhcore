@@ -1,9 +1,9 @@
 package org.inksnow.ankh.core.api.world.storage;
 
 import net.kyori.adventure.key.Key;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.ioc.IocLazy;
 import org.inksnow.ankh.core.api.storage.LocationStorage;
+import org.inksnow.ankh.core.api.util.DcLazy;
 import org.inksnow.ankh.core.api.util.IBuilder;
 
 import javax.annotation.Nonnull;

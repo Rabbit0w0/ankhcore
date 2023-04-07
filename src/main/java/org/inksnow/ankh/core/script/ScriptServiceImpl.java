@@ -12,12 +12,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.inksnow.ankh.core.api.AnkhCoreLoader;
 import org.inksnow.ankh.core.api.AnkhServiceLoader;
-import org.inksnow.ankh.core.api.ioc.DcLazy;
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptEvent;
 import org.inksnow.ankh.core.api.script.AnkhScriptEngine;
 import org.inksnow.ankh.core.api.script.AnkhScriptService;
 import org.inksnow.ankh.core.api.script.PreparedScript;
 import org.inksnow.ankh.core.api.script.ScriptContext;
+import org.inksnow.ankh.core.api.util.DcLazy;
 import org.inksnow.ankh.core.common.config.AnkhConfig;
 import org.inksnow.ankh.core.common.util.ExecuteReportUtil;
 import org.slf4j.helpers.MessageFormatter;
@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 @Singleton
 @Slf4j
@@ -47,8 +46,6 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     this.config = config;
   }
 
-  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of((Supplier<AnkhScriptEngine>) this::defaultEngineImpl);
-
   @Override
   public @Nonnull AnkhScriptEngine engine(@Nullable String key) {
     if (key == null || key.isEmpty()) {
@@ -61,6 +58,8 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     val configDefaultService = config.service().script();
     return engine(configDefaultService == null ? "ankh-core:bsh" : configDefaultService);
   }
+
+  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of(this::defaultEngineImpl);
 
   private AnkhScriptEngine loadEngineImpl(String key) {
     return AnkhServiceLoader.loadService(key, AnkhScriptEngine.class);
@@ -217,6 +216,4 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       });
     }
   }
-
-
 }

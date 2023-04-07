@@ -10,10 +10,9 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.inksnow.ankh.core.api.plugin.AnkhPluginContainer
 import org.inksnow.ankh.core.api.plugin.annotations.AutoRegistered
 import org.inksnow.ankh.core.api.world.WorldService
-import org.inksnow.ankh.core.common.dsl.key
-import org.inksnow.ankh.core.common.dsl.logger
 import org.inksnow.ankh.core.item.AbstractAnkhItem
 import org.inksnow.ankh.testplugin.block.TestBlock
+import org.slf4j.LoggerFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,9 +23,9 @@ class TestItem @Inject private constructor(
   private val worldService: WorldService,
   private val testBlockFactory: TestBlock.Factory,
 ) : AbstractAnkhItem() {
-  private val logger by logger()
+  private val logger = LoggerFactory.getLogger(this.javaClass)
 
-  override fun key(): Key = pluginContainer.key("test-item")
+  override fun key(): Key = Key.key(pluginContainer.plugin().name, "test-item")
   override fun material(): Material = Material.STONE
 
   override fun itemName(): Component = Component.text()

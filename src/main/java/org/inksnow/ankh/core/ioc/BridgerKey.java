@@ -16,7 +16,7 @@ public class BridgerKey<T> implements AnkhIocKey<T> {
     }
 
     @Singleton
-    static class Factory implements AnkhIocKey.Factory {
+    public static class Factory implements AnkhIocKey.Factory {
         @Override
         public <T> AnkhIocKey<T> get(Class<T> type) {
             return new BridgerKey<>(Key.get(type));

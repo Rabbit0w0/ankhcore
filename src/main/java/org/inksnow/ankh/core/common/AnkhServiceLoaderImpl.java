@@ -53,8 +53,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
       val resultList = new ArrayList<>();
       for (val plugin : pluginRegistry.get().values()) {
         for (val entry : plugin.getInjector().getAllBindings().entrySet()) {
-          val rawType = entry.getKey().getTypeLiteral().getRawType();
-          if (!clazz.isAssignableFrom(rawType)) {
+          if (clazz != entry.getKey().getTypeLiteral().getRawType()) {
             continue;
           }
           String name;
@@ -64,7 +63,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
           } else if (annotation instanceof com.google.inject.name.Named) {
             name = ((com.google.inject.name.Named) annotation).value();
           } else {
-            logger.warn("service implement class {} should be named", rawType);
+            logger.warn("service implement class should be named. {}", entry.getValue().getSource());
             continue;
           }
           if (Arrays.stream(new String[]{

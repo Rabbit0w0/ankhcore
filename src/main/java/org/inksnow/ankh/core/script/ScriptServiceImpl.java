@@ -75,7 +75,10 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     Object result;
 
     try {
-      val context = ScriptContext.builder().with("isConsole", true).build();
+      val context = ScriptContext.builder()
+          .player(player)
+          .with("isConsole", false)
+          .build();
       val startTime = System.nanoTime();
       val script = prepareShell(shell);
       val ppsTime = System.nanoTime();

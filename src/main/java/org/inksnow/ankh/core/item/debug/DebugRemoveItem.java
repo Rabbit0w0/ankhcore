@@ -29,10 +29,9 @@ public class DebugRemoveItem extends AbstractAnkhItem {
       .build();
   private static final List<Component> ITEM_LORE = List.of(
       Component.text("left click to remove ankh-block and block", NamedTextColor.WHITE),
-      Component.empty(),
       Component.text("right click to remove ankh-block only", NamedTextColor.WHITE),
       Component.empty(),
-      Component.text("This is ankh-core debug item, for internal usage only", NamedTextColor.WHITE),
+      Component.text("This is ankh-core debug item", NamedTextColor.WHITE),
       Component.text("DON'T GIVE IT TO PLAYER", NamedTextColor.RED)
   );
 

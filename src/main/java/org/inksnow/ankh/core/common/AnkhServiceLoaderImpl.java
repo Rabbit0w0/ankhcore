@@ -75,6 +75,17 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
           }
         }
       }
+      for (val entry : keyInstanceMap.get().entrySet()) {
+        if (!clazz.isAssignableFrom(entry.getKey().clazz)) {
+          continue;
+        }
+        if (Arrays.stream(new String[]{
+            config.service().get(serviceName + "@" + entry.getKey().value),
+            config.service().get(serviceName + "@" + entry.getKey().namespace + ":" + entry.getKey().value)
+        }).filter(Objects::nonNull).allMatch(Boolean::parseBoolean)) {
+          resultList.add(staticLoadService(Key.key(entry.getKey().namespace, entry.getKey().value), clazz));
+        }
+      }
       return resultList;
     }));
   };

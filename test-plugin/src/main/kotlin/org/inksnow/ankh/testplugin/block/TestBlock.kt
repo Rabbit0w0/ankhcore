@@ -33,13 +33,11 @@ class TestBlock private constructor(
     nextMaterial.set(factory.materials[factory.random.nextInt(factory.materials.size)])
     location.block.type = nextMaterial.get()
 
-    this.hologram?.let { hologram ->
-      hologram.updateContent(
+    this.hologram?.updateContent(
         factory.hologramService.content()
           .appendContent(nextMaterial.get().name)
           .build()
-      )
-    }
+    )
   }
 
   override fun runAsyncTick() {

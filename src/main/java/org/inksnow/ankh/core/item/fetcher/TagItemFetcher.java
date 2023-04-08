@@ -14,7 +14,7 @@ import java.util.List;
 
 @Singleton
 public class TagItemFetcher implements ItemFetcher {
-  private static final ItemTagger itemTagger = AnkhServiceLoader.configLoadService(ItemTagger.class);
+  private static final ItemTagger itemTagger = AnkhServiceLoader.service(ItemTagger.class);
 
   @Override
   public @Nonnull List<Key> fetchItem(@Nonnull ItemStack itemStack) {

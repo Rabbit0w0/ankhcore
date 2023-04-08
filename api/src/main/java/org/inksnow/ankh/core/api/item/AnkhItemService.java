@@ -4,10 +4,15 @@ import net.kyori.adventure.key.Key;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.List;
+import javax.annotation.Nullable;
+import java.util.Set;
 
 public interface AnkhItemService {
-  List<Key> fetchItem(@Nonnull ItemStack itemStack);
+  @Nonnull
+  Set<Key> fetchTag(@Nonnull ItemStack itemStack);
 
-  void tagItem(@Nonnull ItemStack stack, Key tag);
+  @Nullable
+  Key tagItem(@Nonnull ItemStack stack);
+
+  void tagItem(@Nonnull ItemStack stack, @Nullable Key tag);
 }

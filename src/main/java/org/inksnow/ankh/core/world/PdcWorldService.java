@@ -53,7 +53,7 @@ import java.util.function.Predicate;
 @SuppressWarnings("DuplicatedCode") // for fast
 public class PdcWorldService implements WorldService {
   private static final org.inksnow.ankh.core.api.world.storage.WorldStorage storageBackend =
-      AnkhServiceLoader.configLoadService(org.inksnow.ankh.core.api.world.storage.WorldStorage.class);
+      AnkhServiceLoader.service(org.inksnow.ankh.core.api.world.storage.WorldStorage.class);
   private final AnkhCoreLoader coreLoader;
   private final AnkhConfig ankhConfig;
   private final BlockRegistry blockRegistry;
@@ -154,6 +154,37 @@ public class PdcWorldService implements WorldService {
       return;
     }
     handleBlockRemove(chunkStorage, blockId, ankhBlock);
+  }
+
+  @Deprecated // unsafe
+  public void forceRemoveBlock(@Nonnull Location location) {
+    val x = location.getBlockX();
+    val y = location.getBlockY();
+    val z = location.getBlockZ();
+
+    val worldStorage = worldMap.get(location.getWorld().getUID());
+    if (worldStorage == null) {
+      return;
+    }
+
+    val chunkStorage = worldStorage.chunks.get(FastEmbeddedUtil.location_chunkId(x, z));
+    if (chunkStorage == null) {
+      return;
+    }
+
+    val blockId = FastEmbeddedUtil.blockId(x, y, z);
+    val ankhBlock = chunkStorage.blockMap.get(blockId);
+    if (ankhBlock == null) {
+      return;
+    }
+    try {
+      ankhBlock.unload();
+    } catch (Exception e) {
+      //
+    }
+    chunkStorage.asyncTickers.remove(blockId);
+    chunkStorage.blockTickers.remove(blockId);
+    chunkStorage.blockMap.remove(blockId);
   }
 
   private void handleBlockSet(ChunkStorage chunkStorage, Location location, long blockId, AnkhBlock ankhBlock) {

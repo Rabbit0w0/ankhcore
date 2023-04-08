@@ -59,8 +59,6 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     return engine(configDefaultService == null ? "ankh-core:bsh" : configDefaultService);
   }
 
-  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of(this::defaultEngineImpl);
-
   private AnkhScriptEngine loadEngineImpl(String key) {
     return AnkhServiceLoader.loadService(key, AnkhScriptEngine.class);
   }
@@ -68,7 +66,7 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
   @Override
   public @Nonnull AnkhScriptEngine get() {
     return defaultEngine.get();
-  }
+  }  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of(this::defaultEngineImpl);
 
   @Override
   public void runPlayerShell(@Nonnull Player player, @Nonnull String shell) {
@@ -77,7 +75,10 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     Object result;
 
     try {
-      val context = ScriptContext.builder().with("isConsole", true).build();
+      val context = ScriptContext.builder()
+          .player(player)
+          .with("isConsole", false)
+          .build();
       val startTime = System.nanoTime();
       val script = prepareShell(shell);
       val ppsTime = System.nanoTime();
@@ -169,7 +170,8 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
     return prepareShell(shell).execute(context);
   }
 
-  public PreparedScript prepareShell(@Nonnull String shell) throws Exception {
+  @Override
+  public @Nonnull PreparedScript prepareShell(@Nonnull String shell) throws Exception {
     String engineName;
     String command;
     if (shell.startsWith(":")) {
@@ -216,4 +218,8 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       });
     }
   }
+
+
+
+
 }

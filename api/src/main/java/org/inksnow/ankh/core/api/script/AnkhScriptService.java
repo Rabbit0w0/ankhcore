@@ -78,7 +78,7 @@ public interface AnkhScriptService {
    * @return prepared script
    * @throws Exception exception when parse script
    */
-  @Nullable
+  @Nonnull
   PreparedScript prepareShell(@Nonnull String shell) throws Exception;
 
 

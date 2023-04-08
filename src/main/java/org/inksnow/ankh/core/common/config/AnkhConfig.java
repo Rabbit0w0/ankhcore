@@ -13,10 +13,11 @@ import javax.inject.Singleton;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 @Singleton
 public class AnkhConfig {
@@ -30,6 +31,8 @@ public class AnkhConfig {
   private final DatabaseConfig database;
   @Getter
   private final PlayerShellConfig playerShell;
+  @Getter
+  private final ItemConfig item;
   @Getter
   private final ServiceConfig service;
 
@@ -48,6 +51,7 @@ public class AnkhConfig {
     this.tickRate = loadTickRate(configuration);
     this.database = new DatabaseConfig(required(configuration.getConfigurationSection("database"), "database"));
     this.playerShell = new PlayerShellConfig(required(configuration.getConfigurationSection("player-shell"), "player-shell"));
+    this.item = new ItemConfig(required(configuration.getConfigurationSection("item"), "item"));
     this.service = new ServiceConfig(required(configuration.getConfigurationSection("service"), "service"));
   }
 
@@ -89,11 +93,8 @@ public class AnkhConfig {
       try {
         return DriverType.valueOf(typeString);
       } catch (IllegalArgumentException e) {
-        val joiner = new StringJoiner(", ");
-        for (DriverType value : DriverType.values()) {
-          joiner.add(value.name());
-        }
-        throw new IllegalStateException("config key 'database.driver' value is not supported. support values: " + joiner);
+        val supportValues = Arrays.stream(DriverType.values()).map(Enum::name).collect(Collectors.joining(", "));
+        throw new IllegalStateException("config key 'database.driver' value is not supported. support values: " + supportValues);
       }
     }
 
@@ -116,7 +117,7 @@ public class AnkhConfig {
     @Getter
     private final String prefix;
 
-    public PlayerShellConfig(ConfigurationSection configuration) {
+    private PlayerShellConfig(ConfigurationSection configuration) {
       this.enable = configuration.getBoolean("enable");
       this.prefix = required(configuration.getString("prefix"), "player-shell.prefix");
     }
@@ -131,7 +132,7 @@ public class AnkhConfig {
     @Getter
     private final String worldStorage;
 
-    public ServiceConfig(ConfigurationSection configuration) {
+    private ServiceConfig(ConfigurationSection configuration) {
       val keySet = configuration.getKeys(false);
       val map = new HashMap<String, String>(keySet.size());
       for (String key : keySet) {
@@ -150,6 +151,27 @@ public class AnkhConfig {
 
     public String get(String name) {
       return map.get(name);
+    }
+  }
+
+  public static class ItemConfig {
+    @Getter
+    private final LoreFetcherConfig loreFetcher;
+
+    private ItemConfig(ConfigurationSection configuration) {
+      this.loreFetcher = new LoreFetcherConfig(required(configuration.getConfigurationSection("lore-fetcher"), "item.lore-fetcher"));
+    }
+
+    public static class LoreFetcherConfig {
+      @Getter
+      private final String markStart;
+      @Getter
+      private final String markEnd;
+
+      private LoreFetcherConfig(ConfigurationSection configuration) {
+        this.markStart = required(configuration.getString("mark-start"), "item.lore-fetcher.mark-start");
+        this.markEnd = required(configuration.getString("mark-end"), "item.lore-fetcher.mark-end");
+      }
     }
   }
 }

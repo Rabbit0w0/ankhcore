@@ -7,7 +7,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.inksnow.ankh.core.api.AnkhCore;
 
-@Deprecated // old item api
 public interface AnkhItem extends Keyed {
   NamespacedKey ITEM_ID_KEY = new NamespacedKey(AnkhCore.PLUGIN_ID, "item-id");
 

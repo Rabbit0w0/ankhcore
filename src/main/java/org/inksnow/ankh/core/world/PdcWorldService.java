@@ -53,7 +53,7 @@ import java.util.function.Predicate;
 @SuppressWarnings("DuplicatedCode") // for fast
 public class PdcWorldService implements WorldService {
   private static final org.inksnow.ankh.core.api.world.storage.WorldStorage storageBackend =
-      AnkhServiceLoader.configLoadService(org.inksnow.ankh.core.api.world.storage.WorldStorage.class);
+      AnkhServiceLoader.service(org.inksnow.ankh.core.api.world.storage.WorldStorage.class);
   private final AnkhCoreLoader coreLoader;
   private final AnkhConfig ankhConfig;
   private final BlockRegistry blockRegistry;

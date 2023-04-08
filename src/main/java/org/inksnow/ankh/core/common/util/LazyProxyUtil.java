@@ -33,7 +33,7 @@ public class LazyProxyUtil {
     val classWriter = new ClassWriterWithClassLoader(classLoader, ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
     val interfaceInternalName = Type.getInternalName(clazz);
     val interfaceDescriptor = Type.getDescriptor(clazz);
-    val generateClassInternalName = interfaceInternalName + "$ankh-core-asm-lazy-proxy$" + idAllocator.incrementAndGet();
+    val generateClassInternalName = (interfaceInternalName.startsWith("java/") ? "$" : "") + interfaceInternalName + "$ankh-core-asm-lazy-proxy$" + idAllocator.incrementAndGet();
     classWriter.visit(
         Opcodes.V1_8,
         Opcodes.ACC_PUBLIC,
@@ -98,6 +98,10 @@ public class LazyProxyUtil {
       methodVisitor.visitEnd();
     }
     for (val method : clazz.getDeclaredMethods()) {
+      val isFinal = (method.getModifiers() & Opcodes.ACC_FINAL) != 0;
+      if (isFinal) {
+        continue;
+      }
       val methodType = Type.getType(method);
       val methodName = method.getName();
       val methodDescriptor = methodType.getDescriptor();

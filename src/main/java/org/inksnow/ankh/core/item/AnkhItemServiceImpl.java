@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.inksnow.ankh.core.api.AnkhServiceLoader;
 import org.inksnow.ankh.core.api.item.*;
 import org.inksnow.ankh.core.api.plugin.annotations.SubscriptEvent;
+import org.inksnow.ankh.core.item.fetcher.TagItemFetcher;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -82,27 +83,17 @@ public class AnkhItemServiceImpl implements AnkhItemService {
     if (item.getType() == Material.AIR) {
       return null;
     }
-    val keys = fetchTag(item);
-    if (keys.isEmpty()) {
-      return null;
-    }
-    AnkhItem ankhItem = null;
-    Key usedKey = null;
-    for (Key key : keys) {
-      val newAnkhItem = itemRegistry.get(key);
-      if (newAnkhItem != null) {
-        if (ankhItem == null) {
-          ankhItem = newAnkhItem;
-          usedKey = key;
-        } else {
-          logger.warn("Multi ankh-item id found in one item: {}, {}", usedKey, key);
+    for (val itemFetcher : itemFetcherList) {
+      for (Key key : itemFetcher.fetchItem(item)) {
+        val ankhItem = itemRegistry.get(key);
+        if (ankhItem != null) {
+          return ankhItem;
+        } else if (itemFetcher instanceof TagItemFetcher) {
+          logger.warn("No ankh-item {} found, maybe some extensions not loaded", key);
+          return ProtectDataItem.instance();
         }
       }
     }
-    if (ankhItem == null) {
-      logger.warn("No ankh-item {} found, maybe some extensions not loaded", keys);
-      return ProtectDataItem.instance();
-    }
-    return ankhItem;
+    return null;
   }
 }

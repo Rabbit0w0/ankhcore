@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -54,7 +53,7 @@ public class AnkhItemServiceImpl implements AnkhItemService {
     itemTagger.setTag(stack, tag);
   }
 
-  @SubscriptEvent(priority = EventPriority.MONITOR)
+  @SubscriptEvent(priority = EventPriority.HIGHEST)
   private void onInteractEvent(PlayerInteractEvent event) {
     if (event.getAction() == Action.PHYSICAL) {
       return;
@@ -64,9 +63,7 @@ public class AnkhItemServiceImpl implements AnkhItemService {
     if (ankhItem == null) {
       return;
     }
-    if (isUseItem(event)) {
-      ankhItem.onUseItem(event);
-    }
+    ankhItem.acceptInteractEvent(event);
   }
 
   @SubscriptEvent(ignoreCancelled = true, priority = EventPriority.HIGHEST)
@@ -76,27 +73,6 @@ public class AnkhItemServiceImpl implements AnkhItemService {
     if (ankhItem != null) {
       ankhItem.onBlockPlace(event);
     }
-  }
-
-  private boolean isUseItem(PlayerInteractEvent event) {
-    // if deny use hand
-    if (event.useItemInHand() == Event.Result.DENY) {
-      return false;
-    }
-    // if default use block
-    if (event.useInteractedBlock() != Event.Result.ALLOW) {
-      return false;
-    }
-    // if clicked block is null
-    if (event.getClickedBlock() == null) {
-      return true;
-    }
-    // if sneaking
-    if (event.getPlayer().isSneaking()) {
-      return true;
-    }
-    // if clicked block is interactable
-    return !event.getClickedBlock().getType().isInteractable();
   }
 
   private AnkhItem warpItem(ItemStack item) {

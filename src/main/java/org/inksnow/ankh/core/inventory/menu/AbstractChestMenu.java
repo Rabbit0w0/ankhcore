@@ -148,19 +148,19 @@ public class AbstractChestMenu implements InventoryMenu {
         break;
       }
       case MOVE_TO_OTHER_INVENTORY: {
-        if (!modifiable || !playerModifiable) {
+        if (!modifiable() || !playerModifiable()) {
           cancelled = true;
         }
         break;
       }
       case HOTBAR_MOVE_AND_READD: {
-        if (!playerModifiable) {
+        if (!playerModifiable()) {
           cancelled = true;
         }
         break;
       }
       case HOTBAR_SWAP: {
-        if (!playerModifiable) {
+        if (!playerModifiable()) {
           cancelled = true;
         }
         break;
@@ -180,12 +180,12 @@ public class AbstractChestMenu implements InventoryMenu {
     }
 
     if (isClickChest) {
-      if (modifiable) {
+      if (modifiable()) {
         cancelled = !modifiableSlot(event.getRawSlot());
       } else {
         cancelled = true;
       }
-    } else if (!playerModifiable) {
+    } else if (!playerModifiable()) {
       cancelled = true;
     }
 
@@ -201,12 +201,12 @@ public class AbstractChestMenu implements InventoryMenu {
     for (Integer rawSlot : event.getRawSlots()) {
       val isClickChest = rawSlot < event.getInventory().getSize();
       if (isClickChest) {
-        if (modifiable) {
+        if (modifiable()) {
           cancelled = !modifiableSlot(rawSlot);
         } else {
           cancelled = true;
         }
-      } else if (!playerModifiable) {
+      } else if (!playerModifiable()) {
         cancelled = true;
       }
     }

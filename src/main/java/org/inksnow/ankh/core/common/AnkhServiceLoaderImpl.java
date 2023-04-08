@@ -44,6 +44,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
     val binding = injector.getExistingBinding(iocKey);
     return binding != null ? injector.getInstance(iocKey) : null;
   };
+
   private static final Function<Class<?>, List<Object>> configListLoadFunction = clazz -> {
     if (!clazz.isInterface()) {
       throw new IllegalArgumentException("service class must be interface");
@@ -53,8 +54,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
       val resultList = new ArrayList<>();
       for (val plugin : pluginRegistry.get().values()) {
         for (val entry : plugin.getInjector().getAllBindings().entrySet()) {
-          val rawType = entry.getKey().getTypeLiteral().getRawType();
-          if (!clazz.isAssignableFrom(rawType)) {
+          if (clazz != entry.getKey().getTypeLiteral().getRawType()) {
             continue;
           }
           String name;
@@ -64,7 +64,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
           } else if (annotation instanceof com.google.inject.name.Named) {
             name = ((com.google.inject.name.Named) annotation).value();
           } else {
-            logger.warn("service implement class {} should be named", rawType);
+            logger.warn("service implement class should be named. {}", entry.getValue().getSource());
             continue;
           }
           if (Arrays.stream(new String[]{
@@ -75,9 +75,21 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
           }
         }
       }
+      for (val entry : keyInstanceMap.get().entrySet()) {
+        if (!clazz.isAssignableFrom(entry.getKey().clazz)) {
+          continue;
+        }
+        if (Arrays.stream(new String[]{
+            config.service().get(serviceName + "@" + entry.getKey().value),
+            config.service().get(serviceName + "@" + entry.getKey().namespace + ":" + entry.getKey().value)
+        }).filter(Objects::nonNull).allMatch(Boolean::parseBoolean)) {
+          resultList.add(staticLoadService(Key.key(entry.getKey().namespace, entry.getKey().value), clazz));
+        }
+      }
       return resultList;
     }));
   };
+
   private static final Function<StringCacheKey, Object> stringLoadFunction = it -> {
     if (!it.clazz.isInterface()) {
       throw new IllegalArgumentException("service class must be interface");
@@ -99,6 +111,8 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
     }
     return null;
   };
+
+  @SuppressWarnings({"rawtypes", "unchecked"})
   private static final Function<Class<?>, Object> configLoadFunction = clazz -> {
     if (!clazz.isInterface()) {
       throw new IllegalArgumentException("service class must be interface");
@@ -110,7 +124,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
           "Failed to load service " + serviceName + ", no config found."
       );
     }
-    return LazyProxyUtil.generate(clazz, DcLazy.of(() -> staticLoadService(loadConfigValue, clazz)));
+    return LazyProxyUtil.generate(clazz, (DcLazy) DcLazy.of(() -> staticLoadService(loadConfigValue, clazz)));
   };
 
   public static void staticRegisterPlugin(@Nonnull String name, @Nonnull AnkhPluginContainerImpl container) {

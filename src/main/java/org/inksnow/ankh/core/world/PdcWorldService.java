@@ -156,6 +156,37 @@ public class PdcWorldService implements WorldService {
     handleBlockRemove(chunkStorage, blockId, ankhBlock);
   }
 
+  @Deprecated // unsafe
+  public void forceRemoveBlock(@Nonnull Location location) {
+    val x = location.getBlockX();
+    val y = location.getBlockY();
+    val z = location.getBlockZ();
+
+    val worldStorage = worldMap.get(location.getWorld().getUID());
+    if (worldStorage == null) {
+      return;
+    }
+
+    val chunkStorage = worldStorage.chunks.get(FastEmbeddedUtil.location_chunkId(x, z));
+    if (chunkStorage == null) {
+      return;
+    }
+
+    val blockId = FastEmbeddedUtil.blockId(x, y, z);
+    val ankhBlock = chunkStorage.blockMap.get(blockId);
+    if (ankhBlock == null) {
+      return;
+    }
+    try {
+      ankhBlock.unload();
+    } catch (Exception e) {
+      //
+    }
+    chunkStorage.asyncTickers.remove(blockId);
+    chunkStorage.blockTickers.remove(blockId);
+    chunkStorage.blockMap.remove(blockId);
+  }
+
   private void handleBlockSet(ChunkStorage chunkStorage, Location location, long blockId, AnkhBlock ankhBlock) {
     chunkStorage.blockMap.put(blockId, ankhBlock);
     if (ankhBlock instanceof TickableBlock) {

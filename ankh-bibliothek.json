@@ -15,6 +15,11 @@
       "type": "service-kether",
       "name": "service-kether.jar",
       "path": "services/service-kether/build/libs/*-all.jar"
+    },
+    {
+      "type": "service-neigeitems",
+      "name": "service-neigeitems.jar",
+      "path": "services/service-neigeitems/build/libs/*.jar"
     }
   ]
 }

@@ -1,0 +1,10 @@
+name: ankh-neigeitems
+version: 1.0-SNAPSHOT
+api-version: 1.16
+main: org.inksnow.ankh.neigeitems.AnkhNeigeitemsBridgePlugin
+load: STARTUP
+authors:
+  - InkerBot
+depend:
+  - ankh-core
+  - NeigeItems

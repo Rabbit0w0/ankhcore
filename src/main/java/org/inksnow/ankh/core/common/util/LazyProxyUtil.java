@@ -28,7 +28,7 @@ public class LazyProxyUtil {
   }
 
   @SneakyThrows
-  public <T> T generate(Class<T> clazz, DcLazy<?> dcLazy) {
+  public <T> T generate(Class<T> clazz, DcLazy<? extends T> dcLazy) {
     val classLoader = clazz.getClassLoader();
     val classWriter = new ClassWriterWithClassLoader(classLoader, ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
     val interfaceInternalName = Type.getInternalName(clazz);

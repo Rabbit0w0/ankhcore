@@ -44,6 +44,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
     val binding = injector.getExistingBinding(iocKey);
     return binding != null ? injector.getInstance(iocKey) : null;
   };
+
   private static final Function<Class<?>, List<Object>> configListLoadFunction = clazz -> {
     if (!clazz.isInterface()) {
       throw new IllegalArgumentException("service class must be interface");
@@ -88,6 +89,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
       return resultList;
     }));
   };
+
   private static final Function<StringCacheKey, Object> stringLoadFunction = it -> {
     if (!it.clazz.isInterface()) {
       throw new IllegalArgumentException("service class must be interface");
@@ -109,6 +111,8 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
     }
     return null;
   };
+
+  @SuppressWarnings({"rawtypes", "unchecked"})
   private static final Function<Class<?>, Object> configLoadFunction = clazz -> {
     if (!clazz.isInterface()) {
       throw new IllegalArgumentException("service class must be interface");
@@ -120,7 +124,7 @@ public class AnkhServiceLoaderImpl implements AnkhServiceLoader {
           "Failed to load service " + serviceName + ", no config found."
       );
     }
-    return LazyProxyUtil.generate(clazz, DcLazy.of(() -> staticLoadService(loadConfigValue, clazz)));
+    return LazyProxyUtil.generate(clazz, (DcLazy) DcLazy.of(() -> staticLoadService(loadConfigValue, clazz)));
   };
 
   public static void staticRegisterPlugin(@Nonnull String name, @Nonnull AnkhPluginContainerImpl container) {

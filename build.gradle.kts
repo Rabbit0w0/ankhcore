@@ -33,7 +33,6 @@ allprojects {
     maven("https://repo.codemc.io/repository/maven-public/")
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven("https://r2.blobs.inksnow.org/maven/")
   }
 
   java {
@@ -170,10 +169,6 @@ dependencies {
   // logger binding
   implementation("org.apache.logging.log4j:log4j-to-slf4j:2.20.0")
   api("org.slf4j:slf4j-api:2.0.6")
-
-  // other projects
-  compileOnly("pers.neige.neigeitems:NeigeItems:1.12.9")
-  // compileOnly(fileTree("libs/embedded"))
 }
 
 tasks.compileKotlin {

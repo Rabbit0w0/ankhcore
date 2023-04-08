@@ -61,12 +61,12 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
 
   private AnkhScriptEngine loadEngineImpl(String key) {
     return AnkhServiceLoader.loadService(key, AnkhScriptEngine.class);
-  }  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of(this::defaultEngineImpl);
+  }
 
   @Override
   public @Nonnull AnkhScriptEngine get() {
     return defaultEngine.get();
-  }
+  }  private final DcLazy<AnkhScriptEngine> defaultEngine = DcLazy.of(this::defaultEngineImpl);
 
   @Override
   public void runPlayerShell(@Nonnull Player player, @Nonnull String shell) {
@@ -215,6 +215,8 @@ public class ScriptServiceImpl implements AnkhScriptService, Provider<AnkhScript
       });
     }
   }
+
+
 
 
 }

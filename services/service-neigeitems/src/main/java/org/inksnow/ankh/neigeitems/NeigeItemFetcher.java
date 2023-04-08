@@ -1,9 +1,9 @@
-package org.inksnow.ankh.core.item.fetcher;
+package org.inksnow.ankh.neigeitems;
 
-import lombok.val;
 import net.kyori.adventure.key.Key;
 import org.bukkit.inventory.ItemStack;
 import org.inksnow.ankh.core.api.item.ItemFetcher;
+import pers.neige.neigeitems.item.ItemInfo;
 import pers.neige.neigeitems.manager.ItemManager;
 
 import javax.annotation.Nonnull;
@@ -16,7 +16,7 @@ import java.util.Locale;
 public class NeigeItemFetcher implements ItemFetcher {
   @Override
   public @Nonnull List<Key> fetchItem(@Nonnull ItemStack itemStack) {
-    val niItemInfo = ItemManager.INSTANCE.isNiItem(itemStack);
+    ItemInfo niItemInfo = ItemManager.INSTANCE.isNiItem(itemStack);
     if (niItemInfo == null) {
       return Collections.emptyList();
     } else {

@@ -12,3 +12,4 @@ include("libs:shadow-paper-lib")
 include("libs:shadow-nbtapi")
 
 include("services:service-kether")
+include("services:service-neigeitems")

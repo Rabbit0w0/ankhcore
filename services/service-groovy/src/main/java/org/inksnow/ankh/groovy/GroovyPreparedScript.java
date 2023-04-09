@@ -1,8 +1,7 @@
-package org.inksnow.ankh.core.script.engine.groovy;
+package org.inksnow.ankh.groovy;
 
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
-import lombok.val;
 import org.inksnow.ankh.core.api.script.PreparedScript;
 import org.inksnow.ankh.core.api.script.ScriptContext;
 import org.inksnow.ankh.core.script.ScriptCacheStack;
@@ -27,9 +26,9 @@ public class GroovyPreparedScript implements PreparedScript {
 
   @Override
   public Object execute(@Nonnull ScriptContext context) throws Exception {
-    val script = localCache.borrow();
+    Script script = localCache.borrow();
     try {
-      ((GroovyContextBinding) script.getBinding()).context(context);
+      ((GroovyContextBinding) script.getBinding()).setContext(context);
       return script.run();
     } finally {
       localCache.sendBack(script);

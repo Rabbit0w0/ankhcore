@@ -1,4 +1,4 @@
-group = "org.inksnow.ankh.neigeitems"
+group = "org.inksnow.ankh.groovy"
 
 configurations {
   create("ankhShadow")
@@ -7,9 +7,7 @@ configurations {
 }
 
 dependencies {
-  implementation("org.openjdk.nashorn:nashorn-core:15.4") {
-    exclude("org.ow2.asm:asm")
-  }
+  implementation("org.apache.groovy:groovy:4.0.10")
   compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
   compileOnly(project(":"))
 }

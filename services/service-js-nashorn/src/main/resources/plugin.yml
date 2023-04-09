@@ -9,6 +9,4 @@ depend:
   - ankh-core
 
 ankh-classpath:
-  "org.openjdk.nashorn.api.": SELF_ONLY
-  "org.openjdk.nashorn.internal.": SELF_ONLY
-  "org.openjdk.nashorn.tools.": SELF_ONLY
+  "org.openjdk.nashorn.": SELF_ONLY

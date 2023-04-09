@@ -12,6 +12,11 @@
       "path": "loader/plugin/build/libs/*.jar"
     },
     {
+      "type": "service-groovy",
+      "name": "service-groovy.jar",
+      "path": "services/service-groovy/build/libs/*.jar"
+    },
+    {
       "type": "service-js-nashorn",
       "name": "service-js-nashorn.jar",
       "path": "services/service-js-nashorn/build/libs/*.jar"

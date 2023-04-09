@@ -152,7 +152,6 @@ dependencies {
 
   // script
   api("org.beanshell:bsh:3.0.0-SNAPSHOT")
-  api("org.apache.groovy:groovy:4.0.10")
 
   // shadow depends
   api(project(":libs:shadow-paper-lib", configuration = "shadow"))

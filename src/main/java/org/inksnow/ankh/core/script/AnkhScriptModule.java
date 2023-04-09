@@ -7,7 +7,6 @@ import org.inksnow.ankh.core.api.script.AnkhScriptEngine;
 import org.inksnow.ankh.core.api.script.AnkhScriptService;
 import org.inksnow.ankh.core.api.script.ScriptContext;
 import org.inksnow.ankh.core.script.engine.BeanShellEngine;
-import org.inksnow.ankh.core.script.engine.GroovyEngine;
 
 @PluginModule
 public class AnkhScriptModule extends AbstractModule {
@@ -18,6 +17,5 @@ public class AnkhScriptModule extends AbstractModule {
     bind(AnkhScriptService.class).to(ScriptServiceImpl.class);
     bind(AnkhScriptEngine.class).toProvider(ScriptServiceImpl.class);
     bind(AnkhScriptEngine.class).annotatedWith(Names.named("bsh")).to(BeanShellEngine.class);
-    bind(AnkhScriptEngine.class).annotatedWith(Names.named("groovy")).to(GroovyEngine.class);
   }
 }

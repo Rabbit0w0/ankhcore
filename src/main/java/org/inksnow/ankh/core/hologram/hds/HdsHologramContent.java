@@ -40,28 +40,26 @@ public class HdsHologramContent implements HologramContent {
             hdsLines.remove(hdsLines.size() - 1);
         }
 
-        int index = 0;
-        for (LineEntry lineEntry : lines) {
-            if (lineEntry instanceof Text) {
-                if (hdsLines.size() <= 1) {
-                    hdsLines.appendText(((Text) lineEntry).content);
-                } else if (hdsLines.get(index) instanceof TextHologramLine) {
-                    ((TextHologramLine) hdsLines.get(index)).setText(((Text) lineEntry).content);
+        for (int i = 0; i < hdsLines.size(); i++) {
+            if (hdsLines.get(i) instanceof Text) {
+                if (hdsLines.size() <= i) {
+                    hdsLines.appendText(((Text) hdsLines.get(i)).content);
+                } else if (hdsLines.get(i) instanceof TextHologramLine) {
+                    ((TextHologramLine) hdsLines.get(i)).setText(((Text) hdsLines.get(i)).content);
                 } else {
-                    hdsLines.insertText(index, ((Text) lineEntry).content);
-                    hdsLines.remove(index);
+                    hdsLines.insertText(i, ((Text) hdsLines.get(i)).content);
+                    hdsLines.remove(i);
                 }
-            } else if (lineEntry instanceof Item) {
+            } else if (hdsLines.get(i) instanceof Item) {
                 if (hdsLines.size() <= 1) {
-                    hdsLines.appendItem(((Item) lineEntry).item);
-                } else if (hdsLines.get(index) instanceof ItemHologramLine) {
-                    ((Item) hdsLines.get(index)).item = ((Item) lineEntry).item;
+                    hdsLines.appendItem(((Item) hdsLines.get(i)).item);
+                } else if (hdsLines.get(i) instanceof ItemHologramLine) {
+                    ((Item) hdsLines.get(i)).item = ((Item) hdsLines.get(i)).item;
                 } else {
-                    hdsLines.insertItem(index, ((Item) lineEntry).item);
-                    hdsLines.remove(index);
+                    hdsLines.insertItem(i, ((Item) hdsLines.get(i)).item);
+                    hdsLines.remove(i);
                 }
             }
-            index++;
         }
     }
 

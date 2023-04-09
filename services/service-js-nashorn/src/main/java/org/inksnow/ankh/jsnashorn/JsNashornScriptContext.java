@@ -18,7 +18,6 @@ import java.util.List;
 public class JsNashornScriptContext implements ScriptContext {
   private static final Logger logger = LoggerFactory.getLogger("ankh-js-nashorn");
   private static final List<Integer> scopes = List.of(ENGINE_SCOPE, GLOBAL_SCOPE);
-  private final org.inksnow.ankh.core.api.script.ScriptContext delegate;
   protected Writer writer;
   protected Writer errorWriter;
   protected Reader reader;
@@ -26,7 +25,6 @@ public class JsNashornScriptContext implements ScriptContext {
   protected Bindings globalScope;
 
   public JsNashornScriptContext(org.inksnow.ankh.core.api.script.ScriptContext delegate) {
-    this.delegate = delegate;
     Player player = delegate.player();
     ConsoleInterface console;
     if (player == null) {

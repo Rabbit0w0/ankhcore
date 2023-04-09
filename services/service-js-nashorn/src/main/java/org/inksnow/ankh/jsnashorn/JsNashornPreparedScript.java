@@ -26,7 +26,10 @@ public class JsNashornPreparedScript implements PreparedScript {
 
   private NashornScriptEngine createEngine() {
     NashornScriptEngineFactory factory = new NashornScriptEngineFactory();
-    return (NashornScriptEngine) factory.getScriptEngine(this.getClass().getClassLoader());
+    return (NashornScriptEngine) factory.getScriptEngine(
+        new String[]{ "--global-per-engine" },
+        this.getClass().getClassLoader()
+    );
   }
 
   @Override

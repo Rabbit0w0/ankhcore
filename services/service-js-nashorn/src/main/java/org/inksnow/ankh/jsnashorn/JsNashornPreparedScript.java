@@ -2,19 +2,40 @@ package org.inksnow.ankh.jsnashorn;
 
 import org.inksnow.ankh.core.api.script.PreparedScript;
 import org.inksnow.ankh.core.api.script.ScriptContext;
+import org.inksnow.ankh.core.script.ScriptCacheStack;
+import org.openjdk.nashorn.api.scripting.NashornScriptEngine;
+import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 import javax.annotation.Nonnull;
 import javax.script.CompiledScript;
+import javax.script.ScriptException;
 
 public class JsNashornPreparedScript implements PreparedScript {
-  private final CompiledScript compiledScript;
+  private final String script;
+  private final ScriptCacheStack<CompiledScript, ScriptException> cacheStack;
 
-  public JsNashornPreparedScript(CompiledScript compiledScript) {
-    this.compiledScript = compiledScript;
+  public JsNashornPreparedScript(String script) throws ScriptException {
+    this.script = script;
+    this.cacheStack = new ScriptCacheStack<>(this::createScript);
+    this.cacheStack.prepare(1);
+  }
+
+  private CompiledScript createScript() throws ScriptException {
+    return createEngine().compile(script);
+  }
+
+  private NashornScriptEngine createEngine() {
+    NashornScriptEngineFactory factory = new NashornScriptEngineFactory();
+    return (NashornScriptEngine) factory.getScriptEngine(this.getClass().getClassLoader());
   }
 
   @Override
   public Object execute(@Nonnull ScriptContext context) throws Exception {
-    return compiledScript.eval(new JsNashornScriptContext(context));
+    CompiledScript compile = cacheStack.borrow();
+    try {
+      return compile.eval(new JsNashornScriptContext(context));
+    } finally {
+      cacheStack.sendBack(compile);
+    }
   }
 }

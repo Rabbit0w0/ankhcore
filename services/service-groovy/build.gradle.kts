@@ -1,18 +1,15 @@
+group = "org.inksnow.ankh.groovy"
+
 configurations {
   create("ankhShadow")
   create("ankhApi")
-  create("ankhImpl")
-  create("ankhLogger")
+  create("ankhImpl").extendsFrom(getByName("runtimeClasspath"))
 }
 
 dependencies {
-  "ankhShadow"(project(":loader"))
-  add("ankhShadow", project(":loader"))
-
-  "ankhImpl"(project(":")) {
-    exclude(group = "org.slf4j", module = "slf4j-api")
-  }
-  "ankhLogger"(project(":loader:logger"))
+  implementation("org.apache.groovy:groovy:4.0.10")
+  compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
+  compileOnly(project(":"))
 }
 
 tasks.jar {
@@ -26,9 +23,7 @@ tasks.jar {
   })
 
   with(copySpec {
-    from(configurations.getByName("ankhApi").filter {
-      !configurations.getByName("ankhShadow").contains(it)
-    })
+    from(configurations.getByName("ankhApi"))
     into("ankh-api")
   })
 
@@ -38,11 +33,6 @@ tasks.jar {
           !configurations.getByName("ankhApi").contains(it)
     })
     into("ankh-impl")
-  })
-
-  with(copySpec {
-    from(configurations.getByName("ankhLogger"))
-    into("ankh-logger")
   })
 }
 

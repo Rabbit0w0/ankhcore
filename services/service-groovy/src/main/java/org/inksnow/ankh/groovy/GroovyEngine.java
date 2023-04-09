@@ -1,13 +1,10 @@
-package org.inksnow.ankh.core.script.engine;
+package org.inksnow.ankh.groovy;
 
 import groovy.lang.GroovyShell;
-import lombok.val;
 import org.inksnow.ankh.core.api.script.AnkhScriptEngine;
 import org.inksnow.ankh.core.api.script.PreparedScript;
 import org.inksnow.ankh.core.api.script.ScriptContext;
 import org.inksnow.ankh.core.script.ScriptCacheStack;
-import org.inksnow.ankh.core.script.engine.groovy.GroovyContextBinding;
-import org.inksnow.ankh.core.script.engine.groovy.GroovyPreparedScript;
 
 import javax.annotation.Nonnull;
 import javax.inject.Singleton;
@@ -22,9 +19,9 @@ public class GroovyEngine implements AnkhScriptEngine {
 
   @Override
   public @Nonnull Object execute(@Nonnull ScriptContext context, @Nonnull String script) throws Exception {
-    val groovyShell = groovyShellCache.borrow();
+    GroovyShell groovyShell = groovyShellCache.borrow();
     try {
-      ((GroovyContextBinding) groovyShell.getContext()).context(context);
+      ((GroovyContextBinding) groovyShell.getContext()).setContext(context);
       return groovyShell.evaluate(script);
     } finally {
       groovyShellCache.sendBack(groovyShell);

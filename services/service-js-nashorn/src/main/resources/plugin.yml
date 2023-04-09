@@ -1,0 +1,12 @@
+name: ankh-js-nashorn
+version: 1.0-SNAPSHOT
+api-version: 1.16
+main: org.inksnow.ankh.jsnashorn.AnkhJsNashornPlugin
+load: STARTUP
+authors:
+  - InkerBot
+depend:
+  - ankh-core
+
+ankh-classpath:
+  "org.openjdk.nashorn.": SELF_ONLY

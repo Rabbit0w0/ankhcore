@@ -1,4 +1,4 @@
-package org.inksnow.ankh.core.script.engine.bsh;
+package org.inksnow.ankh.core.script.engine.console;
 
 import bsh.ConsoleInterface;
 import lombok.val;
@@ -12,14 +12,14 @@ import org.jetbrains.annotations.Nullable;
 import java.io.PrintStream;
 import java.io.Reader;
 
-public class BshPlayerConsole implements ConsoleInterface {
+public class ScriptPlayerConsole implements ConsoleInterface {
   private static final Reader nullReader = Reader.nullReader();
   private final Player player;
   private final PrintStream delegateOut;
   private final PrintStream delegateErr;
 
 
-  public BshPlayerConsole(Player player) {
+  public ScriptPlayerConsole(Player player) {
     this.player = player;
     this.delegateOut = new PrintStream(
         new LineBufferingOutputStream(

@@ -133,9 +133,11 @@ dependencies {
   api("bot.inker.acj:runtime:1.3")
   api("bot.inker.aig:all:1.1-SNAPSHOT")
   api("org.ow2.asm:asm:9.4")
+  api("org.ow2.asm:asm-analysis:9.4")
+  api("org.ow2.asm:asm-commons:9.4")
   api("org.ow2.asm:asm-tree:9.4")
+  api("org.ow2.asm:asm-util:9.4")
   api("it.unimi.dsi:fastutil:8.5.12")
-  api("net.bytebuddy:byte-buddy:1.14.4")
 
   // database
   api("org.hibernate.orm:hibernate-core:6.1.7.Final")
@@ -150,7 +152,6 @@ dependencies {
 
   // script
   api("org.beanshell:bsh:3.0.0-SNAPSHOT")
-  api("org.apache.groovy:groovy:4.0.10")
 
   // shadow depends
   api(project(":libs:shadow-paper-lib", configuration = "shadow"))

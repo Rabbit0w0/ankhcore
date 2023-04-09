@@ -1,4 +1,4 @@
-package org.inksnow.ankh.core.script.engine.bsh;
+package org.inksnow.ankh.core.script.engine.console;
 
 import bsh.ConsoleInterface;
 import lombok.val;
@@ -10,13 +10,13 @@ import org.slf4j.Logger;
 import java.io.PrintStream;
 import java.io.Reader;
 
-public class BshLoggerConsole implements ConsoleInterface {
+public class ScriptLoggerConsole implements ConsoleInterface {
   private static final Reader nullReader = Reader.nullReader();
   private final Logger logger;
   private final PrintStream delegateOut;
   private final PrintStream delegateErr;
 
-  public BshLoggerConsole(Logger logger) {
+  public ScriptLoggerConsole(Logger logger) {
     this.logger = logger;
     this.delegateOut = new PrintStream(
         new LineBufferingOutputStream(

@@ -13,3 +13,4 @@ include("libs:shadow-nbtapi")
 
 include("services:service-kether")
 include("services:service-neigeitems")
+include("services:service-js-nashorn")

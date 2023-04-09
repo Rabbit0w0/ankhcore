@@ -12,6 +12,11 @@
       "path": "loader/plugin/build/libs/*.jar"
     },
     {
+      "type": "service-js-nashorn",
+      "name": "service-js-nashorn.jar",
+      "path": "services/service-js-nashorn/build/libs/*.jar"
+    },
+    {
       "type": "service-kether",
       "name": "service-kether.jar",
       "path": "services/service-kether/build/libs/*-all.jar"
